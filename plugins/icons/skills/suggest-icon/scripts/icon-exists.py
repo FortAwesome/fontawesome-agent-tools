@@ -3,6 +3,7 @@
 import argparse
 import json
 import sys
+import urllib.error
 import urllib.request
 
 GRAPHQL_URL = "https://api.fontawesome.com"
@@ -39,10 +40,23 @@ req = urllib.request.Request(
     },
 )
 
-with urllib.request.urlopen(req) as resp:
-    data = json.loads(resp.read())
+try:
+    with urllib.request.urlopen(req) as resp:
+        data = json.loads(resp.read())
+except urllib.error.URLError as e:
+    print(f"Error: could not reach Font Awesome API: {e}", file=sys.stderr)
+    sys.exit(1)
 
-icon = data["data"]["release"]["icon"]
+if "errors" in data:
+    print(f"Error: API returned errors: {data['errors']}", file=sys.stderr)
+    sys.exit(1)
+
+release = data["data"]["release"]
+if release is None:
+    print(f"Error: version '{args.version}' not found", file=sys.stderr)
+    sys.exit(1)
+
+icon = release["icon"]
 
 if icon is None:
     print(f"Icon '{args.icon_name}' does not exist in version {args.version}")
@@ -54,7 +68,12 @@ styles = icon["familyStylesByLicense"]
 free = styles.get("free") or []
 pro = styles.get("pro") or []
 
+
+def format_style(s):
+    return "{} {}".format(s["family"], s["style"])
+
+
 if free:
-    print(f"  Free: {', '.join(f'{s['family']} {s['style']}' for s in free)}")
+    print("  Free: {}".format(", ".join(format_style(s) for s in free)))
 if pro:
-    print(f"  Pro: {', '.join(f'{s['family']} {s['style']}' for s in pro)}")
+    print("  Pro: {}".format(", ".join(format_style(s) for s in pro)))

@@ -1,0 +1,5 @@
+pre-commit:
+  commands:
+    deploy-skills:
+      run: bash scripts/deploy-skills.sh
+      stage_fixed: true

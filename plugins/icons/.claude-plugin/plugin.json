@@ -1,11 +1,10 @@
 {
   "name": "icons",
   "description": "Integrate Font Awesome's icons into your project.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": {
     "name": "The Font Awesome Team",
     "email": "hello@fontawesome.com"
   },
-  "homepage": "https://fontawesome.com",
-  "skills": "./.claude/skills"
+  "homepage": "https://fontawesome.com"
 }
