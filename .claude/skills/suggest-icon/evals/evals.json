@@ -1,0 +1,11 @@
+{
+  "skill_name": "suggest-icon",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I would like an icon that represents a comfortable, cozy tea store",
+      "expected_output": "A bar chart image showing the top 3 months by revenue, with labeled axes and values.",
+      "files": []
+    }
+  ]
+}

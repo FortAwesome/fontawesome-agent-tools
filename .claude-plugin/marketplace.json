@@ -1,0 +1,20 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "fontawesome-agent-tools",
+  "metadata": {
+    "description": "The internet's favorite icon library and toolkit."
+  },
+  "owner": {
+    "name": "The Font Awesome Team",
+    "email": "hello@fontawesome.com"
+  },
+  "plugins": [
+    {
+      "name": "icons",
+      "description": "Integrate Font Awesome's icons into your project.",
+      "source": "./plugins/icons",
+      "category": "design",
+      "tags": ["icons", "font", "awesome", "ui"]
+    }
+  ]
+}
