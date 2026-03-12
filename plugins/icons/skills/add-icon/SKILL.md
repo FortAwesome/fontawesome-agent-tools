@@ -273,3 +273,14 @@ Example output:
 If the icon is Pro-only and the project is using the free tier (based on `.font-awesome.md` license field or discovered packages), warn the user:
 
 > Note: `cart-shopping` requires a Font Awesome Pro [subscription](https://fontawesome.com/plans). Your project appears to be using Font Awesome Free.
+
+### 7. Update `.font-awesome.md` if needed
+
+Review whether any information discovered during this run is missing from `.font-awesome.md`. Examples of things that might be incomplete:
+
+- A new import pattern was used that isn't documented under **Import Pattern**
+- A family or style was encountered that isn't listed under **Families**
+- A wrapper component or project convention was observed that isn't in **Conventions**
+- The version, license, or integration method has changed
+
+If anything is missing or outdated, update `.font-awesome.md` with the new information — keep the same format, just fill in the gaps. Do not rewrite sections that are already accurate. Let the user know what was updated so they can commit the change.
