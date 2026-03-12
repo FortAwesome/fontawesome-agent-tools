@@ -15,7 +15,13 @@
       "description": "Integrate Font Awesome's icons into your project.",
       "source": "./plugins/icons",
       "category": "design",
-      "tags": ["icons", "font", "awesome", "ui"]
+      "tags": [
+        "icons",
+        "font",
+        "awesome",
+        "ui"
+      ],
+      "version": "0.0.3"
     }
   ]
 }
