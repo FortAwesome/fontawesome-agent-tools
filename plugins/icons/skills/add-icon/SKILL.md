@@ -43,7 +43,7 @@ Read it and use the configuration it describes. Skip discovery. Proceed to step 
 
 #### If `.font-awesome.md` does not exist
 
-Run a discovery process to figure out how the project uses Font Awesome. Check the following sources (in order of specificity):
+Run a discovery process to figure out how the project uses Font Awesome. **Use a subagent** (via the Agent tool with `subagent_type: "Explore"`) to perform this discovery. The subagent should search for the following sources (in order of specificity) and return a structured summary of what it found:
 
 1. **`package.json` / lock files** — look for Font Awesome packages:
    - `@fortawesome/react-fontawesome` → React component integration
@@ -53,7 +53,7 @@ Run a discovery process to figure out how the project uses Font Awesome. Check t
    - `@fortawesome/free-solid-svg-icons`, `@fortawesome/pro-solid-svg-icons`, etc. → individual icon packages (note the style and license)
 
 2. **HTML files / templates** — look for:
-   - Font Awesome Kit script tags: `<script src="https://kit.fontawesome.com/XXXXXX.js"...>` → Kit (SVG+JS). Extract the kit ID (the token before `.js`) and run `./scripts/fetch-kit.py --kit-id <id>` (in the `add-icon` skill directory) to get the kit's version, license, method, and available families.
+   - Font Awesome Kit script tags: `<script src="https://kit.fontawesome.com/XXXXXX.js"...>` → Kit (SVG+JS). Extract the kit ID (the token before `.js`).
    - CDN links in `<link>` tags: `cdnjs.cloudflare.com/ajax/libs/font-awesome/` or `use.fontawesome.com` → Web Fonts+CSS via CDN
    - `<i class="fa-solid fa-...">` or `<i class="fas fa-...">` usage patterns → class-based (Web Fonts+CSS or SVG+JS)
 
@@ -67,6 +67,10 @@ Run a discovery process to figure out how the project uses Font Awesome. Check t
 5. **Web Components** — look for `<fa-icon>` custom elements.
 
 6. **Other frameworks** — look for Angular (`angular.json`, `FontAwesomeModule`), Svelte, etc.
+
+The subagent should return: which Font Awesome packages are installed (with versions), any kit IDs found, CDN URLs, the framework integration method, import patterns observed in source files, the license (free vs pro), and any project conventions (wrapper components, default sizing, etc.).
+
+After the subagent returns, if a kit ID was found, run `./scripts/fetch-kit.py --kit-id <id>` (in the `add-icon` skill directory) to get the kit's version, license, method, and available families.
 
 After discovery, determine:
 
@@ -117,6 +121,8 @@ Detected by the Font Awesome agent tools. Commit this file so the whole team ben
 ```
 
 Tell the user: "I've written `.font-awesome.md` with your project's Font Awesome configuration. You should commit this file so the team benefits and future icon additions are faster."
+
+**Do not proceed to the next step until `.font-awesome.md` has been written.** The remaining steps depend on this file. If discovery fails to produce enough information to write a meaningful `.font-awesome.md`, stop and ask the user to clarify their Font Awesome setup before continuing.
 
 ### 3. Determine the icon style and family
 
