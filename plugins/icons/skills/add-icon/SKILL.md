@@ -39,7 +39,7 @@ Check for a `.font-awesome.md` file in the project root.
 
 #### If `.font-awesome.md` exists
 
-Read it and use the configuration it describes. Skip discovery. Proceed to step 3.
+Read it and use the configuration it describes. Skip discovery and proceed to step 3. However, keep the file's contents in mind — if any later step reveals information that is missing or incomplete in the file (e.g., a new import pattern, a family not listed, a wrapper component not documented), you will update it at the end (see step 6).
 
 #### If `.font-awesome.md` does not exist
 
