@@ -33,3 +33,5 @@ All scripts below are relative to this skill's directory (`plugins/icons/skills/
    | Icon | Families | Availability |
    |------|----------|--------------|
    | `album-collection` | classic, sharp, duotone, sharp-duotone | Pro (requires a [subscription](https://fontawesome.com/plans)) |
+
+6. **Offer to add the icon.** After presenting your recommendation, ask the user: "Would you like me to add this icon to your code?" If they say yes or provide a location, invoke `/add-icon` with the recommended icon name (and location if given).
