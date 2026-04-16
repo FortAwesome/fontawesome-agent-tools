@@ -18,20 +18,26 @@ Add a Font Awesome icon to the user's project. This skill handles icon name reso
 
 Scripts referenced from `suggest-icon` are relative to `plugins/icons/skills/suggest-icon/`. Scripts referenced from `add-icon` are relative to `plugins/icons/skills/add-icon/`. Run them from their respective directories.
 
+## Tool selection
+
+At the start, run `command -v fa` to check whether the `fa` CLI is available on PATH.
+
+- **If `fa` is found:** use it for icon lookups and kit fetching (it returns structured JSON). For kit operations (`fa kits`), check auth first: run `fa whoami` to see if the user is logged in. If logged in, `fa kits` will work directly. If not logged in but `FA_API_TOKEN` is set, `fa kits` will also work. If neither, tell the user: "You need to be logged in to the Font Awesome CLI for kit operations. Run `fa login` in a separate terminal, then come back here and try again." If they cannot log in, fall back to `fetch-kit.py`.
+- **If `fa` is not found:** fall back to the Python scripts described below.
+- **`latest-version.py`** is always used for version detection — the `fa` CLI has no equivalent.
+
 ## Steps
 
 ### 1. Resolve the icon name
 
 First, determine the Font Awesome version. If the user specifies one, use that. Otherwise run `./scripts/latest-version.py` (in the `suggest-icon` skill directory) to get the latest.
 
-Then verify the icon exists by running:
+Then verify the icon exists:
 
-```
-./scripts/icon-exists.py --version <version> --icon-name <icon>
-```
+- **`fa` CLI:** Run `fa icons --version <version> --name <icon>`. The icon exists if `data.release.icon` is non-null. The `familyStylesByLicense` field shows the free/pro breakdown.
+- **Fallback:** Run `./scripts/icon-exists.py --version <version> --icon-name <icon>`. Exit code `0` means the icon exists; exit code `1` means it does not.
 
-- **Exit code 0:** the icon exists. Proceed.
-- **Exit code 1:** the icon does not exist. Invoke the `/suggest-icon` skill internally with the user's `icon` argument as the use-case. Auto-accept the top recommendation and continue with that icon name. Do not ask the user to confirm — a working icon is better than a broken one.
+If the icon does not exist, invoke the `/suggest-icon` skill internally with the user's `icon` argument as the use-case. Auto-accept the top recommendation and continue with that icon name. Do not ask the user to confirm — a working icon is better than a broken one.
 
 ### 2. Determine the integration method
 
@@ -70,7 +76,10 @@ Run a discovery process to figure out how the project uses Font Awesome. **Use a
 
 The subagent should return: which Font Awesome packages are installed (with versions), any kit IDs found, CDN URLs, the framework integration method, import patterns observed in source files, the license (free vs pro), and any project conventions (wrapper components, default sizing, etc.).
 
-After the subagent returns, if a kit ID was found, run `./scripts/fetch-kit.py --kit-id <id>` (in the `add-icon` skill directory) to get the kit's version, license, method, and available families.
+After the subagent returns, if a kit ID was found, fetch the kit details:
+
+- **`fa` CLI:** Run `fa kits --kit-token <id>`. Returns JSON with the kit's version, license, technology, and available families. Requires the user to be logged in (`fa whoami` returns success) or `FA_API_TOKEN` to be set. If neither, prompt the user to run `fa login` in a separate terminal first.
+- **Fallback:** Run `./scripts/fetch-kit.py --kit-id <id>` (in the `add-icon` skill directory) to get the kit's version, license, method, and available families.
 
 After discovery, determine:
 
@@ -84,41 +93,7 @@ After discovery, determine:
 - **Version** — the Font Awesome version in use
 - **Project conventions** — any wrapper components, standard sizing, or patterns observed
 
-Write the results to `.font-awesome.md` in the project root using this format:
-
-```markdown
-# Font Awesome Configuration
-
-Detected by the Font Awesome agent tools. Commit this file so the whole team benefits.
-
-## Integration
-
-- **Method:** [e.g., React components via @fortawesome/react-fontawesome]
-- **Version:** [e.g., 7.2.0]
-- **License:** [Free or Pro]
-- **Kit ID:** [if applicable, or omit]
-- **CDN URL:** [if applicable, or omit]
-- **Families:** [e.g., classic, duotone, sharp, sharp-duotone — list all available families]
-
-## Defaults
-
-- **Style:** [e.g., solid]
-- **Family:** [e.g., classic]
-
-## Import Pattern
-
-[Describe how icons are imported/used in this project. Examples:]
-
-- Individual imports: `import { faCartShopping } from '@fortawesome/pro-solid-svg-icons'`
-- Component: `<FontAwesomeIcon icon={faCartShopping} />`
-
-## Conventions
-
-[Any project-specific patterns observed, e.g.:]
-
-- Icons are wrapped in a custom `<Icon>` component at `src/components/Icon.tsx`
-- Default size is `lg`
-```
+Write the results to `.font-awesome.md` in the project root. Read `font-awesome-md-format.md` (in this skill's directory, `plugins/icons/skills/add-icon/`) for the template and format to use.
 
 Tell the user: "I've written `.font-awesome.md` with your project's Font Awesome configuration. You should commit this file so the team benefits and future icon additions are faster."
 
@@ -245,6 +220,18 @@ With the corresponding import in the component's TypeScript file.
 ```html
 <fa-icon class="fa-solid fa-cart-shopping"></fa-icon>
 ```
+
+### Important: bare SVG markup
+
+**Never generate Font Awesome SVG markup (raw `<svg>` elements) from your own knowledge or training data.** If a user needs bare SVG output — for instance, to inline an icon as an `<svg>` element — you must fetch it from the Font Awesome API using the `fa` CLI:
+
+```
+fa icons --version <version> --name <icon> --svg-format html
+```
+
+The `--svg-format` flag accepts `html`, `data`, or `icon-definition`. This requires the user to be logged in (`fa whoami`) or `FA_API_TOKEN` to be set. If neither, prompt the user to run `fa login` in a separate terminal first.
+
+Do not approximate, reconstruct, or guess SVG path data. The authoritative source is always the Font Awesome API.
 
 ### 5. Insert or display
 
