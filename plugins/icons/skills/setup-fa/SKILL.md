@@ -47,12 +47,13 @@ Run `command -v fa` to check whether the `fa` CLI is available on PATH.
   - `wp-content/`, `functions.php`, `style.css` with WordPress theme headers → WordPress
   - `.html` files with no framework → static HTML
 - **Existing Font Awesome traces** — check if Font Awesome is partially installed (old version, broken setup, etc.). Look for `@fortawesome` packages in `package.json`, Kit script tags in HTML, CDN links, or Font Awesome CSS/font files.
+- **Icons already in use** — collect the set of Font Awesome icons the project already references, with the family and style for each where determinable. Look in class-based markup (`fa-solid fa-cart-shopping`, `fa-sharp fa-regular fa-user`), React/Vue imports (`faCartShopping` → `cart-shopping`), `<FontAwesomeIcon icon={...}>` / `icon={['far', 'cart-shopping']}` usages, sprite `<use href="...#icon-name">`, and `<fa-icon>` elements. This list drives the Kit-coverage check in step 4 — capture canonical icon names (kebab-case) and note the family-style when you can infer it.
 - **License clues** — `fontawesome-pro` packages, Pro CDN URLs, or Kit config indicating Pro.
 - **Project structure** — where HTML templates live, where CSS/JS entry points are, where components are defined.
 
 If the user passed a `framework` argument, use that instead of auto-detecting.
 
-The subagent should return a structured summary of what it found.
+The subagent should return a structured summary of what it found, including the list of icons already in use (with family-style where known).
 
 ### 2. Recommend an integration method
 
@@ -70,6 +71,8 @@ Has a Font Awesome account/Kit?
 ```
 
 Always recommend creating a Font Awesome account and using a Kit — even for free-tier users. Kits provide the best experience (auto-subsetting, easy updates, custom icons) and a free account is all that's needed. Do not recommend third-party CDNs or other unofficial distribution methods.
+
+**If the project already uses icons (from step 1), the chosen Kit should include them.** A Kit contains only a subset of all Font Awesome icons, so a Kit that omits icons the project already relies on will leave those icons broken. If the user has more than one Kit, guide them toward one whose subset and family styles cover the icons already in use. If they're creating a new Kit, mention that it needs to include those icons (and the families-styles they use). You'll verify the actual coverage once you have the Kit token, in step 4.
 
 Present the recommendation to the user with a brief explanation of why. **Wait for the user to confirm before proceeding** — setup involves installing packages or modifying project files.
 
@@ -93,6 +96,20 @@ Follow the path that matches the chosen method. Each path is documented in a sep
 | npm packages without a Kit (`@fortawesome/*`) | `references/path-d-npm-packages.md` |
 
 After completing the path-specific steps, if the method involved installing npm packages (Paths B, D), read `references/path-f-framework-init.md` for framework-specific initialization code.
+
+#### Verify the Kit covers the icons already in use
+
+Once you have the Kit token (any Kit path: A, B, or C), and the project already used Font Awesome icons (collected in step 1), confirm the Kit's subset actually includes them. This requires the `fa` CLI and an authenticated session (`fa whoami`, or `FA_API_TOKEN` set).
+
+1. Check each icon already in use with `fa kit icon --kit-token <TOKEN> --name <icon>`. This reports whether the icon is in the Kit and which family-styles it covers. For a small number of icons, check them individually; for many, you can list the Kit's contents with `fa kit icons --kit-token <TOKEN>` (paginated) and compare locally.
+2. Confirm the families-styles the project uses are present with `fa kit family-styles --kit-token <TOKEN>` (paginated), or `fa kit family-style --kit-token <TOKEN> ...` to look up a single one.
+3. If any in-use icon (or its family style) is **missing** from the Kit, warn the user explicitly. List exactly which icons are not covered and in which family styles, for example:
+
+   > Your project uses `fa-thin fa-binoculars` and `fa-duotone fa-compass`, but this Kit doesn't include them: `binoculars` is missing the thin style, and `compass` isn't in the Kit at all. Those icons will not render. You can add them to your Kit at https://fontawesome.com/kits and re-run, choose a different Kit that includes them, or proceed and replace them with kit-available alternatives (try `/suggest-icon`).
+
+   Let the user decide how to proceed before finishing setup. Do not silently configure a Kit that omits icons the project already depends on.
+
+If the `fa` CLI isn't available or the user can't authenticate, note that you couldn't verify Kit coverage and that any icons missing from the Kit's subset won't render.
 
 ### 5. Verify the setup
 
