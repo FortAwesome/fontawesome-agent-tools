@@ -14,11 +14,11 @@ All scripts below are relative to this skill's directory (`plugins/icons/skills/
 
 ## Tool selection
 
-At the start, run `command -v fa` to check whether the `fa` CLI is available on PATH, and `command -v jq` to check whether the `jq` CLI is available on PATH.
+At the start, run `command -v fa` to check whether the `fa` CLI is available on PATH.
 
 - **If `fa` is found:** use it for icon lookups and searches (it returns structured JSON). If the project is configured with a Kit (see "Respect the configured Kit" below), also use `fa search --kit-token <TOKEN>` to search only icons available in the Kit, and `fa kit icon` to confirm a specific icon is included.
 - **If `fa` is not found:** fall back to the Python scripts described below. Kit-aware searching requires the `fa` CLI; without it, you cannot scope suggestions to the Kit's subset — warn the user that your suggestions may include icons their Kit does not contain.
-- **If `fa` and `jq` are found** then `fa releases | jq '.releases[] | select(.isLatest) | .version'` can be used to get the latest version. Otherwise, use `latest-version.py` to get the latest version.
+- Use `latest-version.py` to get the latest version.
 
 ## Respect the configured Kit
 

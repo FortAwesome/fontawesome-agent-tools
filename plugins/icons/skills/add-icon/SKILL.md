@@ -20,11 +20,11 @@ Scripts referenced from `suggest-icon` are relative to `plugins/icons/skills/sug
 
 ## Tool selection
 
-At the start, run `command -v fa` to check whether the `fa` CLI is available on PATH, and `command -v jq` to check whether the `jq` CLI is available on PATH.
+At the start, run `command -v fa` to check whether the `fa` CLI is available on PATH.
 
 - **If `fa` is found:** use it for icon lookups and kit fetching (it returns structured JSON). For kit operations (`fa kits` and `fa kit`), check auth first: run `fa whoami` to see if the user is logged in. If logged in, these will work directly. If not logged in but `FA_API_TOKEN` is set, they will also work. If neither, tell the user: "You need to be logged in to the Font Awesome CLI for kit operations. Run `fa login` in a separate terminal, then come back here and try again." If they cannot log in, fall back to `fetch-kit.py`. When the project uses a Kit, `fa kit icon --kit-token <TOKEN> <icon>` tells you whether a specific icon is in the Kit's subset and which family styles it's available in — use it to avoid adding an icon the Kit doesn't include (see step 3).
 - **If `fa` is not found:** fall back to the Python scripts described below.
-- **If `fa` and `jq` are found** then `fa releases | jq '.releases[] | select(.isLatest) | .version'` can be used to get the latest version. Otherwise, use `latest-version.py` to get the latest version.
+- Use `latest-version.py` to get the latest version.
 
 ## Steps
 
