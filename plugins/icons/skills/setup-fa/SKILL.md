@@ -27,6 +27,8 @@ Before starting, check whether `.font-awesome.md` already exists in the project 
 
 Run `command -v fa` to check whether the `fa` CLI is available on PATH.
 
+The `fa kit` subcommand requires `fa` version 0.8.0 or newer. If the `fa kit` subcommand is needed, recommend the user upgrade `fa`, using instructions here: https://docs.fontawesome.com/web/use-with/fa-cli
+
 - **If `fa` is found:** use it for Kit operations and version queries (it returns structured JSON). For kit operations (`fa kits` and `fa kit`), check auth first: run `fa whoami` to see if the user is logged in. If logged in, `fa kits` will work directly. If not logged in but `FA_API_TOKEN` is set, `fa kits` will also work. If neither, tell the user: "You need to be logged in to the Font Awesome CLI for kit operations. Run `fa login` in a separate terminal, then come back here and try again."
 - **If `fa` is not found:** fall back to the Python scripts described below where applicable.
 - Use `latest-version.py` to get the latest version.

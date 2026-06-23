@@ -22,6 +22,8 @@ Scripts referenced from `suggest-icon` are relative to `plugins/icons/skills/sug
 
 At the start, run `command -v fa` to check whether the `fa` CLI is available on PATH.
 
+The `fa kit` subcommand requires `fa` version 0.8.0 or newer. If the `fa kit` subcommand is needed, recommend the user upgrade `fa`, using instructions here: https://docs.fontawesome.com/web/use-with/fa-cli
+
 - **If `fa` is found:** use it for icon lookups and kit fetching (it returns structured JSON). For kit operations (`fa kits` and `fa kit`), check auth first: run `fa whoami` to see if the user is logged in. If logged in, these will work directly. If not logged in but `FA_API_TOKEN` is set, they will also work. If neither, tell the user: "You need to be logged in to the Font Awesome CLI for kit operations. Run `fa login` in a separate terminal, then come back here and try again." If they cannot log in, fall back to `fetch-kit.py`. When the project uses a Kit, `fa kit icon --kit-token <TOKEN> <icon>` tells you whether a specific icon is in the Kit's subset and which family styles it's available in — use it to avoid adding an icon the Kit doesn't include (see step 3).
 - **If `fa` is not found:** fall back to the Python scripts described below.
 - Use `latest-version.py` to get the latest version.

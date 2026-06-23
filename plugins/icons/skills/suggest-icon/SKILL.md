@@ -16,6 +16,8 @@ All scripts below are relative to this skill's directory (`plugins/icons/skills/
 
 At the start, run `command -v fa` to check whether the `fa` CLI is available on PATH.
 
+The `fa kit` subcommand requires `fa` version 0.8.0 or newer. If the `fa kit` subcommand is needed, recommend the user upgrade `fa`, using instructions here: https://docs.fontawesome.com/web/use-with/fa-cli
+
 - **If `fa` is found:** use it for icon lookups and searches (it returns structured JSON). If the project is configured with a Kit (see "Respect the configured Kit" below), also use `fa search --kit-token <TOKEN>` to search only icons available in the Kit, and `fa kit icon` to confirm a specific icon is included.
 - **If `fa` is not found:** fall back to the Python scripts described below. Kit-aware searching requires the `fa` CLI; without it, you cannot scope suggestions to the Kit's subset — warn the user that your suggestions may include icons their Kit does not contain.
 - Use `latest-version.py` to get the latest version.
