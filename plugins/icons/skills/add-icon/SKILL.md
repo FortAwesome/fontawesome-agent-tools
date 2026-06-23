@@ -38,6 +38,8 @@ First, determine whether the project uses a Kit for integrating Font Awesome. If
 
 If the project uses a Kit, then verify that the icon exists in the particular Kit's subset. This can only be done with the `fa` CLI. If the user is not logged in, prompt them to run `fa login` in a separate terminal first.
 
+If the `fa` CLI is not available, tell the user that you cannot verify whether the icon is in their Kit's subset. Suggest they install the `fa` CLI, login with `fa login`, then re-run this skill.
+
 To verify the icon exists in the kit, run `fa kit icon --kit-token <TOKEN> <icon>`.
 
 If the icon does not exist, invoke the `/suggest-icon` skill internally with the user's `icon` argument as the use-case. Auto-accept the top recommendation without prompting the user to confirm, if there are any recommendations.
