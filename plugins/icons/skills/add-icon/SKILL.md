@@ -92,7 +92,7 @@ The subagent should return: which Font Awesome packages are installed (with vers
 
 After the subagent returns, if a kit ID was found, fetch the kit details:
 
-- **`fa` CLI:** Run `fa kits --kit-token <id>`. Returns JSON with the kit's version, license, technology, and available families. Requires the user to be logged in (`fa whoami` returns success) or `FA_API_TOKEN` to be set. If neither, prompt the user to run `fa login` in a separate terminal first.
+- **`fa` CLI:** Run `fa kit show --kit-token <id>`. Returns JSON with the kit's version, license, technology, and available families. Requires the user to be logged in (`fa whoami` returns success) or `FA_API_TOKEN` to be set. If neither, prompt the user to run `fa login` in a separate terminal first.
 - **Fallback:** Run `./scripts/fetch-kit.py --kit-id <id>` (in the `add-icon` skill directory) to get the kit's version, license, method, and available families.
 
 After discovery, determine:
