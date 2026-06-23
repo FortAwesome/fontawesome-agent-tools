@@ -14,8 +14,8 @@ Detected by the Font Awesome agent tools. Commit this file so the whole team ben
 - **Method:** [e.g., React components via @fortawesome/react-fontawesome, Kit embed (SVG+JS), CDN, self-hosted web fonts]
 - **Version:** [e.g., 7.2.0]
 - **License:** [Free or Pro]
-- **Kit ID:** [if applicable, or omit — this is the Kit token, e.g. `abc123def4`. It's usable as `--kit-token` with the `fa` CLI: `fa kit icon/icons/family-styles ...` to check what the Kit's subset includes, and `fa search --kit-token <TOKEN>` to search only kit-available icons. `/add-icon` and `/suggest-icon` use it to avoid adding or suggesting icons the Kit doesn't contain.]
-- **Kit Revision:** [e.g. 42 -- this is the Kit's revision number, useful for tracking updates. It changes every time a kit is updated, whether by changing its subset, settings, or adding/removing/changing any custom icons. Its found as `kitRevision` in the kit detail from `fa kit show --kit-token <TOKEN>`]
+- **Kit ID:** [if applicable, or omit — this is the Kit token, e.g. `abc123def4`. It's usable as `--kit-token` with the `fa` CLI (e.g. `fa kit icon ...`, `fa kit icons ...`, `fa kit family-styles ...`) to check what the Kit's subset includes, and `fa search --kit-token <TOKEN>` to search only kit-available icons. `/add-icon` and `/suggest-icon` use it to avoid adding or suggesting icons the Kit doesn't contain.]
+- **Kit Revision:** [e.g. 42 -- this is the Kit's revision number, useful for tracking updates. It changes every time a kit is updated, whether by changing its subset, settings, or adding/removing/changing any custom icons. It's found as `kitRevision` in the kit detail from `fa kit show --kit-token <TOKEN>`]
 - **CDN URL:** [if applicable, or omit]
 - **Families:** [e.g., classic, duotone, sharp, sharp-duotone — list all available families]
 
