@@ -48,6 +48,8 @@ If `/suggest-icon` offers no recommendations, it may be because the Kit's subset
 
 If the project does not use a Kit, then to verify the icon exists:
 
+Determine the version of Font Awesome in use. First, try to discover it from `.font-awesome.md`; otherwise, use `latest-version.py` to get the latest version. Use this version as `<version>` in the following commands.
+
 - **`fa` CLI:** Run `fa icons --version <version> --name <icon>`. The icon exists if `data.release.icon` is non-null. The `familyStylesByLicense` field shows the free/pro breakdown.
 - **Fallback:** Run `./scripts/icon-exists.py --version <version> --icon-name <icon>`. Exit code `0` means the icon exists; exit code `1` means it does not.
 
