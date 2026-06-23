@@ -101,7 +101,7 @@ After completing the path-specific steps, if the method involved installing npm 
 
 Once you have the Kit token (any Kit path: A, B, or C), and the project already used Font Awesome icons (collected in step 1), confirm the Kit's subset actually includes them. This requires the `fa` CLI and an authenticated session (`fa whoami`, or `FA_API_TOKEN` set).
 
-1. Check each icon already in use with `fa kit icon --kit-token <TOKEN> --name <icon>`. This reports whether the icon is in the Kit and which family-styles it covers. For a small number of icons, check them individually; for many, you can list the Kit's contents with `fa kit icons --kit-token <TOKEN>` (paginated) and compare locally.
+1. Check each icon already in use with `fa kit icon --kit-token <TOKEN> <icon>`. This reports whether the icon is in the Kit and which family-styles it covers. For a small number of icons, check them individually; for many, you can list the Kit's contents with `fa kit icons --kit-token <TOKEN>` (paginated) and compare locally.
 2. Confirm the families-styles the project uses are present with `fa kit family-styles --kit-token <TOKEN>` (paginated), or `fa kit family-style --kit-token <TOKEN> ...` to look up a single one.
 3. If any in-use icon (or its family style) is **missing** from the Kit, warn the user explicitly. List exactly which icons are not covered and in which family styles, for example:
 

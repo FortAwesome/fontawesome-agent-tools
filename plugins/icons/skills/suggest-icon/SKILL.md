@@ -27,7 +27,7 @@ If the project has a `.font-awesome.md` file with a **Kit ID** (the kit token), 
 When a Kit token is present, scope every suggestion to the Kit:
 
 - Search with `fa search --kit-token <TOKEN> --query <your-guess>` instead of `fa search --version <version> ...`. This returns only icons that are actually available in the Kit, up to the Kit's subset, so every result is safe to recommend.
-- Before presenting your primary recommendation, confirm it with `fa kit icon --kit-token <TOKEN> --name <icon>`. This tells you whether the icon is in the Kit and which family-styles it's available in.
+- Before presenting your primary recommendation, confirm it with `fa kit icon --kit-token <TOKEN> <icon>`. This tells you whether the icon is in the Kit and which family-styles it's available in.
 - If the icon you'd most like to recommend is **not** in the Kit, say so plainly, recommend the closest kit-available alternative instead, and let the user know they can add the missing icon to their Kit at https://fontawesome.com/kits (after which it will be available).
 
 If no `.font-awesome.md` exists or it records no Kit, suggest from the full icon set as normal.
@@ -45,7 +45,7 @@ If no `.font-awesome.md` exists or it records no Kit, suggest from the full icon
    - **`fa` CLI:** Run `fa icons --version <version> --name <your-guess>`. The icon exists if `data.release.icon` is non-null. The `familyStylesByLicense` field shows the free/pro breakdown.
    - **Fallback:** Run `./scripts/icon-exists.py --version <version> --icon-name <your-guess>`. Exit code `0` means the icon exists; exit code `1` means it does not.
 
-   **If a Kit token is configured,** also confirm Kit membership with `fa kit icon --kit-token <TOKEN> --name <your-guess>`. An icon can exist in Font Awesome but still be absent from the Kit's subset — if it's not in the Kit, don't recommend it as-is (see step 5).
+   **If a Kit token is configured,** also confirm Kit membership with `fa kit icon --kit-token <TOKEN> <your-guess>`. An icon can exist in Font Awesome but still be absent from the Kit's subset — if it's not in the Kit, don't recommend it as-is (see step 5).
 
 4. **Search for alternatives.** Do this regardless of whether your initial guess exists — searching often surfaces more specific or better-fitting icons that you wouldn't think of on your own.
 
