@@ -133,11 +133,9 @@ Verify the icon is available in the chosen style and family, based on whether th
 
 #### If the project uses a Kit
 
-This requires the `fa` CLI. If the user is not logged in, prompt them to run `fa login` in a separate terminal first.
+Re-use the output of `fa kit icon --kit-token <TOKEN> <icon>` from Step 1: "Resolve the icon name". There it was used to resolve the icon name. The same output can be used here to check whether the icon is available in the chosen family-style.
 
-Check the availability of the icon in a given family-style by running `fa kit icon --kit-token <TOKEN> <icon>`. This reports whether the icon is in the Kit and the exact family-styles it's available in.
-
-If the icon **is** in the Kit, make sure the family-style you resolved above is one of the family-styles it lists. If your chosen family-style isn't included but another is, tell the user, and ask if they'd prefer to use that other one, or else tell them to add the missing one to the kit's subset.
+If your chosen family-style for the icon isn't included but another is, tell the user, and ask if they'd prefer to use another family-style that is available, or else tell them to add the missing one to the kit's subset.
 
 If the icon is **not** in the Kit at all, stop before generating code. Tell the user the icon isn't part of their Kit's subset, and offer two paths: (a) add the icon to the Kit at https://fontawesome.com/kits and re-run, or (b) pick a kit-available alternative — you can run `/suggest-icon` (which is Kit-aware) to find one. Do not silently add an icon the Kit lacks.
 
