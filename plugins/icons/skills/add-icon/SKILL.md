@@ -22,17 +22,35 @@ Scripts referenced from `suggest-icon` are relative to `plugins/icons/skills/sug
 
 At the start, run `command -v fa` to check whether the `fa` CLI is available on PATH.
 
-- **If `fa` is found:** use it for icon lookups and kit fetching (it returns structured JSON). For kit operations (`fa kits`), check auth first: run `fa whoami` to see if the user is logged in. If logged in, `fa kits` will work directly. If not logged in but `FA_API_TOKEN` is set, `fa kits` will also work. If neither, tell the user: "You need to be logged in to the Font Awesome CLI for kit operations. Run `fa login` in a separate terminal, then come back here and try again." If they cannot log in, fall back to `fetch-kit.py`.
+The `fa kit` subcommand requires `fa` version 0.8.0 or newer. If the `fa kit` subcommand is needed, recommend the user upgrade `fa`, using instructions here: https://docs.fontawesome.com/web/use-with/fa-cli
+
+- **If `fa` is found:** use it for icon lookups and kit fetching (it returns structured JSON). For kit operations (`fa kits` and `fa kit`), check auth first: run `fa whoami` to see if the user is logged in. If logged in, these will work directly. If not logged in but `FA_API_TOKEN` is set, they will also work. If neither, tell the user: "You need to be logged in to the Font Awesome CLI for kit operations. Run `fa login` in a separate terminal, then come back here and try again." If they cannot log in, fall back to `fetch-kit.py`. When the project uses a Kit, `fa kit icon --kit-token <TOKEN> <icon>` tells you whether a specific icon is in the Kit's subset and which family styles it's available in — use it to avoid adding an icon the Kit doesn't include (see step 3).
 - **If `fa` is not found:** fall back to the Python scripts described below.
-- **`latest-version.py`** is always used for version detection — the `fa` CLI has no equivalent.
+- Use `latest-version.py` to get the latest version.
 
 ## Steps
 
 ### 1. Resolve the icon name
 
-First, determine the Font Awesome version. If the user specifies one, use that. Otherwise run `./scripts/latest-version.py` (in the `suggest-icon` skill directory) to get the latest.
+First, determine whether the project uses a Kit for integrating Font Awesome. If the project has a `.font-awesome.md` file, read it to determine whether a Kit is in use.
 
-Then verify the icon exists:
+#### If project uses a Kit
+
+If the project uses a Kit, then verify that the icon exists in the particular Kit's subset. This can only be done with the `fa` CLI. If the user is not logged in, prompt them to run `fa login` in a separate terminal first.
+
+If the `fa` CLI is not available, tell the user that you cannot verify whether the icon is in their Kit's subset. Suggest they install the `fa` CLI, login with `fa login`, then re-run this skill.
+
+To verify the icon exists in the kit, run `fa kit icon --kit-token <TOKEN> <icon>`.
+
+If the icon does not exist, invoke the `/suggest-icon` skill internally with the user's `icon` argument as the use-case. Auto-accept the top recommendation without prompting the user to confirm, if there are any recommendations.
+
+If `/suggest-icon` offers no recommendations, it may be because the Kit's subset does not include any icons similar to the user's query. In that case, search all of Font Awesome (not just the Kit) for similar icons using `fa search --version <version> --query <icon>`. Let the user know that the icon they requested is not in their Kit's subset, but they could add it to their Kit at https://fontawesome.com/kits.
+
+#### If project does not use a Kit
+
+If the project does not use a Kit, then to verify the icon exists:
+
+Determine the version of Font Awesome in use. First, try to discover it from `.font-awesome.md`; otherwise, use `latest-version.py` to get the latest version. Use this version as `<version>` in the following commands.
 
 - **`fa` CLI:** Run `fa icons --version <version> --name <icon>`. The icon exists if `data.release.icon` is non-null. The `familyStylesByLicense` field shows the free/pro breakdown.
 - **Fallback:** Run `./scripts/icon-exists.py --version <version> --icon-name <icon>`. Exit code `0` means the icon exists; exit code `1` means it does not.
@@ -78,7 +96,7 @@ The subagent should return: which Font Awesome packages are installed (with vers
 
 After the subagent returns, if a kit ID was found, fetch the kit details:
 
-- **`fa` CLI:** Run `fa kits --kit-token <id>`. Returns JSON with the kit's version, license, technology, and available families. Requires the user to be logged in (`fa whoami` returns success) or `FA_API_TOKEN` to be set. If neither, prompt the user to run `fa login` in a separate terminal first.
+- **`fa` CLI:** Run `fa kit show --kit-token <id>`. Returns JSON with the kit's version, license, technology, and available families. Requires the user to be logged in (`fa whoami` returns success) or `FA_API_TOKEN` to be set. If neither, prompt the user to run `fa login` in a separate terminal first.
 - **Fallback:** Run `./scripts/fetch-kit.py --kit-id <id>` (in the `add-icon` skill directory) to get the kit's version, license, method, and available families.
 
 After discovery, determine:
@@ -113,7 +131,23 @@ Tell the user: "I've written `.font-awesome.md` with your project's Font Awesome
 2. Otherwise, use the default family from `.font-awesome.md`.
 3. If neither, default to `classic`.
 
-Verify the icon is available in the chosen style and family by checking the output from `icon-exists.py` (it prints available families and styles). If the icon is not available in the requested style or family, tell the user and suggest available alternatives. Also check that the chosen family is in the project's available families list — if not, warn the user.
+If `.font-awesome.md` records a **Kit ID** (kit token), the project's icons come from a Kit, and a Kit contains only a subset of all Font Awesome icons. **Do not add an icon the Kit does not include** — it will not render.
+
+Verify the icon is available in the chosen style and family, based on whether the project uses a Kit:
+
+#### If the project uses a Kit
+
+Re-use the output of `fa kit icon --kit-token <TOKEN> <icon>` from Step 1: "Resolve the icon name". There it was used to resolve the icon name. The same output can be used here to check whether the icon is available in the chosen family-style.
+
+If your chosen family-style for the icon isn't included but another is, tell the user, and ask if they'd prefer to use another family-style that is available, or else tell them to add the missing one to the kit's subset.
+
+If the icon is **not** in the Kit at all, stop before generating code. Tell the user the icon isn't part of their Kit's subset, and offer two paths: (a) add the icon to the Kit at https://fontawesome.com/kits and re-run, or (b) pick a kit-available alternative — you can run `/suggest-icon` (which is Kit-aware) to find one. Do not silently add an icon the Kit lacks.
+
+To list what the Kit does contain, `fa kit family-styles --kit-token <TOKEN>` shows the available family-styles and `fa kit icons --kit-token <TOKEN>` lists the available icon variants, which are the icons in specific family-styles. Both are paginated queries.
+
+#### If the project does not use a Kit
+
+Run `icon-exists.py`. Its output shows available families and styles. If the icon is not available in the requested style or family, tell the user and suggest available alternatives. Also check that the chosen family is in the project's available families list — if not, warn the user.
 
 ### 4. Generate the code
 
