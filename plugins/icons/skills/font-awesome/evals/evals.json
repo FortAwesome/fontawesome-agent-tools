@@ -1,0 +1,108 @@
+{
+  "skill_name": "font-awesome",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I would like an icon that represents a comfortable, cozy tea store",
+      "expected_output": "A Font Awesome icon recommendation relevant to tea/coziness, presented in a markdown table with icon name, families, and availability.",
+      "files": [],
+      "assertions": [
+        "The output recommends a specific Font Awesome icon by name",
+        "The output uses a markdown table with Icon, Families, and Availability columns",
+        "The suggested icon is semantically relevant to tea, mugs, warmth, or coziness",
+        "The output indicates whether the icon is Free or Pro"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I'm using version 5 and would like a portable electronics device. I only have the free version of Font Awesome though.",
+      "expected_output": "A Font Awesome icon recommendation for a portable electronics device, using version 5, noting free availability.",
+      "files": [],
+      "assertions": [
+        "The output recommends a specific Font Awesome icon by name",
+        "The output uses a markdown table with Icon, Families, and Availability columns",
+        "The suggested icon is semantically relevant to portable electronics (phone, laptop, tablet, etc.)",
+        "The output indicates the icon is available in the Free tier",
+        "The version used is 5.x, not the latest version"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "What's icon can I use to represent the nintendo console?",
+      "expected_output": "A Font Awesome icon recommendation relevant to Nintendo/gaming consoles, presented in a markdown table with icon name, families, and availability.",
+      "files": [],
+      "assertions": [
+        "The output recommends a specific Font Awesome icon by name",
+        "The output uses a markdown table with Icon, Families, and Availability columns",
+        "The suggested icon is semantically relevant to gaming or consoles",
+        "The output indicates whether the icon is Free or Pro"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "what vampire icons can I use?",
+      "expected_output": "Icons related to vampires (e.g. bat, coffin, garlic), checked against the user's entitlements and kits, with a plain note that there's no dedicated vampire icon if that's the case.",
+      "files": [],
+      "assertions": [
+        "The font-awesome skill is loaded without the user naming a skill",
+        "The answer is based on fa search/fa icons results, not memory alone",
+        "The output checks the user's license or entitlements (fa entitlements) or states the license assumption",
+        "The output says whether each icon is usable on the user's Free or Pro access",
+        "The output uses a markdown table with Icon, Families, and Availability columns"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "list my Font Awesome kits",
+      "expected_output": "A concise table of the user's kits with name, token, version, license, subset type, and technology.",
+      "files": [],
+      "assertions": [
+        "The font-awesome skill is loaded without the user naming a skill",
+        "The output is produced from fa kits, not from setup-fa or a kit download",
+        "The output is a summarized table, not raw JSON"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "show me a preview of the custom icons in kit c3e629990d",
+      "expected_output": "Rendered previews of the kit's uploaded icons, using SVG markup from the API.",
+      "files": [],
+      "assertions": [
+        "The SVGs come from `fa kit show --kit-token c3e629990d --svg-format html` (or an equivalent fa query on iconUploads)",
+        "The kit is not downloaded (no fa kit download)",
+        "No SVG path data is written from memory"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "which of my kits have the bat icon?",
+      "expected_output": "A list of the user's kits that contain bat, with Full Library kits noted as containing it when the license allows, and By Icon kits checked individually.",
+      "files": [],
+      "assertions": [
+        "The font-awesome skill is loaded without the user naming a skill",
+        "Kit membership is checked with fa kit icon or fa search --kit-token, not assumed",
+        "Free kits are noted as not containing Pro-only icons"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "am I on Pro?",
+      "expected_output": "The user's Icon Collection entitlement (e.g. Pro+), from fa entitlements.",
+      "files": [],
+      "assertions": [
+        "The font-awesome skill is loaded without the user naming a skill",
+        "The answer comes from fa entitlements"
+      ]
+    },
+    {
+      "id": 9,
+      "prompt": "how do I make an icon spin?",
+      "expected_output": "An explanation of the fa-spin animation class from the official docs, with a citation.",
+      "files": [],
+      "assertions": [
+        "The answer is grounded in docs.fontawesome.com content fetched during the run",
+        "The output cites the docs page"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+---
+name: font-awesome
+description: >-
+  Font Awesome knowledge and tooling through the `fa` CLI and the official docs.
+  Use for ANY question or action involving Font Awesome: finding, searching for,
+  or suggesting icons; checking whether an icon exists or which families and
+  styles it comes in; Free vs Pro and what the user's account is entitled to;
+  the user's kits, what a kit contains, kit subsets and family-styles; custom
+  (uploaded) icons and their SVGs; releases and versions; official SVG markup;
+  setup, styling, troubleshooting, and upgrade questions; adding icons to code.
+  Includes questions phrased about the user, such as "what vampire icons can I
+  use?", "list my kits", "show my custom icons", "which of my kits has bat?",
+  or "am I on Pro?".
+---
+
+This is the entry point for anything Font Awesome. Answer the question directly using the tools below; there is no need for the user to pick a narrower skill. Hand off to a workflow skill only when the job is a multi-step change to a project (see "Workflows").
+
+Your own knowledge of Font Awesome is a fine first guess, but it goes stale: icon names change between versions, new families ship, and kits are per-user. Verify against the API before stating facts.
+
+## Tools
+
+The `fa` CLI is the primary tool. It returns JSON and covers the catalog, the user's account, and their kits. Read [references/fa-cli.md](references/fa-cli.md) for the command map, auth, output shapes, and known quirks before your first `fa` call in a conversation.
+
+- Run `command -v fa` once. If it's missing, the Python scripts in `scripts/` (relative to this skill's directory) cover catalog lookups and kit metadata, but nothing account- or kit-scoped. Tell the user that installing the CLI unlocks more: https://docs.fontawesome.com/web/use-with/fa-cli
+- **The CLI documents itself and is newer than your training data.** Before falling back to anything heavier (downloading a kit, scraping a page, writing a script), run `fa <command> --help` on the command you're already using and look for a flag that does the job. If no command fits, `fa query` runs any GraphQL query against the Font Awesome API.
+- For conceptual questions (setup, styling, frameworks, troubleshooting, upgrading), the official docs are authoritative. See [references/docs.md](references/docs.md).
+
+## Who is "I"? Resolve the user's context
+
+Many questions are about the user: "what can I use", "my kits", "do I have". Work out which context applies before answering, cheapest source first:
+
+1. **A project.** If the working directory has a `.font-awesome.md` (format in [references/font-awesome-md-format.md](references/font-awesome-md-format.md)), it records the version, license, families, and possibly a Kit token. A Kit token means the project can only use what that kit contains, so scope every answer to it.
+2. **The account.** With no project config, "I" means the logged-in account:
+   - `fa whoami`: who they are, and whether kit and account commands will work.
+   - `fa entitlements`: which Icon Collection they own (Free, Pro, Pro+). This decides which icons they can use at all.
+   - `fa kits`: every kit, with version, license, subset type, technology, and custom icons.
+3. **Neither.** If not logged in and no project config, answer from the public catalog for the latest release and say that's what you did. Suggest `fa login` (run in a separate terminal) for answers about their own account.
+
+Don't do all of this for every question. "Is there a bat icon?" needs only the catalog. "Can I use the bat icon?" needs entitlements, and if they have kits, which kits contain it.
+
+## Answering common questions
+
+| Question shape | Approach |
+|---|---|
+| "Is there an icon for X?" / "What icons can I use for X?" | Follow [references/suggest-icon.md](references/suggest-icon.md). Scope to a kit when the project or the user names one. For "can I use", also check entitlements, and if they have "By Icon" kits, say which ones actually contain the icon. |
+| "Does icon X exist / which styles?" | `fa icons --version <v> --name <icon>`. Read `familyStylesByLicense`. |
+| "List my kits" / "which kits have X?" | `fa kits` for the list. For membership, `fa kit icon --kit-token <t> <icon>` per kit, or `fa search --kit-token <t> --query <icon>`. |
+| "Show / preview my custom icons" | `fa kit show --kit-token <t> --svg-format html`. One call returns the names, unicodes, and SVG markup. To search uploads by name, `fa search --kit-token <t> --query <q> --custom`. |
+| "Give me the SVG for X" | `fa icons --version <v> --name <icon> --svg-format html --svg-family-style <family>,<style>`. Never write SVG path data from memory. |
+| "Am I on Pro?" / "What do I have access to?" | `fa entitlements`, plus license per kit from `fa kits`. |
+| "What's the latest version?" | `fa releases` (the entry with `isLatest: true`). |
+| "What families / styles exist?" | `fa family-styles --version <v>`. For a kit, `fa kit family-styles --kit-token <t>`. |
+| How-to, setup concepts, troubleshooting | [references/docs.md](references/docs.md) |
+
+When showing icons visually, render the SVG markup the API returned; don't redraw it.
+
+## Workflows
+
+Two jobs change a project's files and have their own skills with step-by-step procedures. Load them when the user asks for that change, not for questions about it.
+
+- **`add-icon`**: put an icon into the user's code (it resolves the integration method, writes the right markup or import, and keeps `.font-awesome.md` current).
+- **`setup-fa`**: set up Font Awesome in a project from scratch (pick an integration method, install, and write `.font-awesome.md`).
+
+After answering a question about an icon, offer to add it to their code if they're working in a project.
+
+## Ground rules
+
+- **Never produce Font Awesome SVG markup from memory.** Fetch it with `--svg-format`.
+- **Never recommend an icon a kit doesn't contain** when the project uses that kit. Say it's missing, offer the closest kit-available alternative, and note it can be added at https://fontawesome.com/kits.
+- **Mark Pro icons** as requiring a [subscription](https://fontawesome.com/plans) when the user's license is Free or unknown.
+- **Keep JSON out of the answer.** Summarize into a table or short list; `fa kits` output in particular is large.

@@ -8,17 +8,21 @@ This is a Claude Code plugin marketplace package (`fontawesome-agent-tools`) by 
 
 ## Architecture
 
-- **`.claude-plugin/manifest.json`** — Top-level marketplace manifest. Declares the package name, owner, and lists all plugins.
-- **`plugins/icons/`** — The "icons" plugin. Its config lives at `plugins/icons/.claude-plugin/plugin.json` and points to skills at `.claude/skills/`.
-- **`.claude/skills/`** — Skill definitions (SKILL.md files). Currently contains `suggest-icon`, a user-invokable skill that suggests Font Awesome icons for a given concept or use case.
+- **`.claude-plugin/marketplace.json`** — Top-level marketplace manifest. Declares the package name, owner, and lists all plugins.
+- **`plugins/icons/`** — The "icons" plugin. Its config lives at `plugins/icons/.claude-plugin/plugin.json`; its skills live under `plugins/icons/skills/`:
+  - **`font-awesome`** — The hub skill and the single entry point for any Font Awesome question or action (finding icons, kits, custom icons, entitlements, versions, docs). Its broad `description` is what makes Claude load it without the user naming a skill. It owns all shared material: `references/fa-cli.md` (the `fa` CLI command map, auth, and quirks), `references/suggest-icon.md` (icon suggestion workflow), `references/docs.md` (answering from docs.fontawesome.com), `references/font-awesome-md-format.md`, the fallback `scripts/`, and `evals/`.
+  - **`add-icon`** and **`setup-fa`** — Workflow skills for jobs that change a project's files. Their descriptions are deliberately narrow so they don't compete with the hub on questions, and they reference the hub's shared material via `../font-awesome/...` paths rather than duplicating it.
+  - **`suggest-icon`** and **`fa-help`** — Thin aliases kept so the existing `/suggest-icon` and `/fa-help` commands keep working. They set `disable-model-invocation: true`, so Claude never loads them on its own and they don't compete with the hub; they only run when typed. Their bodies just point at the hub's references. Don't remove them, since that would break the commands for existing users.
 
 The manifest schema follows `https://anthropic.com/claude-code/marketplace.schema.json`.
 
 ## Adding a New Skill
 
 1. Create a directory under `plugins/<plugin-name>/skills/<skill-name>/`.
-2. Add a `SKILL.md` with YAML frontmatter (`name`, `description`, `user-invokable`, `args`).
-3. If it belongs to a new plugin, add the plugin entry to `.claude-plugin/manifest.json` and create its `plugin.json`.
+2. Add a `SKILL.md` with YAML frontmatter containing only `name` and `description`. Other tools that install these skills (claude.ai upload, the Skills API) reject unknown keys, and Claude Code ignores ones it doesn't recognize. Document inputs in an "Inputs" section of the body instead. The one exception is `disable-model-invocation: true` on command-only aliases (see `suggest-icon` and `fa-help`). The `description` decides when Claude loads the skill, so say what the skill is for and when to use it, and keep it under 1,536 characters.
+   - Prefer extending the `font-awesome` hub (a new reference file plus a row in its "Answering common questions" table) over adding a new skill. Add a separate skill only for a multi-step workflow that changes project files.
+   - Put shared CLI guidance in `font-awesome/references/fa-cli.md`, not in individual skills.
+3. If it belongs to a new plugin, add the plugin entry to `.claude-plugin/marketplace.json` and create its `plugin.json`.
 4. Run `bash scripts/deploy-skills.sh` to create the top-level symlink (or let the pre-commit hook handle it).
 
 ## Deployment
