@@ -68,7 +68,7 @@ See [CHANGELOG.md](CHANGELOG.md) for details.
 Skills live under `plugins/<plugin>/skills/<skill>/`. The top-level `skills/` directory holds symlinks to them so `npx skills` can discover them.
 
 - `bash scripts/deploy-skills.sh` creates and refreshes those symlinks.
-- `bash scripts/bump-plugin-versions.sh` bumps the patch version of any plugin with staged changes. It skips a plugin whose `plugin.json` is already staged, so stage a manual bump for minor or major releases.
+- `bash scripts/bump-plugin-versions.sh` bumps the patch version of any plugin with staged changes, once per branch. If a plugin's version already differs from `main`, including a manual minor or major bump, it's left alone.
 - `lefthook install` sets up a pre-commit hook that runs both scripts.
 
 See [CLAUDE.md](CLAUDE.md) for the architecture and conventions for adding skills.
