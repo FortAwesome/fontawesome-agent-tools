@@ -7,10 +7,10 @@ description: >-
   styles it comes in; Free vs Pro and what the user's account is entitled to;
   the user's kits, what a kit contains, kit subsets and family-styles; custom
   (uploaded) icons and their SVGs; releases and versions; official SVG markup;
-  setup, styling, troubleshooting, and upgrade questions; adding icons to code.
+  setup, styling, troubleshooting, and upgrade questions.
   Includes questions phrased about the user, such as "what vampire icons can I
   use?", "list my kits", "show my custom icons", "which of my kits has bat?",
-  or "am I on Pro?".
+  or "am I on Pro?". To put an icon into project code, use add-icon instead.
 ---
 
 This is the entry point for anything Font Awesome. Answer the question directly using the tools below; there is no need for the user to pick a narrower skill. Hand off to a workflow skill only when the job is a multi-step change to a project (see "Workflows").
@@ -21,7 +21,7 @@ Your own knowledge of Font Awesome is probably stale or invalid for a particular
 
 The `fa` CLI is the primary tool. It returns JSON and covers the catalog, the user's account, and their kits. Read [references/fa-cli.md](references/fa-cli.md) for the command map, auth, output shapes, and known quirks before your first `fa` call in a conversation.
 
-- Run `command -v fa` once. If it's missing, the Python scripts in `scripts/` (relative to this skill's directory) cover catalog lookups and kit metadata, but nothing account- or kit-scoped. Tell the user that installing the CLI unlocks more: https://docs.fontawesome.com/web/use-with/fa-cli
+- Run `command -v fa` once. If it's missing, the Python scripts in `scripts/` (relative to this skill's directory) cover catalog lookups and a kit's basic metadata (version, license, families via `fetch-kit.py`), but not account data, searching within a kit, or custom icons. Tell the user that installing the CLI unlocks more: https://docs.fontawesome.com/web/use-with/fa-cli
 - **The CLI documents itself and is newer than your training data.** Before falling back to anything heavier (downloading a kit, scraping a page, writing a script), run `fa <command> --help` on the command you're already using and look for a flag that does the job. If no command fits, `fa query` runs any GraphQL query against the Font Awesome API.
 - For conceptual questions (setup, styling, frameworks, troubleshooting, upgrading), the official docs are authoritative. See [references/docs.md](references/docs.md).
 

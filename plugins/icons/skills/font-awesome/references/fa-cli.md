@@ -11,7 +11,7 @@ The `fa` CLI talks to the Font Awesome GraphQL API and prints JSON. Pass `--json
 
 Catalog commands (`icons`, `search --version`, `releases`, `family-styles`, `icon-packs`) work anonymously. Account and kit commands (`whoami`, `entitlements`, `kits`, `kit ...`, `search --kit-token`) and SVG output (`--svg-format`) need auth:
 
-- `fa whoami` succeeds when logged in. Alternatively, `FA_API_TOKEN` may be set in the environment.
+- `fa whoami` succeeds when logged in. Alternatively, `FA_API_TOKEN` may be set in the environment (an API token from https://fontawesome.com/account/general). That suits CI or anyone who can't use `fa login`.
 - If neither, tell the user: "You need to be logged in to the Font Awesome CLI for this. Run `fa login` in a separate terminal, then try again." `fa login` is interactive (device authorization), so don't run it yourself.
 
 ## Command map

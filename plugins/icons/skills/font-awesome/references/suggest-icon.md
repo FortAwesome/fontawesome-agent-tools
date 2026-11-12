@@ -7,7 +7,7 @@ Your own knowledge of Font Awesome icons is good for a first guess, but it may b
 ## 1. Settle the scope
 
 - **Version:** the version the user names, else the one in `.font-awesome.md`, else the latest (`fa releases`, or `scripts/latest-version.py`).
-- **Kit:** if `.font-awesome.md` records a Kit token, or the user names a kit, every suggestion must come from that kit. A kit holds only a subset of Font Awesome, and suggesting an icon outside it gives a broken result.
+- **Kit:** if `.font-awesome.md` records a Kit token, or the user names a kit, every suggestion must come from that kit. A kit holds only a subset of Font Awesome, and suggesting an icon outside it gives a broken result. Scoping needs the `fa` CLI and auth. If `fa` isn't installed or the user can't log in, search unscoped instead and tell the user you couldn't verify Kit coverage, so some suggestions may not be in their Kit.
 - **"Can I use":** if the question is about what the user can use and there's no project kit, check `fa entitlements` (Free vs Pro). If `fa kits` shows "By Icon" (`CUSTOM`) kits, note which of them contain your picks.
 
 ## 2. Guess, verify, and search
@@ -34,4 +34,6 @@ Lead with the best match, then list relevant alternatives. If there's no exact i
 
 ## 4. Offer the next step
 
-If the user is working in a project, ask whether they'd like the icon added to their code. If yes, follow the `add-icon` skill with the chosen icon (and location, if given).
+If you're running this as part of another workflow (such as `add-icon`), skip this step and hand the top pick back to that workflow without asking.
+
+Otherwise, if the user is working in a project, ask whether they'd like the icon added to their code. If yes, follow the `add-icon` skill with the chosen icon (and location, if given).

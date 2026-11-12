@@ -69,7 +69,7 @@ Then continue in reduced mode:
 
 When the `font-awesome` skill is installed, use its shared tooling:
 
-- **`fa` CLI usage, auth, and quirks:** `../font-awesome/references/fa-cli.md`. Read it before your first `fa` call. If the user isn't logged in for a kit operation, tell them to run `fa login` in a separate terminal.
+- **`fa` CLI usage, auth, and quirks:** `../font-awesome/references/fa-cli.md`. Read it before your first `fa` call. Its Auth section says what to do when a command needs the user to log in.
 - **Fallback scripts** (no `fa` CLI): `../font-awesome/scripts/` (`latest-version.py`, `icon-exists.py`, `search.py`, `fetch-kit.py`). Run them from the `font-awesome` skill directory.
 - **Finding an icon for a concept:** `../font-awesome/references/suggest-icon.md`.
 - **`.font-awesome.md` format:** `../font-awesome/references/font-awesome-md-format.md`.
@@ -84,9 +84,11 @@ First, determine whether the project uses a Kit for integrating Font Awesome. If
 
 #### If project uses a Kit
 
-If the project uses a Kit, then verify that the icon exists in the particular Kit's subset. This can only be done with the `fa` CLI. If the user is not logged in, prompt them to run `fa login` in a separate terminal first.
+If the project uses a Kit, then verify that the icon exists in the particular Kit's subset. This can only be done with the `fa` CLI, and it needs auth (see `fa-cli.md`).
 
 If the `fa` CLI is not available, tell the user that you cannot verify whether the icon is in their Kit's subset. Suggest they install the `fa` CLI, login with `fa login`, then re-run this skill.
+
+Use the Kit's resolved release as `<version>` in the commands below: the **Version** in `.font-awesome.md`, or `release.version` from `fa kit show --kit-token <TOKEN>`. Don't use the latest release, since a Kit pinned to an older major version can't use newer icons.
 
 To verify the icon exists in the kit, run `fa kit icon --kit-token <TOKEN> <icon>`.
 
@@ -144,7 +146,7 @@ The subagent should return: which Font Awesome packages are installed (with vers
 
 After the subagent returns, if a kit ID was found, fetch the kit details:
 
-- **`fa` CLI:** Run `fa kit show --kit-token <id>`. Returns JSON with the kit's version, license, technology, and available families. Requires the user to be logged in (`fa whoami` returns success) or `FA_API_TOKEN` to be set. If neither, prompt the user to run `fa login` in a separate terminal first.
+- **`fa` CLI:** Run `fa kit show --kit-token <id>`. Returns JSON with the kit's version, license, technology, and available families. Needs auth (see `fa-cli.md`).
 - **Fallback:** Run `scripts/fetch-kit.py --kit-id <id>` (in the `font-awesome` skill directory) to get the kit's version, license, method, and available families.
 
 After discovery, determine:
@@ -311,7 +313,7 @@ With the corresponding import in the component's TypeScript file.
 fa icons --version <version> --name <icon> --svg-format html
 ```
 
-The `--svg-format` flag accepts `html`, `data`, or `icon-definition`. This requires the user to be logged in (`fa whoami`) or `FA_API_TOKEN` to be set. If neither, prompt the user to run `fa login` in a separate terminal first.
+The `--svg-format` flag accepts `html`, `data`, or `icon-definition`. It needs auth (see `fa-cli.md`).
 
 Do not approximate, reconstruct, or guess SVG path data. The authoritative source is always the Font Awesome API.
 

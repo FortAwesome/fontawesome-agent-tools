@@ -19,7 +19,7 @@ Take these from the user's request (or from the arguments, when invoked as `/set
 
 ## Important: bare SVG markup
 
-**Never generate Font Awesome SVG markup (raw `<svg>` elements) from your own knowledge or training data.** If a bare SVG is needed during setup (e.g., for verification), fetch it from the Font Awesome API using `fa icons --version <version> --name <icon> --svg-format html`. This requires the user to be logged in (`fa whoami`) or `FA_API_TOKEN` to be set.
+**Never generate Font Awesome SVG markup (raw `<svg>` elements) from your own knowledge or training data.** If a bare SVG is needed during setup (e.g., for verification), fetch it from the Font Awesome API using `fa icons --version <version> --name <icon> --svg-format html`. It needs auth (see `fa-cli.md`).
 
 ## Pre-flight check
 
@@ -75,7 +75,7 @@ Then continue in reduced mode:
 
 When the `font-awesome` skill is installed, use its shared tooling:
 
-- **`fa` CLI usage, auth, and quirks:** `../font-awesome/references/fa-cli.md`. Read it before your first `fa` call. Kit operations need the user to be logged in (`fa whoami`) or `FA_API_TOKEN` to be set. If neither, tell them to run `fa login` in a separate terminal.
+- **`fa` CLI usage, auth, and quirks:** `../font-awesome/references/fa-cli.md`. Read it before your first `fa` call. Its Auth section says what to do when a command needs the user to log in.
 - **Fallback scripts** (no `fa` CLI): `../font-awesome/scripts/`. Run them from the `font-awesome` skill directory.
 - **Latest version:** `fa releases` (the entry with `isLatest: true`), or `scripts/latest-version.py`.
 - **`.font-awesome.md` format:** `../font-awesome/references/font-awesome-md-format.md`.
@@ -148,7 +148,7 @@ After completing the path-specific steps, if the method involved installing npm 
 
 #### Verify the Kit covers the icons already in use
 
-Once you have the Kit token (any Kit path: A, B, or C), and the project already used Font Awesome icons (collected in step 1), confirm the Kit's subset actually includes them. This requires the `fa` CLI and an authenticated session (`fa whoami`, or `FA_API_TOKEN` set).
+Once you have the Kit token (any Kit path: A, B, or C), and the project already used Font Awesome icons (collected in step 1), confirm the Kit's subset actually includes them. This requires the `fa` CLI and auth (see `fa-cli.md`).
 
 1. Check each icon already in use with `fa kit icon --kit-token <TOKEN> <icon>`. This reports whether the icon is in the Kit and which family-styles it covers. For a small number of icons, check them individually; for many, you can list the Kit's contents with `fa kit icons --kit-token <TOKEN>` (paginated) and compare locally.
 2. Confirm the family-styles the project uses are present with `fa kit family-styles --kit-token <TOKEN>` (paginated), or `fa kit family-style --kit-token <TOKEN> ...` to look up a single one.

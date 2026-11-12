@@ -64,11 +64,12 @@
     },
     {
       "id": 6,
-      "prompt": "show me a preview of the custom icons in kit c3e629990d",
-      "expected_output": "Rendered previews of the kit's uploaded icons, using SVG markup from the API.",
+      "prompt": "show me a preview of the custom icons in my kits",
+      "expected_output": "Rendered previews of the uploaded icons in the user's kits, using SVG markup from the API.",
       "files": [],
       "assertions": [
-        "The SVGs come from `fa kit show --kit-token c3e629990d --svg-format html` (or an equivalent fa query on iconUploads)",
+        "The kits with custom icons are found from fa kits (non-empty iconUploads), not assumed",
+        "The SVGs come from `fa kit show --kit-token <token> --svg-format html` for those kits (or an equivalent fa query on iconUploads)",
         "The kit is not downloaded (no fa kit download)",
         "No SVG path data is written from memory"
       ]
