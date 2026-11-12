@@ -25,9 +25,55 @@ Take these from the user's request (or from the arguments, when invoked as `/set
 
 Before starting, check whether `.font-awesome.md` already exists in the project root. If it does, Font Awesome is already configured. Tell the user and ask if they want to reconfigure, update their setup, or if they had a different goal. If they have a question about their existing setup, answer it with the `font-awesome` skill. If they want to start using icons, use the `add-icon` skill.
 
+## Requires the `font-awesome` skill
+
+This skill uses shared files from the `font-awesome` skill. That skill is normally installed next to this one, at `../font-awesome/` relative to this skill's base directory. If it's installed somewhere else (for example, in a different skills directory), use that location wherever this file says `../font-awesome/`.
+
+**Check before step 1** that `../font-awesome/SKILL.md` exists. If it doesn't, and the `font-awesome` skill isn't available anywhere else in this session, tell the user:
+
+> Setting up Font Awesome works best with the `font-awesome` skill, which isn't installed. It was added in version 0.1.0 of the Font Awesome agent tools and holds the `fa` CLI guidance, icon search, and `.font-awesome.md` format that this skill uses. To install it:
+>
+> - npx skills: `npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome`
+> - Claude Code plugin: `/plugin marketplace update fontawesome-agent-tools`, then update the `icons` plugin from `/plugin`
+> - claude.ai or the Skills API: upload the `font-awesome` skill from https://github.com/FortAwesome/fontawesome-agent-tools
+>
+> I'll continue without it, but I can't run some of the usual checks.
+
+Then continue in reduced mode:
+
+- Skip every instruction to read a file under `../font-awesome/`, and don't run the fallback scripts (they live in that skill). This skill's own `references/` files are still available.
+- Use the `fa` CLI commands named in this file and its references. Get the latest version from `fa releases` (the entry with `isLatest: true`). For anything else, check `fa <command> --help`. If a kit or account command fails with an auth error, ask the user to run `fa login` in a separate terminal.
+- If `fa` isn't installed either, tell the user you can't look up their kits or verify the latest version, and ask them for the Kit token or version they want to use.
+- Write `.font-awesome.md` with this skeleton, filling in what you configured and omitting lines that don't apply:
+
+  ```markdown
+  # Font Awesome Configuration
+
+  ## Integration
+
+  - **Method:** [e.g., Kit embed, React components, npm web fonts]
+  - **Version:** [e.g., 7.2.0]
+  - **License:** [Free or Pro]
+  - **Kit ID:** [Kit token, if any]
+  - **Families:** [e.g., classic, sharp]
+
+  ## Defaults
+
+  - **Style:** [e.g., solid]
+  - **Family:** [e.g., classic]
+
+  ## Import Pattern
+
+  [How icons are imported or used in this project]
+
+  ## Conventions
+
+  [Wrapper components, default sizing, other project patterns]
+  ```
+
 ## Tools
 
-This skill relies on the shared Font Awesome tooling in the `font-awesome` skill, a sibling directory of this one (`../font-awesome/`):
+When the `font-awesome` skill is installed, use its shared tooling:
 
 - **`fa` CLI usage, auth, and quirks:** `../font-awesome/references/fa-cli.md`. Read it before your first `fa` call. Kit operations need the user to be logged in (`fa whoami`) or `FA_API_TOKEN` to be set. If neither, tell them to run `fa login` in a separate terminal.
 - **Fallback scripts** (no `fa` CLI): `../font-awesome/scripts/`. Run them from the `font-awesome` skill directory.

@@ -23,7 +23,8 @@ The manifest schema follows `https://anthropic.com/claude-code/marketplace.schem
    - Prefer extending the `font-awesome` hub (a new reference file plus a row in its "Answering common questions" table) over adding a new skill. Add a separate skill only for a multi-step workflow that changes project files.
    - Put shared CLI guidance in `font-awesome/references/fa-cli.md`, not in individual skills.
 3. If it belongs to a new plugin, add the plugin entry to `.claude-plugin/marketplace.json` and create its `plugin.json`.
-4. Run `bash scripts/deploy-skills.sh` to create the top-level symlink (or let the pre-commit hook handle it).
+4. If the skill reads anything from `../font-awesome/`, give it a "Requires the `font-awesome` skill" check like the one in `add-icon`. Users of `npx skills`, claude.ai, and the Skills API can install skills one at a time, so the skill must check that `font-awesome` is present, tell the user how to install it, and continue in a reduced mode. In any text a user might see, call it the `font-awesome` skill, never "the hub".
+5. Run `bash scripts/deploy-skills.sh` to create the top-level symlink (or let the pre-commit hook handle it).
 
 ## Deployment
 
@@ -32,3 +33,7 @@ The top-level `skills/` directory contains symlinks to the canonical skill direc
 - **`scripts/deploy-skills.sh`** — Creates and maintains these symlinks. It removes stale symlinks, detects naming collisions across plugins, and creates relative symlinks. Idempotent and safe to run repeatedly.
 - **`scripts/bump-plugin-versions.sh`** — Detects which plugins have staged changes and increments their patch version in both `plugins/<name>/.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`. Skips plugins whose `plugin.json` is already staged (assumes a manual version bump).
 - **`lefthook.yml`** — Configures pre-commit hooks that run `deploy-skills.sh` and `bump-plugin-versions.sh`, auto-staging any modified files. Run `lefthook install` after cloning to activate the hooks.
+
+## Versioning
+
+The `icons` plugin is pre-1.0. The pre-commit hook bumps the patch version automatically. For a breaking change (a new required skill, moved shared files, a removed or renamed skill or command), bump the minor version by hand in both `plugins/icons/.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`, stage `plugin.json` so the hook skips it, and add an entry to `CHANGELOG.md` with upgrade steps for each install channel.

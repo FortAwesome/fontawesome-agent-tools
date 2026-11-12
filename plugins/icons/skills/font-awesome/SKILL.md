@@ -15,7 +15,7 @@ description: >-
 
 This is the entry point for anything Font Awesome. Answer the question directly using the tools below; there is no need for the user to pick a narrower skill. Hand off to a workflow skill only when the job is a multi-step change to a project (see "Workflows").
 
-Your own knowledge of Font Awesome is a fine first guess, but it goes stale: icon names change between versions, new families ship, and kits are per-user. Verify against the API before stating facts.
+Your own knowledge of Font Awesome is probably stale or invalid for a particular user's kit. Icon names change between versions, new families ship, and kits are per-user and may include only a subset of icons. Verify against the API before stating facts.
 
 ## Tools
 
