@@ -63,6 +63,21 @@ Catalog commands (`icons`, `search --version`, `releases`, `family-styles`, `ico
 - **Kits record a major version (`version: "7.x"`) and a resolved release (`release.version`).** Use `release.version` for `--version` arguments.
 - `fa kits --kit-token` and `fa kits --download` are deprecated. Use `fa kit show` and `fa kit download`.
 
+## Summarizing icon results
+
+`fa search` and `fa icons` return every family-style of every icon. That's often 16 to 36 entries per icon, which is a lot to read. Don't write your own filter to shorten it: a filter that keeps only Free/Pro drops the families, which you need to answer. Pipe the output through `scripts/summarize-icons.py` (in this skill's directory) instead. It prints one line per icon with Free/Pro, the families, the family-style count, and the Free family-styles:
+
+```
+fa search --version <v> --query <q> --page-size 10 --json | python3 <this skill's directory>/scripts/summarize-icons.py
+```
+
+```
+bat (Bat) | Pro | classic, duotone, sharp, sharp-duotone (16 family-styles)
+mug-saucer (Mug Saucer) | Free+Pro | classic, duotone, sharp, sharp-duotone, utility, utility-duo, utility-fill, whiteboard (20 family-styles) | free: classic/solid
+```
+
+It also accepts `fa icons --name`, `fa search --kit-token` and `fa kit icon` output (kit results list the kit's family-styles). When you need the exact style list for one icon, for example to write its code, use the full JSON for that icon.
+
 ## Fallback scripts (no `fa` CLI)
 
 Run these from this skill's directory (`font-awesome/`). They call the public API and cover only catalog lookups and kit metadata:

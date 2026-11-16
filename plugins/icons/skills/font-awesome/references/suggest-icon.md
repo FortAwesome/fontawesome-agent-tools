@@ -18,6 +18,7 @@ Always use fuzzy search, not an exact-name lookup. Search turns up the exact ico
    - Kit in scope: `fa search --kit-token <t> --query <q> --page-size 10`. Every result is safe to recommend. Add `--custom` to also check the kit's uploaded icons.
    - No kit: `fa search --version <v> --query <q> --page-size 10` (fallback: `scripts/search.py`).
    - Try a couple of related queries if the first is thin (for "vampire": `bat`, `coffin`, `fangs`, `blood`).
+   - To read the results compactly, pipe them through `scripts/summarize-icons.py` (see [fa-cli.md](fa-cli.md)) rather than writing your own filter. It keeps the families and Free/Pro you need for the table below.
 2. **Find the exact match.** If a result's `id` is exactly the name the user asked for (or your guess), that's the lead answer. With a kit in scope, a result from the kit search is in the kit. An icon can exist in Font Awesome and still be missing from the kit.
 
 ## 3. Present
