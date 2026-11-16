@@ -8,7 +8,7 @@ Font Awesome publishes docs for LLMs at `https://docs.fontawesome.com`. The inde
 
 ## Steps
 
-1. **Fetch the index.** `WebFetch` `https://docs.fontawesome.com/llms.txt` with a prompt like: "Return the complete content of this file exactly as-is. I need to see every URL and its description."
+1. **Fetch the index first, every time,** even if you think you know the page's URL. Page paths change between versions, and a guessed URL can 404 or return an outdated page. `WebFetch` `https://docs.fontawesome.com/llms.txt` with a prompt like: "Return the complete content of this file exactly as-is. I need to see every URL and its description."
 2. **Pick the page(s).** URLs end in `.md` and the paths are descriptive (e.g. `/web/setup/use-kit.md`, `/web/style/animate.md`, `/web/use-with/react/troubleshoot.md`). Most questions map to one or two pages. Start with the most specific.
 3. **Fetch them**, at most three per question, with a prompt like: "Return the full content of this documentation page as Markdown. Preserve all headings, code blocks, and tables."
 4. **Answer** directly and concisely, with code examples from the docs. If the project has a `.font-awesome.md`, tailor the answer to its integration method, version, and license. If the docs give several approaches, recommend the one that fits.

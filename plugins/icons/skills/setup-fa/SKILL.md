@@ -4,8 +4,11 @@ description: >-
   Set up Font Awesome in a project from scratch or reconfigure it: detect the
   project type, choose an integration method (Kit embed, Kit npm package, Kit
   download, or npm packages), install it, and write .font-awesome.md. Use when
-  the user asks to install, add, or set up Font Awesome in a project. For
-  questions about Font Awesome, icons, or kits, use the font-awesome skill.
+  the user asks you to install, add, or set up Font Awesome in their project.
+  Questions about how to set it up ("how do I set up Font Awesome with Vue?")
+  are questions, not requests to change the project: answer them with the
+  font-awesome skill. For other questions about Font Awesome, icons, or kits,
+  use the font-awesome skill too.
 ---
 
 Set up Font Awesome in a project from scratch. This skill handles everything from detecting the project type, through downloading a Kit or installing packages, to writing the initial integration code and creating `.font-awesome.md` so that adding icons works immediately afterward.
@@ -33,17 +36,7 @@ Before starting, check whether `.font-awesome.md` already exists in the project 
 
 This skill uses shared files from the `font-awesome` skill. That skill is normally installed next to this one, at `../font-awesome/` relative to this skill's base directory. If it's installed somewhere else (for example, in a different skills directory), use that location wherever this file says `../font-awesome/`.
 
-**Check before step 1** that `../font-awesome/SKILL.md` exists. If it doesn't, and the `font-awesome` skill isn't available anywhere else in this session, tell the user:
-
-> Setting up Font Awesome works best with the `font-awesome` skill, which isn't installed. It was added in version 0.1.0 of the Font Awesome agent tools and holds the `fa` CLI guidance, icon search, and `.font-awesome.md` format that this skill uses. To install it:
->
-> - npx skills: `npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome`
-> - Claude Code plugin: `/plugin marketplace update fontawesome-agent-tools`, then update the `icons` plugin from `/plugin`
-> - claude.ai or the Skills API: upload the `font-awesome` skill from https://github.com/FortAwesome/fontawesome-agent-tools
->
-> I'll continue without it, but I can't run some of the usual checks.
-
-Then continue in reduced mode:
+**Step 0 below checks for it** and, if it's missing, shows the user a message. After that, continue in reduced mode:
 
 - Skip every instruction to read a file under `../font-awesome/`, and don't run the fallback scripts (they live in that skill). This skill's own `references/` files are still available.
 - Use the `fa` CLI commands named in this file and its references. Get the latest version from `fa releases` (the entry with `isLatest: true`). For anything else, check `fa <command> --help`. If a kit or account command fails with an auth error, ask the user to run `fa login` in a separate terminal.
@@ -85,6 +78,20 @@ When the `font-awesome` skill is installed, use its shared tooling:
 - **`.font-awesome.md` format:** `../font-awesome/references/font-awesome-md-format.md`.
 
 ## Steps
+
+### 0. Check for the `font-awesome` skill
+
+Do this first, every time: check that `../font-awesome/SKILL.md` exists (relative to this skill's base directory, not the project). If it doesn't, and the `font-awesome` skill isn't available anywhere else in this session, you **must** tell the user this before doing anything else. It isn't optional: their install is incomplete, and they can't fix it unless you tell them. Show it word for word, as the first thing in your reply. Don't shorten or reword it, and keep all three install lines.
+
+> Setting up Font Awesome works best with the `font-awesome` skill, which isn't installed. It was added in version 0.1.0 of the Font Awesome agent tools and holds the `fa` CLI guidance, icon search, and `.font-awesome.md` format that this skill uses. To install it:
+>
+> - npx skills: `npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome`
+> - Claude Code plugin: `/plugin marketplace update fontawesome-agent-tools`, then update the `icons` plugin from `/plugin`
+> - claude.ai or the Skills API: upload the `font-awesome` skill from https://github.com/FortAwesome/fontawesome-agent-tools
+>
+> I'll continue without it, but I can't run some of the usual checks.
+
+Then continue in reduced mode (see "Requires the `font-awesome` skill" above).
 
 ### 1. Detect the project type
 
@@ -137,7 +144,21 @@ Then fetch the relevant page(s) using `WebFetch`. When fetching, use a prompt li
 
 This ensures the instructions are current and version-accurate. Do not rely on training data alone for setup instructions — the docs are authoritative.
 
-### 4. Execute the setup
+### 4. Check the Kit covers the icons already in use
+
+**Do this before changing any files.** Once you have the Kit token (any Kit path: A, B, or C), and the project already uses Font Awesome icons (collected in step 1), confirm the Kit's subset actually includes them. If you don't have the Kit token yet, ask for it now (it's the first thing each Kit path needs anyway). This requires the `fa` CLI and auth (see `fa-cli.md`).
+
+1. Check each icon already in use with `fa kit icon --kit-token <TOKEN> <icon>`. This reports whether the icon is in the Kit and which family-styles it covers. For a small number of icons, check them individually; for many, you can list the Kit's contents with `fa kit icons --kit-token <TOKEN>` (paginated) and compare locally.
+2. Confirm the family-styles the project uses are present with `fa kit family-styles --kit-token <TOKEN>` (paginated), or `fa kit family-style --kit-token <TOKEN> ...` to look up a single one.
+3. If any in-use icon (or its family style) is **missing** from the Kit, warn the user explicitly. List exactly which icons are not covered and in which family styles, for example:
+
+   > Your project uses `fa-thin fa-binoculars` and `fa-duotone fa-compass`, but this Kit doesn't include them: `binoculars` is missing the thin style, and `compass` isn't in the Kit at all. Those icons will not render. You can add them to your Kit at https://fontawesome.com/kits and re-run, choose a different Kit that includes them, or proceed and replace them with kit-available alternatives (see `../font-awesome/references/suggest-icon.md`).
+
+   **Stop here and ask the user how to proceed.** Don't add the embed code, install anything, add a test icon, or write `.font-awesome.md` until they answer. Do not silently configure a Kit that omits icons the project already depends on.
+
+If the `fa` CLI isn't available or the user can't authenticate, note that you couldn't verify Kit coverage and that any icons missing from the Kit's subset won't render.
+
+### 5. Execute the setup
 
 Follow the path that matches the chosen method. Each path is documented in a separate reference file under `references/` (relative to this skill's directory). Read the appropriate file for detailed instructions.
 
@@ -150,21 +171,7 @@ Follow the path that matches the chosen method. Each path is documented in a sep
 
 After completing the path-specific steps, if the method involved installing npm packages (Paths B, D), read `references/path-f-framework-init.md` for framework-specific initialization code.
 
-#### Verify the Kit covers the icons already in use
-
-Once you have the Kit token (any Kit path: A, B, or C), and the project already used Font Awesome icons (collected in step 1), confirm the Kit's subset actually includes them. This requires the `fa` CLI and auth (see `fa-cli.md`).
-
-1. Check each icon already in use with `fa kit icon --kit-token <TOKEN> <icon>`. This reports whether the icon is in the Kit and which family-styles it covers. For a small number of icons, check them individually; for many, you can list the Kit's contents with `fa kit icons --kit-token <TOKEN>` (paginated) and compare locally.
-2. Confirm the family-styles the project uses are present with `fa kit family-styles --kit-token <TOKEN>` (paginated), or `fa kit family-style --kit-token <TOKEN> ...` to look up a single one.
-3. If any in-use icon (or its family style) is **missing** from the Kit, warn the user explicitly. List exactly which icons are not covered and in which family styles, for example:
-
-   > Your project uses `fa-thin fa-binoculars` and `fa-duotone fa-compass`, but this Kit doesn't include them: `binoculars` is missing the thin style, and `compass` isn't in the Kit at all. Those icons will not render. You can add them to your Kit at https://fontawesome.com/kits and re-run, choose a different Kit that includes them, or proceed and replace them with kit-available alternatives (see `../font-awesome/references/suggest-icon.md`).
-
-   Let the user decide how to proceed before finishing setup. Do not silently configure a Kit that omits icons the project already depends on.
-
-If the `fa` CLI isn't available or the user can't authenticate, note that you couldn't verify Kit coverage and that any icons missing from the Kit's subset won't render.
-
-### 5. Verify the setup
+### 6. Verify the setup
 
 Add a test icon to confirm everything is working:
 
@@ -173,13 +180,13 @@ Add a test icon to confirm everything is working:
 3. Tell the user to preview the page/app to confirm the icon renders.
 4. If they report issues, refer back to the `llms.txt` index to find the relevant troubleshooting page (look for URLs containing `troubleshoot`) and fetch it to guide diagnosis.
 
-### 6. Write `.font-awesome.md`
+### 7. Write `.font-awesome.md`
 
 Create `.font-awesome.md` in the project root. Read `../font-awesome/references/font-awesome-md-format.md` for the template and format to use. Populate it with everything discovered and configured during setup.
 
 Tell the user: "I've written `.font-awesome.md` with your project's Font Awesome configuration. Commit this file so the team benefits and adding icons works immediately."
 
-### 7. Next steps
+### 8. Next steps
 
 After setup is complete, tell the user what they can do next:
 

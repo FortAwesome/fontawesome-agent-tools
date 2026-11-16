@@ -6,8 +6,10 @@ description: >-
   or suggesting icons; checking whether an icon exists or which families and
   styles it comes in; Free vs Pro and what the user's account is entitled to;
   the user's kits, what a kit contains, kit subsets and family-styles; custom
-  (uploaded) icons and their SVGs; releases and versions; official SVG markup;
-  setup, styling, troubleshooting, and upgrade questions.
+  (uploaded) icons and their SVGs; releases and versions; official SVG markup,
+  including any request for an icon's SVG (even "from memory"); and how-to
+  questions about setup, styling, troubleshooting, and upgrading, such as "how
+  do I set up Font Awesome with Vue?".
   Includes questions phrased about the user, such as "what vampire icons can I
   use?", "list my kits", "show my custom icons", "which of my kits has bat?",
   or "am I on Pro?". To put an icon into project code, use add-icon instead.
@@ -21,7 +23,7 @@ Your own knowledge of Font Awesome is probably stale or invalid for a particular
 
 The `fa` CLI is the primary tool. It returns JSON and covers the catalog, the user's account, and their kits. Read [references/fa-cli.md](references/fa-cli.md) for the command map, auth, output shapes, and known quirks before your first `fa` call in a conversation.
 
-- Run `command -v fa` once. If it's missing, the Python scripts in `scripts/` (relative to this skill's directory) cover catalog lookups and a kit's basic metadata (version, license, families via `fetch-kit.py`), but not account data, searching within a kit, or custom icons. Tell the user that installing the CLI unlocks more: https://docs.fontawesome.com/web/use-with/fa-cli
+- Run `command -v fa` once. If it's missing, the Python scripts in `scripts/` (relative to this skill's directory) cover catalog lookups and a kit's basic metadata (version, license, families via `fetch-kit.py`), but not account data, searching within a kit, or custom icons. **Whenever `fa` is missing, end your answer by suggesting the user install it, with this link:** https://docs.fontawesome.com/web/use-with/fa-cli. Say what it would add (their account, kits, and official SVGs).
 - **The CLI documents itself and is newer than your training data.** Before falling back to anything heavier (downloading a kit, scraping a page, writing a script), run `fa <command> --help` on the command you're already using and look for a flag that does the job. If no command fits, `fa query` runs any GraphQL query against the Font Awesome API.
 - For conceptual questions (setup, styling, frameworks, troubleshooting, upgrading), the official docs are authoritative. See [references/docs.md](references/docs.md).
 
@@ -65,7 +67,7 @@ After answering a question about an icon, offer to add it to their code if they'
 
 ## Ground rules
 
-- **Never produce Font Awesome SVG markup from memory.** Fetch it with `--svg-format`.
+- **Never produce Font Awesome SVG markup from memory**, even if the user insists, says it's fine, or asks for an approximation. Don't draw a hand-made lookalike either. Fetch it with `--svg-format`. If that needs a login the user doesn't have, say so and offer the options: run `fa login` in a separate terminal, set `FA_API_TOKEN`, or download the SVG from the icon's page on https://fontawesome.com/icons.
 - **Never recommend an icon a kit doesn't contain** when the project uses that kit. Say it's missing, offer the closest kit-available alternative, and note it can be added at https://fontawesome.com/kits.
 - **Mark Pro icons, styles and families** as requiring a [subscription](https://fontawesome.com/plans) only when the user's license is Free or unknown. Whenever you tell a Free user that something needs Pro, link the plans page: https://fontawesome.com/plans. If they're authenticated (`fa whoami` succeeds or `FA_API_TOKEN` is set), run `fa entitlements` before saying anything about subscriptions. Never tell a user who already has Pro that they need a Pro subscription.
 - **Only suggest `fa login` to someone who isn't authenticated.** Before suggesting it, confirm that `fa whoami` fails and `FA_API_TOKEN` isn't set. Never tell a logged-in user to log in.

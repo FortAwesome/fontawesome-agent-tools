@@ -18,7 +18,7 @@ This is the `/suggest-icon` command. It's kept so the command still works. Since
 
 ## If the `font-awesome` skill is missing
 
-Tell the user:
+Tell the user this message. Show it word for word, as the first thing in your reply. Don't shorten or reword it, and keep all three install lines.
 
 > `/suggest-icon` now uses the `font-awesome` skill, which isn't installed. It was added in version 0.1.0 of the Font Awesome agent tools and gives better suggestions: it checks your kits, your license, and the exact Font Awesome version you use. To install it:
 >

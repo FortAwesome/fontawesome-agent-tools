@@ -22,17 +22,7 @@ Take these from the user's request (or from the arguments, when invoked as `/add
 
 This skill uses shared files from the `font-awesome` skill. That skill is normally installed next to this one, at `../font-awesome/` relative to this skill's base directory. If it's installed somewhere else (for example, in a different skills directory), use that location wherever this file says `../font-awesome/`.
 
-**Check before step 1** that `../font-awesome/SKILL.md` exists. If it doesn't, and the `font-awesome` skill isn't available anywhere else in this session, tell the user:
-
-> Adding icons works best with the `font-awesome` skill, which isn't installed. It was added in version 0.1.0 of the Font Awesome agent tools and holds the `fa` CLI guidance, icon search, and `.font-awesome.md` format that this skill uses. To install it:
->
-> - npx skills: `npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome`
-> - Claude Code plugin: `/plugin marketplace update fontawesome-agent-tools`, then update the `icons` plugin from `/plugin`
-> - claude.ai or the Skills API: upload the `font-awesome` skill from https://github.com/FortAwesome/fontawesome-agent-tools
->
-> I'll continue without it, but I can't run some of the usual checks.
-
-Then continue in reduced mode:
+**Step 0 below checks for it** and, if it's missing, shows the user a message. After that, continue in reduced mode:
 
 - Skip every instruction to read a file under `../font-awesome/`, and don't run the fallback scripts (they live in that skill).
 - Use the `fa` CLI commands named in this file. For anything else, check `fa <command> --help`. If a kit or account command fails with an auth error, ask the user to run `fa login` in a separate terminal.
@@ -78,6 +68,20 @@ When the project uses a Kit, `fa kit icon --kit-token <TOKEN> <icon>` tells you 
 
 ## Steps
 
+### 0. Check for the `font-awesome` skill
+
+Do this first, every time: check that `../font-awesome/SKILL.md` exists (relative to this skill's base directory, not the project). If it doesn't, and the `font-awesome` skill isn't available anywhere else in this session, you **must** tell the user this before doing anything else. It isn't optional: their install is incomplete, and they can't fix it unless you tell them. Show it word for word, as the first thing in your reply. Don't shorten or reword it, and keep all three install lines.
+
+> Adding icons works best with the `font-awesome` skill, which isn't installed. It was added in version 0.1.0 of the Font Awesome agent tools and holds the `fa` CLI guidance, icon search, and `.font-awesome.md` format that this skill uses. To install it:
+>
+> - npx skills: `npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome`
+> - Claude Code plugin: `/plugin marketplace update fontawesome-agent-tools`, then update the `icons` plugin from `/plugin`
+> - claude.ai or the Skills API: upload the `font-awesome` skill from https://github.com/FortAwesome/fontawesome-agent-tools
+>
+> I'll continue without it, but I can't run some of the usual checks.
+
+Then continue in reduced mode (see "Requires the `font-awesome` skill" above).
+
 ### 1. Resolve the icon name
 
 First, determine whether the project uses a Kit for integrating Font Awesome. If the project has a `.font-awesome.md` file, read it to determine whether a Kit is in use.
@@ -113,11 +117,11 @@ Check for a `.font-awesome.md` file in the project root.
 
 #### If `.font-awesome.md` exists
 
-Read it and use the configuration it describes. Skip discovery and proceed to step 3. However, keep the file's contents in mind — if any later step reveals information that is missing or incomplete in the file (e.g., a new import pattern, a family not listed, a wrapper component not documented), you will update it at the end (see step 6).
+Read it and use the configuration it describes. Skip discovery and proceed to step 3. However, keep the file's contents in mind — if any later step reveals information that is missing or incomplete in the file (e.g., a new import pattern, a family not listed, a wrapper component not documented), you will update it at the end (see step 7).
 
 #### If `.font-awesome.md` does not exist
 
-Run a discovery process to figure out how the project uses Font Awesome. **Use a subagent** (via the Agent tool with `subagent_type: "Explore"`) to perform this discovery. The subagent should search for the following sources (in order of specificity) and return a structured summary of what it found:
+Run a discovery process to figure out how the project uses Font Awesome. **Use a subagent** (via the Agent tool with `subagent_type: "Explore"`) to perform this discovery, even when the project is small. It keeps the file-by-file search out of the main conversation. The subagent should search for the following sources (in order of specificity) and return a structured summary of what it found:
 
 1. **`package.json` / lock files** — look for Font Awesome packages:
    - `@fortawesome/react-fontawesome` → React component integration
@@ -165,7 +169,7 @@ Write the results to `.font-awesome.md` in the project root. Read `../font-aweso
 
 Tell the user: "I've written `.font-awesome.md` with your project's Font Awesome configuration. You should commit this file so the team benefits and future icon additions are faster."
 
-**Do not proceed to the next step until `.font-awesome.md` has been written.** The remaining steps depend on this file. If discovery fails to produce enough information to write a meaningful `.font-awesome.md`, stop and ask the user to clarify their Font Awesome setup before continuing.
+**Do not proceed to the next step until `.font-awesome.md` has been written.** Write it as its own action, before any edit to the project's code, and don't combine it with the code change in one command. The remaining steps depend on this file. If discovery fails to produce enough information to write a meaningful `.font-awesome.md`, stop and ask the user to clarify their Font Awesome setup before continuing.
 
 ### 3. Determine the icon style and family
 
