@@ -22,7 +22,7 @@ Always use fuzzy search, not an exact-name lookup. Search turns up the exact ico
 
 ## 3. Present
 
-Lead with the exact match if there is one, emphasized, with its families and styles. Otherwise lead with the best match. Then list relevant alternatives. If there's no exact icon for the name or concept, say so plainly before the alternatives. Use a table:
+Lead with the exact match if there is one, emphasized, with whether it's Free or Pro and its families and styles (a count of family-styles is enough). Otherwise lead with the best match. Then list relevant alternatives. If there's no exact icon for the name or concept, say so plainly before the alternatives. Use a table:
 
 | Icon | Families | Availability |
 |------|----------|--------------|
@@ -30,7 +30,7 @@ Lead with the exact match if there is one, emphasized, with its families and sty
 | `album-collection` | classic, sharp, duotone, sharp-duotone | Pro (requires a [subscription](https://fontawesome.com/plans)) |
 
 - With a kit in scope, recommend only kit-available icons. If your best conceptual match isn't in the kit, say so, recommend the closest kit-available icon, and note that the missing one can be added at https://fontawesome.com/kits.
-- When the user's license is known, say whether each pick is usable for them, not just whether it's Free or Pro in the abstract.
+- When the user's license is known, say whether each pick is usable for them, not just whether it's Free or Pro in the abstract. If they're authenticated, check `fa entitlements` first, and don't tell a Pro user they need a subscription.
 - Never provide SVG markup from memory. If they want the SVG, fetch it with `--svg-format` (see [fa-cli.md](fa-cli.md)).
 
 ## 4. Offer the next step
