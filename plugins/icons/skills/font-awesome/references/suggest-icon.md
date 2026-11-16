@@ -10,18 +10,19 @@ Your own knowledge of Font Awesome icons is good for a first guess, but it may b
 - **Kit:** if `.font-awesome.md` records a Kit token, or the user names a kit, every suggestion must come from that kit. A kit holds only a subset of Font Awesome, and suggesting an icon outside it gives a broken result. Scoping needs the `fa` CLI and auth. If `fa` isn't installed or the user can't log in, search unscoped instead and tell the user you couldn't verify Kit coverage, so some suggestions may not be in their Kit.
 - **"Can I use":** if the question is about what the user can use and there's no project kit, check `fa entitlements` (Free vs Pro). If `fa kits` shows "By Icon" (`CUSTOM`) kits, note which of them contain your picks.
 
-## 2. Guess, verify, and search
+## 2. Search
 
-1. **Guess** the icon name that best fits.
-2. **Verify it exists:** `fa icons --version <v> --name <guess>` (fallback: `scripts/icon-exists.py --version <v> --icon-name <guess>`). With a kit in scope, also run `fa kit icon --kit-token <t> <guess>`. An icon can exist in Font Awesome and still be missing from the kit.
-3. **Search for alternatives anyway.** Search often turns up better or more specific icons than the guess:
+Always use fuzzy search, not an exact-name lookup. Search turns up the exact icon when there is one, plus better or more specific alternatives.
+
+1. **Search** with the user's term, and with your own best-guess icon name if it's different:
    - Kit in scope: `fa search --kit-token <t> --query <q> --page-size 10`. Every result is safe to recommend. Add `--custom` to also check the kit's uploaded icons.
    - No kit: `fa search --version <v> --query <q> --page-size 10` (fallback: `scripts/search.py`).
    - Try a couple of related queries if the first is thin (for "vampire": `bat`, `coffin`, `fangs`, `blood`).
+2. **Find the exact match.** If a result's `id` is exactly the name the user asked for (or your guess), that's the lead answer. With a kit in scope, a result from the kit search is in the kit. An icon can exist in Font Awesome and still be missing from the kit.
 
 ## 3. Present
 
-Lead with the best match, then list relevant alternatives. If there's no exact icon for the concept, say so plainly before the alternatives. Use a table:
+Lead with the exact match if there is one, emphasized, with its families and styles. Otherwise lead with the best match. Then list relevant alternatives. If there's no exact icon for the name or concept, say so plainly before the alternatives. Use a table:
 
 | Icon | Families | Availability |
 |------|----------|--------------|

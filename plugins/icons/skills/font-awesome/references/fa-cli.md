@@ -21,7 +21,7 @@ Catalog commands (`icons`, `search --version`, `releases`, `family-styles`, `ico
 | Need | Command |
 |---|---|
 | All releases, and which is latest | `fa releases` (`releases[]` with `version`, `date`, `isLatest`) |
-| One icon: exists? families, styles, Free/Pro | `fa icons --version <v> --name <icon>`. `data.release.icon` is null if it doesn't exist. `familyStylesByLicense.{free,pro}[]` lists family-styles. |
+| One icon by exact name: families, styles, Free/Pro | `fa icons --version <v> --name <icon>`. `data.release.icon` is null if it doesn't exist. `familyStylesByLicense.{free,pro}[]` lists family-styles. To answer "is there an X icon?", use search instead, so near matches show up too. |
 | Official SVG for an icon | add `--svg-format html` (or `data`, `icon-definition`) and `--svg-family-style <family>,<style>` (repeatable) |
 | Search by concept | `fa search --version <v> --query <q> --page-size 10`. Results at `data.searchPaginated.icons[]` with `id`, `label`, `unicodeHex`, `familyStylesByLicense`. |
 | List icons in a release | `fa icons --version <v> [--license free\|pro] --page N --page-size N` |

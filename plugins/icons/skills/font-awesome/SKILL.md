@@ -34,7 +34,7 @@ Many questions are about the user: "what can I use", "my kits", "do I have". Wor
    - `fa whoami`: who they are, and whether kit and account commands will work.
    - `fa entitlements`: which Icon Collection they own (Free, Pro, Pro+). This decides which icons they can use at all.
    - `fa kits`: every kit, with version, license, subset type, technology, and custom icons.
-3. **Neither.** If not logged in and no project config, answer from the public catalog for the latest release and say that's what you did. Suggest `fa login` (run in a separate terminal) for answers about their own account.
+3. **Neither.** If not logged in and no project config, answer from the public catalog for the latest release and say that's what you did. Suggest `fa login` (run in a separate terminal) for answers about their own account, but only once you know they aren't authenticated (see the ground rules).
 
 Don't do all of this for every question. "Is there a bat icon?" needs only the catalog. "Can I use the bat icon?" needs entitlements, and if they have kits, which kits contain it.
 
@@ -43,7 +43,7 @@ Don't do all of this for every question. "Is there a bat icon?" needs only the c
 | Question shape | Approach |
 |---|---|
 | "Is there an icon for X?" / "What icons can I use for X?" | Follow [references/suggest-icon.md](references/suggest-icon.md). Scope to a kit when the project or the user names one. For "can I use", also check entitlements, and if they have "By Icon" kits, say which ones actually contain the icon. |
-| "Does icon X exist / which styles?" | `fa icons --version <v> --name <icon>`. Read `familyStylesByLicense`. |
+| "Is there an X icon?" / "Does icon X exist / which styles?" | Fuzzy search, not an exact-name lookup: `fa search --version <v> --query <X> --page-size 10`. Without `fa`, use `scripts/search.py`, then `scripts/icon-exists.py` on the exact match to get its families and styles. If a result's `id` exactly matches X, lead with it and its families and styles from `familyStylesByLicense`, then list the closest other matches. If nothing matches exactly, say so, then give the closest matches. |
 | "List my kits" / "which kits have X?" | `fa kits` for the list. For membership, `fa kit icon --kit-token <t> <icon>` per kit, or `fa search --kit-token <t> --query <icon>`. |
 | "Show / preview my custom icons" | `fa kit show --kit-token <t> --svg-format html`. One call returns the names, unicodes, and SVG markup. To search uploads by name, `fa search --kit-token <t> --query <q> --custom`. |
 | "Give me the SVG for X" | `fa icons --version <v> --name <icon> --svg-format html --svg-family-style <family>,<style>`. Never write SVG path data from memory. |
@@ -68,4 +68,5 @@ After answering a question about an icon, offer to add it to their code if they'
 - **Never produce Font Awesome SVG markup from memory.** Fetch it with `--svg-format`.
 - **Never recommend an icon a kit doesn't contain** when the project uses that kit. Say it's missing, offer the closest kit-available alternative, and note it can be added at https://fontawesome.com/kits.
 - **Mark Pro icons** as requiring a [subscription](https://fontawesome.com/plans) when the user's license is Free or unknown.
+- **Only suggest `fa login` to someone who isn't authenticated.** Before suggesting it, confirm that `fa whoami` fails and `FA_API_TOKEN` isn't set. Never tell a logged-in user to log in.
 - **Keep JSON out of the answer.** Summarize into a table or short list; `fa kits` output in particular is large.
