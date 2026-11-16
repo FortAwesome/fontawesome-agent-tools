@@ -339,11 +339,13 @@ Example output:
 > <FontAwesomeIcon icon={faCartShopping} />
 > ```
 
-### 6. Pro icon notice
+### 6. Pro notice
 
-If the icon is Pro-only and the project is using the free tier (based on `.font-awesome.md` license field or discovered packages), warn the user:
+If the project or account is on Free (from the `.font-awesome.md` license field, the installed packages, the Kit's license, or `fa entitlements`), and the user asks for something that needs Pro (a Pro-only icon, or a Pro-only style or family such as light, thin, duotone, or sharp), tell them it needs Pro and **always link the plans page, https://fontawesome.com/plans**. This applies whether or not you insert anything. For example:
 
 > Note: `cart-shopping` requires a Font Awesome Pro [subscription](https://fontawesome.com/plans). Your project appears to be using Font Awesome Free.
+
+Don't show this notice to a user who already has Pro.
 
 ### 7. Update `.font-awesome.md` if needed
 

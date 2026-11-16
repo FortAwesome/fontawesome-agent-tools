@@ -21,6 +21,10 @@ Take these from the user's request (or from the arguments, when invoked as `/set
 
 **Never generate Font Awesome SVG markup (raw `<svg>` elements) from your own knowledge or training data.** If a bare SVG is needed during setup (e.g., for verification), fetch it from the Font Awesome API using `fa icons --version <version> --name <icon> --svg-format html`. It needs auth (see `fa-cli.md`).
 
+## Free users and Pro features
+
+If the user is on Free and asks for something that needs Pro (Pro icons, Pro styles or families, Pro npm packages), tell them it needs Pro and link the plans page: https://fontawesome.com/plans. Don't show this to a user who already has Pro.
+
 ## Pre-flight check
 
 Before starting, check whether `.font-awesome.md` already exists in the project root. If it does, Font Awesome is already configured. Tell the user and ask if they want to reconfigure, update their setup, or if they had a different goal. If they have a question about their existing setup, answer it with the `font-awesome` skill. If they want to start using icons, use the `add-icon` skill.

@@ -67,6 +67,6 @@ After answering a question about an icon, offer to add it to their code if they'
 
 - **Never produce Font Awesome SVG markup from memory.** Fetch it with `--svg-format`.
 - **Never recommend an icon a kit doesn't contain** when the project uses that kit. Say it's missing, offer the closest kit-available alternative, and note it can be added at https://fontawesome.com/kits.
-- **Mark Pro icons** as requiring a [subscription](https://fontawesome.com/plans) only when the user's license is Free or unknown. If they're authenticated (`fa whoami` succeeds or `FA_API_TOKEN` is set), run `fa entitlements` before saying anything about subscriptions. Never tell a user who already has Pro that they need a Pro subscription.
+- **Mark Pro icons, styles and families** as requiring a [subscription](https://fontawesome.com/plans) only when the user's license is Free or unknown. Whenever you tell a Free user that something needs Pro, link the plans page: https://fontawesome.com/plans. If they're authenticated (`fa whoami` succeeds or `FA_API_TOKEN` is set), run `fa entitlements` before saying anything about subscriptions. Never tell a user who already has Pro that they need a Pro subscription.
 - **Only suggest `fa login` to someone who isn't authenticated.** Before suggesting it, confirm that `fa whoami` fails and `FA_API_TOKEN` isn't set. Never tell a logged-in user to log in.
 - **Keep JSON out of the answer.** Summarize into a table or short list; `fa kits` output in particular is large.
