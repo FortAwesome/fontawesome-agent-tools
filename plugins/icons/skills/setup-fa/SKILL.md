@@ -36,7 +36,7 @@ Before starting, check whether `.font-awesome.md` already exists in the project 
 
 This skill uses shared files from the `font-awesome` skill. That skill is normally installed next to this one, at `../font-awesome/` relative to this skill's base directory. If it's installed somewhere else (for example, in a different skills directory), use that location wherever this file says `../font-awesome/`.
 
-**Step 0 below checks for it** and, if it's missing, shows the user a message. After that, continue in reduced mode:
+**Step 0 below checks for it** and, if it's missing, shows the user a message and asks whether to go ahead. If they say yes, continue in reduced mode:
 
 - Skip every instruction to read a file under `../font-awesome/`, and don't run the fallback scripts (they live in that skill). This skill's own `references/` files are still available.
 - Use the `fa` CLI commands named in this file and its references. Get the latest version from `fa releases` (the entry with `isLatest: true`). For anything else, check `fa <command> --help`. If a kit or account command fails with an auth error, ask the user to run `fa login` in a separate terminal.
@@ -88,12 +88,12 @@ sh <this skill's base directory>/scripts/check-font-awesome.sh
 ```
 
 - If it prints `font-awesome skill: installed`, continue with step 1.
-- If it prints `NOT INSTALLED` and a message, the user's Font Awesome tools are incomplete and they need to know. **Show that message word for word, at the start of your reply. It's short on purpose, so don't drop it.** Then continue in reduced mode (see "Requires the `font-awesome` skill" above).
+- If it prints `NOT INSTALLED` and a message, the user's Font Awesome tools are incomplete and they need to know. **Stop before changing anything.** Reply with that message, word for word, followed by the question "Do you want me to go ahead without it?", and end your turn. Don't recommend a method, install anything, or edit any file until the user answers. If they say yes, continue in reduced mode (see "Requires the `font-awesome` skill" above) from step 1, and don't repeat the message. If they say no, stop.
 - The script only looks next to this skill. If it says `NOT INSTALLED` but the `font-awesome` skill is in your list of available skills, use that copy and don't show the message.
 
 #### Example replies when the `font-awesome` skill is missing
 
-These show whole replies. The message from step 0 comes first, word for word, in your first reply of the conversation, and not again after that. What follows it depends on the task.
+These show whole replies. Your first reply is only the message from step 0, word for word, and the question. Nothing changes until the user answers, and the message isn't repeated after that.
 
 **Example 1.** Only `setup-fa` is installed. A SvelteKit app with no Font Awesome yet. The user says: "get Font Awesome working in this app"
 
@@ -101,21 +101,21 @@ Your reply:
 
 > Note: the `font-awesome` skill, which `setup-fa` needs, isn't installed. It was added in version 0.1.0 of the Font Awesome agent tools. Install it with `npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome`, or see https://github.com/FortAwesome/fontawesome-agent-tools for other ways to install it. Until then, some of the usual checks are skipped.
 >
+> Do you want me to go ahead without it?
+
+**Example 2.** Same conversation, next turn. The user answers: "yes". You already showed the message, so don't show it again.
+
+Your reply:
+
 > This is a SvelteKit app with no Font Awesome yet. I recommend a Kit package via npm (`@awesome.me/kit-<token>`). Which Kit should I use, or would you rather use npm packages without a Kit?
 
-**Example 2.** Only `setup-fa` is installed. A static HTML site. The user says: "install Font Awesome with my kit abc1234567"
+**Example 3.** Only `setup-fa` is installed. A static HTML site. The user says: "install Font Awesome with my kit abc1234567"
 
 Your reply:
 
 > Note: the `font-awesome` skill, which `setup-fa` needs, isn't installed. It was added in version 0.1.0 of the Font Awesome agent tools. Install it with `npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome`, or see https://github.com/FortAwesome/fontawesome-agent-tools for other ways to install it. Until then, some of the usual checks are skipped.
 >
-> I added the embed script for Kit `abc1234567` to the `<head>` of `index.html`, added a test icon to the header, and wrote `.font-awesome.md`. Open the page to check the icon renders.
-
-**Example 3.** Same conversation as the first example, one turn later. The user answers: "Use my kit def9876543." You already showed the message, so don't show it again.
-
-Your reply:
-
-> I added `.npmrc` for the Font Awesome registry, installed `@awesome.me/kit-def9876543`, added a test icon to `src/routes/+page.svelte`, and wrote `.font-awesome.md`. Set `FA_PACKAGE_TOKEN` before your next `npm install`.
+> Do you want me to go ahead without it?
 
 ### 1. Detect the project type
 
@@ -219,4 +219,4 @@ After setup is complete, tell the user what they can do next:
 
 ## Before you finish
 
-If step 0 printed the missing-skill message, check that your reply includes it, exactly as printed, before you report on the setup.
+If step 0 printed the missing-skill message, your first reply must be that message and the question, with no changes made. If you've already got the user's answer, don't repeat the message.
