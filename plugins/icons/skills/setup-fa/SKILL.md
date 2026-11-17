@@ -88,7 +88,7 @@ sh <this skill's base directory>/scripts/check-font-awesome.sh
 ```
 
 - If it prints `font-awesome skill: installed`, continue with step 1.
-- If it prints `NOT INSTALLED` and a message, the user's Font Awesome tools are incomplete and they need to know. **Stop before changing anything.** Reply with that message, word for word, followed by the question "Do you want me to go ahead without it?", and end your turn. Don't recommend a method, install anything, or edit any file until the user answers. If they say yes, continue in reduced mode (see "Requires the `font-awesome` skill" above) from step 1, and don't repeat the message. If they say no, stop.
+- If it prints `NOT INSTALLED` and a message, the user's Font Awesome tools are incomplete and they need to know. **Stop before changing anything.** Reply with that message, word for word, followed by the question "Do you want me to go ahead without it?", and end your turn. Start the reply with the message itself: don't explain why you're stopping or mention these instructions. Don't recommend a method, install anything, or edit any file until the user answers. If they say yes, continue in reduced mode (see "Requires the `font-awesome` skill" above) from step 1, and don't repeat the message. If they say no, stop.
 - The script only looks next to this skill. If it says `NOT INSTALLED` but the `font-awesome` skill is in your list of available skills, use that copy and don't show the message.
 
 #### Example replies when the `font-awesome` skill is missing
