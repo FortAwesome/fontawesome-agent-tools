@@ -91,6 +91,32 @@ sh <this skill's base directory>/scripts/check-font-awesome.sh
 - If it prints `NOT INSTALLED` and a message, the user's Font Awesome tools are incomplete and they need to know. **Show that message word for word, at the start of your reply. It's short on purpose, so don't drop it.** Then continue in reduced mode (see "Requires the `font-awesome` skill" above).
 - The script only looks next to this skill. If it says `NOT INSTALLED` but the `font-awesome` skill is in your list of available skills, use that copy and don't show the message.
 
+#### Example replies when the `font-awesome` skill is missing
+
+These show whole replies. The message from step 0 comes first, word for word, in your first reply of the conversation, and not again after that. What follows it depends on the task.
+
+**Example 1.** Only `setup-fa` is installed. A SvelteKit app with no Font Awesome yet. The user says: "get Font Awesome working in this app"
+
+Your reply:
+
+> Note: the `font-awesome` skill, which `setup-fa` needs, isn't installed. It was added in version 0.1.0 of the Font Awesome agent tools. Install it with `npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome`, or see https://github.com/FortAwesome/fontawesome-agent-tools for other ways to install it. Until then, some of the usual checks are skipped.
+>
+> This is a SvelteKit app with no Font Awesome yet. I recommend a Kit package via npm (`@awesome.me/kit-<token>`). Which Kit should I use, or would you rather use npm packages without a Kit?
+
+**Example 2.** Only `setup-fa` is installed. A static HTML site. The user says: "install Font Awesome with my kit abc1234567"
+
+Your reply:
+
+> Note: the `font-awesome` skill, which `setup-fa` needs, isn't installed. It was added in version 0.1.0 of the Font Awesome agent tools. Install it with `npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome`, or see https://github.com/FortAwesome/fontawesome-agent-tools for other ways to install it. Until then, some of the usual checks are skipped.
+>
+> I added the embed script for Kit `abc1234567` to the `<head>` of `index.html`, added a test icon to the header, and wrote `.font-awesome.md`. Open the page to check the icon renders.
+
+**Example 3.** Same conversation as the first example, one turn later. The user answers: "Use my kit def9876543." You already showed the message, so don't show it again.
+
+Your reply:
+
+> I added `.npmrc` for the Font Awesome registry, installed `@awesome.me/kit-def9876543`, added a test icon to `src/routes/+page.svelte`, and wrote `.font-awesome.md`. Set `FA_PACKAGE_TOKEN` before your next `npm install`.
+
 ### 1. Detect the project type
 
 **Use a subagent** (via the Agent tool with `subagent_type: "Explore"`) to determine:

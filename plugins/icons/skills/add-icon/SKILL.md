@@ -80,6 +80,36 @@ sh <this skill's base directory>/scripts/check-font-awesome.sh
 - If it prints `NOT INSTALLED` and a message, the user's Font Awesome tools are incomplete and they need to know. **Show that message word for word, at the start of your reply. It's short on purpose, so don't drop it.** Then continue in reduced mode (see "Requires the `font-awesome` skill" above).
 - The script only looks next to this skill. If it says `NOT INSTALLED` but the `font-awesome` skill is in your list of available skills, use that copy and don't show the message.
 
+#### Example replies when the `font-awesome` skill is missing
+
+These show whole replies. The message from step 0 comes first, word for word, in your first reply of the conversation, and not again after that. What follows it depends on the task.
+
+**Example 1.** Only `add-icon` is installed. A Vue project that uses the Free npm packages and has no `.font-awesome.md`. The user says: "put a trash can on the delete button in src/components/Item.vue"
+
+Your reply:
+
+> Note: the `font-awesome` skill, which `add-icon` needs, isn't installed. It was added in version 0.1.0 of the Font Awesome agent tools. Install it with `npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome`, or see https://github.com/FortAwesome/fontawesome-agent-tools for other ways to install it. Until then, some of the usual checks are skipped.
+>
+> I added a trash can (`faTrashCan`, solid) to the delete button in `src/components/Item.vue`, registered with the project's existing `library.add` call, and wrote `.font-awesome.md`. I haven't run the build.
+
+**Example 2.** Only `add-icon` is installed. A static HTML site with a Kit embed. The user says: "put a bell icon next to the Notifications link"
+
+Your reply:
+
+> Note: the `font-awesome` skill, which `add-icon` needs, isn't installed. It was added in version 0.1.0 of the Font Awesome agent tools. Install it with `npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome`, or see https://github.com/FortAwesome/fontawesome-agent-tools for other ways to install it. Until then, some of the usual checks are skipped.
+>
+> I added `<i class="fa-solid fa-bell"></i>` next to the Notifications link in `index.html`. I couldn't confirm your Kit includes `bell`, because that check needs the `font-awesome` skill.
+
+**Example 3.** Only `add-icon` is installed. The user says: "give me the markup for a calendar icon" and names no file.
+
+Your reply:
+
+> Note: the `font-awesome` skill, which `add-icon` needs, isn't installed. It was added in version 0.1.0 of the Font Awesome agent tools. Install it with `npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome`, or see https://github.com/FortAwesome/fontawesome-agent-tools for other ways to install it. Until then, some of the usual checks are skipped.
+>
+> Here's the markup for `calendar` in your project's default style:
+>
+> `<i class="fa-solid fa-calendar"></i>`
+
 ### 1. Resolve the icon name
 
 First, determine whether the project uses a Kit for integrating Font Awesome. If the project has a `.font-awesome.md` file, read it to determine whether a Kit is in use.
