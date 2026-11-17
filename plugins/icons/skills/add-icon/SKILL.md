@@ -120,9 +120,16 @@ Use the Kit's resolved release as `<version>` in the commands below: the **Versi
 
 To verify the icon exists in the kit, run `fa kit icon --kit-token <TOKEN> <icon>`.
 
-If the icon does not exist, follow `../font-awesome/references/suggest-icon.md` with the user's `icon` input as the concept, scoped to the Kit. Auto-accept the top recommendation without prompting the user to confirm, if there are any recommendations.
+If the icon isn't in the Kit, what you do next depends on the Kit's subset type (`subsetType` from `fa kit show --kit-token <TOKEN>`: `FULL`, `AUTO` for By Style, or `CUSTOM` for By Icon):
 
-If that turns up no recommendations, it may be because the Kit's subset does not include any icons similar to the user's query. In that case, search all of Font Awesome (not just the Kit) for similar icons using `fa search --version <version> --query <icon>`. Let the user know that the icon they requested is not in their Kit's subset, but they could add it to their Kit at https://fontawesome.com/kits.
+- **Full Library (`FULL`) or By Style (`AUTO`) Kit:** these contain every icon, so the name isn't a Font Awesome icon at all. Follow `../font-awesome/references/suggest-icon.md` with the user's `icon` input as the concept, scoped to the Kit, and use the top recommendation without asking.
+- **By Icon (`CUSTOM`) Kit:** the Kit holds only a hand-picked subset, so its best match can be far from what the user meant. Compare it with the full catalog before using it:
+  1. Search the full catalog: `fa search --version <version> --query <icon> --page-size 10`. Note the top ten icon names.
+  2. Search the Kit: `fa search --kit-token <TOKEN> --query <icon> --page-size 10`.
+  3. If the Kit's top hit is among the catalog's top ten, use it without asking, and tell the user which icon you used and that it's the closest one in their Kit.
+  4. Otherwise (including when the Kit search finds nothing), **stop before generating code and ask.** Say the Kit has no close match for what they asked for, and list the catalog's top ten by name only. Offer two choices: add one of those icons to the Kit's subset at https://fontawesome.com/kits and try again, or use one of the less relevant icons already in the Kit (name them, from the Kit search).
+
+  If the request isn't a single word (for example "an icon for coziness"), you can also try a closer search term, such as "cozy". Compare the Kit and the catalog with the same term.
 
 #### If project does not use a Kit
 
@@ -219,7 +226,7 @@ Re-use the output of `fa kit icon --kit-token <TOKEN> <icon>` from Step 1: "Reso
 
 If your chosen family-style for the icon isn't included but another is, tell the user, and ask if they'd prefer to use another family-style that is available, or else tell them to add the missing one to the kit's subset.
 
-If the icon is **not** in the Kit at all, stop before generating code. Tell the user the icon isn't part of their Kit's subset, and offer two paths: (a) add the icon to the Kit at https://fontawesome.com/kits and re-run, or (b) pick a kit-available alternative — find one with `../font-awesome/references/suggest-icon.md`, which is Kit-aware. Do not silently add an icon the Kit lacks.
+Step 1 already settled which icon to use, and that it's in the Kit (or you stopped and asked). Never add an icon the Kit lacks.
 
 To list what the Kit does contain, `fa kit family-styles --kit-token <TOKEN>` shows the available family-styles and `fa kit icons --kit-token <TOKEN>` lists the available icon variants, which are the icons in specific family-styles. Both are paginated queries.
 
