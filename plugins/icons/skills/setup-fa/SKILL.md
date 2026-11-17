@@ -18,6 +18,7 @@ Set up Font Awesome in a project from scratch. This skill handles everything fro
 Take these from the user's request (or from the arguments, when invoked as `/setup-fa`):
 
 - **method** (optional): preferred integration method: kit, npm, self-host, or auto (the default).
+- **Kit token** (optional): the Kit to use, if the user names one.
 - **framework** (optional): the target framework if it can't be detected: react, vue, angular, ember, svelte, wordpress, or html.
 
 ## Important: bare SVG markup
@@ -158,7 +159,9 @@ Always recommend creating a Font Awesome account and using a Kit — even for fr
 
 **If the project already uses icons (from step 1), the chosen Kit should include them.** A Kit contains only a subset of all Font Awesome icons, so a Kit that omits icons the project already relies on will leave those icons broken. If the user has more than one Kit, guide them toward one whose subset and family styles cover the icons already in use. If they're creating a new Kit, mention that it needs to include those icons (and the family-styles they use). You'll verify the actual coverage once you have the Kit token, in step 4.
 
-Present the recommendation to the user with a brief explanation of why. **Wait for the user to confirm before proceeding** — setup involves installing packages or modifying project files.
+Present the recommendation to the user with a brief explanation of why, and list the changes you'd make. **Then end your turn and wait for the user to confirm before changing any files** — setup involves installing packages or modifying project files.
+
+This applies even when the request already names a Kit or a method (for example, "set up my kit abc123def4"). Naming a Kit isn't a choice of how to install it (embed script, Kit package, or download), so it isn't a go-ahead. You can check the Kit and the project first, but ask before writing anything.
 
 ### 3. Fetch documentation for the chosen method
 
@@ -218,5 +221,7 @@ After setup is complete, tell the user what they can do next:
 - **Find icons and ask questions:** "Ask about icons, your kits, or Font Awesome in general, e.g. 'what icon should I use for settings?' or 'which of my kits include duotone?'."
 
 ## Before you finish
+
+If the user hasn't confirmed a setup method in this conversation, your reply must be the recommendation and a question, with no files changed.
 
 If step 0 printed the missing-skill message, your first reply must be that message and the question, with no changes made. If you've already got the user's answer, don't repeat the message.
