@@ -18,7 +18,7 @@ This is the `/suggest-icon` command. It's kept so the command still works. Since
 
 ## If the `font-awesome` skill is missing
 
-Tell the user this message. Show it word for word, at the start of your reply. It's short on purpose, so don't drop it.
+Your reply must start with this message, word for word, before anything else. Show it even though you can still answer without the skill: it's how the user finds out what to install. It's short on purpose, so don't drop or reword it, and don't explain why you're showing it.
 
 > Note: the `font-awesome` skill, which `/suggest-icon` now uses, isn't installed. It was added in version 0.1.0 of the Font Awesome agent tools. Install it with `npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome`, or see https://github.com/FortAwesome/fontawesome-agent-tools for other ways to install it. Here's a basic suggestion in the meantime.
 
@@ -28,3 +28,7 @@ Then give a basic answer:
 - **If `fa` isn't installed:** suggest a few icon names from your own knowledge, say plainly that you couldn't verify them, and link https://fontawesome.com/search?q=<use-case> so the user can check.
 
 Don't produce SVG markup from memory.
+
+## Before you finish
+
+If the `font-awesome` skill is missing, check that your reply starts with the message above, word for word.
