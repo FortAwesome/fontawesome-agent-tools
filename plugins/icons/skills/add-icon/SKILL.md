@@ -22,7 +22,7 @@ Take these from the user's request (or from the arguments, when invoked as `/add
 
 This skill uses shared files from the `font-awesome` skill. That skill is normally installed next to this one, at `../font-awesome/` relative to this skill's base directory. If it's installed somewhere else (for example, in a different skills directory), use that location wherever this file says `../font-awesome/`.
 
-**Step 0 below checks for it** and, if it's missing, shows the user a message. After that, continue in reduced mode:
+**Step 0 below checks for it** and, if it's missing, shows the user a message and asks whether to go ahead. If they say yes, continue in reduced mode:
 
 - Skip every instruction to read a file under `../font-awesome/`, and don't run the fallback scripts (they live in that skill).
 - Use the `fa` CLI commands named in this file. For anything else, check `fa <command> --help`. If a kit or account command fails with an auth error, ask the user to run `fa login` in a separate terminal.
@@ -77,38 +77,34 @@ sh <this skill's base directory>/scripts/check-font-awesome.sh
 ```
 
 - If it prints `font-awesome skill: installed`, continue with step 1.
-- If it prints `NOT INSTALLED` and a message, the user's Font Awesome tools are incomplete and they need to know. **Show that message word for word, at the start of your reply. It's short on purpose, so don't drop it.** Then continue in reduced mode (see "Requires the `font-awesome` skill" above).
+- If it prints `NOT INSTALLED` and a message, the user's Font Awesome tools are incomplete and they need to know. **Stop before changing anything.** Reply with that message, word for word, followed by the question "Do you want me to go ahead without it?", and end your turn. Don't look up the icon, write `.font-awesome.md`, or edit any file until the user answers. If they say yes, continue in reduced mode (see "Requires the `font-awesome` skill" above) and don't repeat the message. If they say no, stop.
 - The script only looks next to this skill. If it says `NOT INSTALLED` but the `font-awesome` skill is in your list of available skills, use that copy and don't show the message.
 
 #### Example replies when the `font-awesome` skill is missing
 
-These show whole replies. The message from step 0 comes first, word for word, in your first reply of the conversation, and not again after that. What follows it depends on the task.
+These show whole replies. Your first reply is only the message from step 0, word for word, and the question. Nothing changes until the user answers, and the message isn't repeated after that.
 
-**Example 1.** Only `add-icon` is installed. A Vue project that uses the Free npm packages and has no `.font-awesome.md`. The user says: "put a trash can on the delete button in src/components/Item.vue"
+**Example 1.** Only `add-icon` is installed. A Vue project that uses the Free npm packages. The user says: "put a trash can on the delete button in src/components/Item.vue"
 
 Your reply:
 
 > Note: the `font-awesome` skill, which `add-icon` needs, isn't installed. It was added in version 0.1.0 of the Font Awesome agent tools. Install it with `npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome`, or see https://github.com/FortAwesome/fontawesome-agent-tools for other ways to install it. Until then, some of the usual checks are skipped.
 >
+> Do you want me to go ahead without it?
+
+**Example 2.** Same conversation, next turn. The user answers: "yes, go ahead". You already showed the message, so don't show it again.
+
+Your reply:
+
 > I added a trash can (`faTrashCan`, solid) to the delete button in `src/components/Item.vue`, registered with the project's existing `library.add` call, and wrote `.font-awesome.md`. I haven't run the build.
 
-**Example 2.** Only `add-icon` is installed. A static HTML site with a Kit embed. The user says: "put a bell icon next to the Notifications link"
+**Example 3.** Only `add-icon` is installed. A static HTML site with a Kit embed. The user says: "put a bell icon next to the Notifications link"
 
 Your reply:
 
 > Note: the `font-awesome` skill, which `add-icon` needs, isn't installed. It was added in version 0.1.0 of the Font Awesome agent tools. Install it with `npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome`, or see https://github.com/FortAwesome/fontawesome-agent-tools for other ways to install it. Until then, some of the usual checks are skipped.
 >
-> I added `<i class="fa-solid fa-bell"></i>` next to the Notifications link in `index.html`. I couldn't confirm your Kit includes `bell`, because that check needs the `font-awesome` skill.
-
-**Example 3.** Only `add-icon` is installed. The user says: "give me the markup for a calendar icon" and names no file.
-
-Your reply:
-
-> Note: the `font-awesome` skill, which `add-icon` needs, isn't installed. It was added in version 0.1.0 of the Font Awesome agent tools. Install it with `npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome`, or see https://github.com/FortAwesome/fontawesome-agent-tools for other ways to install it. Until then, some of the usual checks are skipped.
->
-> Here's the markup for `calendar` in your project's default style:
->
-> `<i class="fa-solid fa-calendar"></i>`
+> Do you want me to go ahead without it?
 
 ### 1. Resolve the icon name
 
@@ -392,4 +388,4 @@ If anything is missing or outdated, update `.font-awesome.md` with the new infor
 
 ## Before you finish
 
-If step 0 printed the missing-skill message, check that your reply includes it, exactly as printed, before you report on adding the icon.
+If step 0 printed the missing-skill message, your first reply must be that message and the question, with no changes made. If you've already got the user's answer, don't repeat the message.
