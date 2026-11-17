@@ -18,15 +18,9 @@ This is the `/fa-help` command. It's kept so the command still works. Since vers
 
 ## If the `font-awesome` skill is missing
 
-Tell the user this message. Show it word for word, as the first thing in your reply. Don't shorten or reword it, and keep all three install lines.
+Tell the user this message. Show it word for word, at the start of your reply. It's short on purpose, so don't drop it.
 
-> `/fa-help` now uses the `font-awesome` skill, which isn't installed. It was added in version 0.1.0 of the Font Awesome agent tools and can also answer questions about your account, kits, and specific icons. To install it:
->
-> - npx skills: `npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome`
-> - Claude Code plugin: `/plugin marketplace update fontawesome-agent-tools`, then update the `icons` plugin from `/plugin`
-> - claude.ai or the Skills API: upload the `font-awesome` skill from https://github.com/FortAwesome/fontawesome-agent-tools
->
-> I'll answer from the Font Awesome docs in the meantime.
+> Note: the `font-awesome` skill, which `/fa-help` now uses, isn't installed. It was added in version 0.1.0 of the Font Awesome agent tools. Install it with `npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome`, or see https://github.com/FortAwesome/fontawesome-agent-tools for other ways to install it. I'll answer from the Font Awesome docs in the meantime.
 
 Then answer from the official docs:
 

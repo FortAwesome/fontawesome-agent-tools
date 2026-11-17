@@ -70,17 +70,15 @@ When the project uses a Kit, `fa kit icon --kit-token <TOKEN> <icon>` tells you 
 
 ### 0. Check for the `font-awesome` skill
 
-Do this first, every time: check that `../font-awesome/SKILL.md` exists (relative to this skill's base directory, not the project). If it doesn't, and the `font-awesome` skill isn't available anywhere else in this session, you **must** tell the user this before doing anything else. It isn't optional: their install is incomplete, and they can't fix it unless you tell them. Show it word for word, as the first thing in your reply. Don't shorten or reword it, and keep all three install lines.
+Do this first, every time. Run the check script from this skill's base directory:
 
-> Adding icons works best with the `font-awesome` skill, which isn't installed. It was added in version 0.1.0 of the Font Awesome agent tools and holds the `fa` CLI guidance, icon search, and `.font-awesome.md` format that this skill uses. To install it:
->
-> - npx skills: `npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome`
-> - Claude Code plugin: `/plugin marketplace update fontawesome-agent-tools`, then update the `icons` plugin from `/plugin`
-> - claude.ai or the Skills API: upload the `font-awesome` skill from https://github.com/FortAwesome/fontawesome-agent-tools
->
-> I'll continue without it, but I can't run some of the usual checks.
+```
+sh <this skill's base directory>/scripts/check-font-awesome.sh
+```
 
-Then continue in reduced mode (see "Requires the `font-awesome` skill" above).
+- If it prints `font-awesome skill: installed`, continue with step 1.
+- If it prints `NOT INSTALLED` and a message, the user's Font Awesome tools are incomplete and they need to know. **Show that message word for word, at the start of your reply. It's short on purpose, so don't drop it.** Then continue in reduced mode (see "Requires the `font-awesome` skill" above).
+- The script only looks next to this skill. If it says `NOT INSTALLED` but the `font-awesome` skill is in your list of available skills, use that copy and don't show the message.
 
 ### 1. Resolve the icon name
 
@@ -361,3 +359,7 @@ Review whether any information discovered during this run is missing from `.font
 - The version, license, or integration method has changed
 
 If anything is missing or outdated, update `.font-awesome.md` with the new information — keep the same format, just fill in the gaps. Do not rewrite sections that are already accurate. Let the user know what was updated so they can commit the change.
+
+## Before you finish
+
+If step 0 printed the missing-skill message, check that your reply includes it, exactly as printed, before you report on adding the icon.

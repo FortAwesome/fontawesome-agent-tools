@@ -18,15 +18,9 @@ This is the `/suggest-icon` command. It's kept so the command still works. Since
 
 ## If the `font-awesome` skill is missing
 
-Tell the user this message. Show it word for word, as the first thing in your reply. Don't shorten or reword it, and keep all three install lines.
+Tell the user this message. Show it word for word, at the start of your reply. It's short on purpose, so don't drop it.
 
-> `/suggest-icon` now uses the `font-awesome` skill, which isn't installed. It was added in version 0.1.0 of the Font Awesome agent tools and gives better suggestions: it checks your kits, your license, and the exact Font Awesome version you use. To install it:
->
-> - npx skills: `npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome`
-> - Claude Code plugin: `/plugin marketplace update fontawesome-agent-tools`, then update the `icons` plugin from `/plugin`
-> - claude.ai or the Skills API: upload the `font-awesome` skill from https://github.com/FortAwesome/fontawesome-agent-tools
->
-> Here's a basic suggestion in the meantime.
+> Note: the `font-awesome` skill, which `/suggest-icon` now uses, isn't installed. It was added in version 0.1.0 of the Font Awesome agent tools. Install it with `npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome`, or see https://github.com/FortAwesome/fontawesome-agent-tools for other ways to install it. Here's a basic suggestion in the meantime.
 
 Then give a basic answer:
 

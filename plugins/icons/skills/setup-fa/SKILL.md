@@ -81,17 +81,15 @@ When the `font-awesome` skill is installed, use its shared tooling:
 
 ### 0. Check for the `font-awesome` skill
 
-Do this first, every time: check that `../font-awesome/SKILL.md` exists (relative to this skill's base directory, not the project). If it doesn't, and the `font-awesome` skill isn't available anywhere else in this session, you **must** tell the user this before doing anything else. It isn't optional: their install is incomplete, and they can't fix it unless you tell them. Show it word for word, as the first thing in your reply. Don't shorten or reword it, and keep all three install lines.
+Do this first, every time. Run the check script from this skill's base directory:
 
-> Setting up Font Awesome works best with the `font-awesome` skill, which isn't installed. It was added in version 0.1.0 of the Font Awesome agent tools and holds the `fa` CLI guidance, icon search, and `.font-awesome.md` format that this skill uses. To install it:
->
-> - npx skills: `npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome`
-> - Claude Code plugin: `/plugin marketplace update fontawesome-agent-tools`, then update the `icons` plugin from `/plugin`
-> - claude.ai or the Skills API: upload the `font-awesome` skill from https://github.com/FortAwesome/fontawesome-agent-tools
->
-> I'll continue without it, but I can't run some of the usual checks.
+```
+sh <this skill's base directory>/scripts/check-font-awesome.sh
+```
 
-Then continue in reduced mode (see "Requires the `font-awesome` skill" above).
+- If it prints `font-awesome skill: installed`, continue with step 1.
+- If it prints `NOT INSTALLED` and a message, the user's Font Awesome tools are incomplete and they need to know. **Show that message word for word, at the start of your reply. It's short on purpose, so don't drop it.** Then continue in reduced mode (see "Requires the `font-awesome` skill" above).
+- The script only looks next to this skill. If it says `NOT INSTALLED` but the `font-awesome` skill is in your list of available skills, use that copy and don't show the message.
 
 ### 1. Detect the project type
 
@@ -192,3 +190,7 @@ After setup is complete, tell the user what they can do next:
 
 - **Add icons:** "Ask me to add an icon anywhere in your code, e.g. 'add a shopping cart icon to the checkout button'."
 - **Find icons and ask questions:** "Ask about icons, your kits, or Font Awesome in general, e.g. 'what icon should I use for settings?' or 'which of my kits include duotone?'."
+
+## Before you finish
+
+If step 0 printed the missing-skill message, check that your reply includes it, exactly as printed, before you report on the setup.
