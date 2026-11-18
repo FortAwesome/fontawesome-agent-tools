@@ -179,6 +179,14 @@ Run a discovery process to figure out how the project uses Font Awesome. **Use a
 
 The subagent should return: which Font Awesome packages are installed (with versions), any kit IDs found, CDN URLs, the framework integration method, import patterns observed in source files, the license (free vs pro), and any project conventions (wrapper components, default sizing, etc.).
 
+#### If discovery finds no Font Awesome
+
+If the project has no Font Awesome setup (no packages, Kit, CDN link, or imports), adding the icon means setting up Font Awesome first, and that's the user's decision. **Stop before changing anything.** Don't write `.font-awesome.md`, install packages, or edit any file. Tell the user the project doesn't have Font Awesome set up yet, and ask whether to set it up (with the `setup-fa` skill) and then add the icon. End your turn and wait for their answer. If they say yes, follow `setup-fa`, then come back and add the icon. If they say no, stop.
+
+Ask the same way whatever else the project uses. Don't look for other icon libraries, and don't treat them as a reason to go ahead or to decline.
+
+The one exception: the user asked for the icon as inline SVG markup (see "Important: bare SVG markup" below). That needs no Font Awesome setup, so fetch the SVG with `fa` and insert it without asking.
+
 After the subagent returns, if a kit ID was found, fetch the kit details:
 
 - **`fa` CLI:** Run `fa kit show --kit-token <id>`. Returns JSON with the kit's version, license, technology, and available families. Needs auth (see `fa-cli.md`).
@@ -396,3 +404,5 @@ If anything is missing or outdated, update `.font-awesome.md` with the new infor
 ## Before you finish
 
 If step 0 printed the missing-skill message, your first reply must be that message and the question, with no changes made. If you've already got the user's answer, don't repeat the message.
+
+If discovery found no Font Awesome setup and the user hasn't yet agreed to set it up, your reply must be that question, with no files changed (unless they asked for inline SVG).
