@@ -4,7 +4,9 @@ description: >-
   Insert a Font Awesome icon into the user's project code, writing the correct
   markup, component, or import for the project's integration method and keeping
   .font-awesome.md current. Use when the user asks to add, insert, or put an icon
-  somewhere in their code. For questions about icons (finding one, checking
+  somewhere in their code, including when the icon is one part of a bigger task
+  (building a page, panel, or component that should have an icon): load this
+  before writing any icon code. For questions about icons (finding one, checking
   availability, kits), use the font-awesome skill instead.
 ---
 
