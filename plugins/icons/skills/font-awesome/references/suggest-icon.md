@@ -28,9 +28,9 @@ Lead with the exact match if there is one, emphasized, with whether it's Free or
 | Icon | Families | Availability |
 |------|----------|--------------|
 | `mug-saucer` | classic, sharp, duotone, sharp-duotone | Free |
-| `album-collection` | classic, sharp, duotone, sharp-duotone | Pro (requires a [subscription](https://fontawesome.com/plans)) |
+| `album-collection` | classic, sharp, duotone, sharp-duotone | Pro |
 
-Keep the **Families** and **Availability** columns in every table, for every row. A count of family-styles is fine for Families, and you can add a column such as "Why it fits", but don't drop either one or move it into the prose. Availability says Free or Pro even when the user has Pro; that's when you add whether they can use it.
+Keep the **Families** and **Availability** columns in every table, for every row. A count of family-styles is fine for Families, and you can add a column such as "Why it fits", but don't drop either one or move it into the prose. Availability says Free or Pro even when the user has Pro; that's when you add whether they can use it. Add "(requires a [subscription](https://fontawesome.com/plans))" to Pro rows only for a user you know is on Free, or who isn't authenticated.
 
 - With a kit in scope, recommend only kit-available icons. If your best conceptual match isn't in the kit, say so, recommend the closest kit-available icon, and note that the missing one can be added at https://fontawesome.com/kits.
 - When the user's license is known, say whether each pick is usable for them, not just whether it's Free or Pro in the abstract. If they're authenticated, check `fa entitlements` first, and don't tell a Pro user they need a subscription.

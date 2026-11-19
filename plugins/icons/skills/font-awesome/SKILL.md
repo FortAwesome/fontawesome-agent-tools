@@ -38,7 +38,9 @@ Many questions are about the user: "what can I use", "my kits", "do I have". Wor
    - `fa kits`: every kit, with version, license, subset type, technology, and custom icons.
 3. **Neither.** If not logged in and no project config, answer from the public catalog for the latest release and say that's what you did. Suggest `fa login` (run in a separate terminal) for answers about their own account, but only once you know they aren't authenticated (see the ground rules).
 
-Don't do all of this for every question. "Is there a bat icon?" needs only the catalog. "Can I use the bat icon?" needs entitlements, and if they have kits, which kits contain it.
+Don't do all of this for every question. "Is there a bat icon?" needs only the catalog to find the icon. "Can I use the bat icon?" needs entitlements, and if they have kits, which kits contain it.
+
+**Before saying anything about Pro or subscriptions, know the license.** If your answer includes a Pro icon, style or family and the user is authenticated (`FA_API_TOKEN` is set or `fa whoami` succeeds), run `fa entitlements` first, even for a plain "is there an X icon?" question. A Pro user should hear that they can use it, not that they need to buy it.
 
 ## Answering common questions
 
@@ -69,6 +71,6 @@ After answering a question about an icon, offer to add it to their code if they'
 
 - **Never produce Font Awesome SVG markup from memory**, even if the user insists, says it's fine, or asks for an approximation. Don't draw a hand-made lookalike either. Fetch it with `--svg-format`. If that needs a login the user doesn't have, say so and offer the options: run `fa login` in a separate terminal, set `FA_API_TOKEN`, or download the SVG from the icon's page on https://fontawesome.com/icons.
 - **Never recommend an icon a kit doesn't contain** when the project uses that kit. Say it's missing, offer the closest kit-available alternative, and note it can be added at https://fontawesome.com/kits.
-- **Mark Pro icons, styles and families** as requiring a [subscription](https://fontawesome.com/plans) only when the user's license is Free or unknown. Whenever you tell a Free user that something needs Pro, link the plans page: https://fontawesome.com/plans. If they're authenticated (`fa whoami` succeeds or `FA_API_TOKEN` is set), run `fa entitlements` before saying anything about subscriptions. Never tell a user who already has Pro that they need a Pro subscription.
+- **Say whether an icon, style or family is Free or Pro, and say it needs a [subscription](https://fontawesome.com/plans) only to a user you know is on Free, or who isn't authenticated.** Whenever you tell a Free user that something needs Pro, link the plans page: https://fontawesome.com/plans. If they're authenticated (`fa whoami` succeeds or `FA_API_TOKEN` is set), run `fa entitlements` before saying anything about subscriptions. If you still don't know their license, call the icon Pro and stop there: no subscription claim, no plans link. Never tell a user who already has Pro that they need a Pro subscription.
 - **Only suggest `fa login` to someone who isn't authenticated.** Before suggesting it, confirm that `fa whoami` fails and `FA_API_TOKEN` isn't set. Never tell a logged-in user to log in.
 - **Keep JSON out of the answer.** Summarize into a table or short list; `fa kits` output in particular is large.
