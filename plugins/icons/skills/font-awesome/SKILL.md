@@ -7,12 +7,12 @@ description: >-
   between versions. Covers finding, searching for, or suggesting icons;
   whether an icon exists and in which styles; Free vs Pro and what the user's
   account includes; the user's kits, kit contents, and custom icons; releases
-  and versions; official SVG markup, including any request for an icon's SVG
-  (even "from memory"); how-to questions about setup, styling, animation,
+  and versions; official SVG markup, including any request for an icon's SVG;
+  how-to questions about setup, styling, animation,
   troubleshooting, and upgrading; setting up Font Awesome in a project; and
   adding an icon to the user's code, including when the icon is one part of a
   bigger task (a page, panel, or component). Load this before writing any Font
-  Awesome icon code. Includes requests about the user, such as "what vampire
+  Awesome icon code. Includes requests about the user, such as "what animal
   icons can I use?", "list my kits", "am I on Pro?", or "add a cart icon to
   the header".
 ---
