@@ -8,7 +8,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parse as parseYaml } from 'yaml';
@@ -48,6 +48,11 @@ const ALLOWED_KEYS = new Set([
 // there don't count toward that decision. Write the description for reliable
 // loading using only terms that fit strictly within this limit.
 const MAX_DESCRIPTION_LENGTH = 1024;
+
+// Codex cuts the body of a plugin-bundled skill to 8,000 bytes when it injects
+// it, so a longer SKILL.md silently loses its tail there. Keep the whole file,
+// frontmatter included, within that, and move detail into references/.
+const MAX_SKILL_MD_BYTES = 8000;
 
 function frontmatter(skillDir) {
   const content = readFileSync(join(skillDir, 'SKILL.md'), 'utf8');
@@ -90,6 +95,15 @@ for (const skillDir of skillDirs) {
       `${name(skillDir)} description is ${description.length} characters; the limit is ` +
         `${MAX_DESCRIPTION_LENGTH}. Terms past the limit are truncated and don't help the agent ` +
         `decide when to load the skill.`,
+    );
+  });
+
+  test(`${name(skillDir)}: SKILL.md fits the size limit`, () => {
+    const bytes = statSync(join(skillDir, 'SKILL.md')).size;
+    assert.ok(
+      bytes <= MAX_SKILL_MD_BYTES,
+      `${name(skillDir)}/SKILL.md is ${bytes} bytes; the limit is ${MAX_SKILL_MD_BYTES}. ` +
+        `Codex truncates plugin skills past it. Move detail into references/.`,
     );
   });
 
