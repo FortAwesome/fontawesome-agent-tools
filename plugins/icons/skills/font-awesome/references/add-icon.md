@@ -139,6 +139,8 @@ Tell the user: "I've written `.font-awesome.md` with your project's Font Awesome
 2. Otherwise, use the default family from `.font-awesome.md`.
 3. If neither, default to `classic`.
 
+**The project's license decides what you can add, not the account's.** If the project is on Free (the License in `.font-awesome.md`, Free-only packages such as `@fortawesome/free-*-svg-icons`, or a Free Kit) and the request needs Pro (a Pro-only icon, or a Pro-only style or family such as light, thin, duotone, or sharp), don't write a Pro import, package, or class: the project can't load it, so the build or the icon breaks. This holds even when `fa entitlements` shows the account has Pro. **Stop before changing any files and ask** which they'd like: the icon in a Free style instead (name it, for example solid), or setting the project up for Pro first (follow `references/setup.md`) and then adding the icon. If the account is on Free too, include the Pro notice from step 6.
+
 If `.font-awesome.md` records a **Kit ID** (kit token), the project's icons come from a Kit, and a Kit contains only a subset of all Font Awesome icons. **Do not add an icon the Kit does not include** — it will not render.
 
 Verify the icon is available in the chosen style and family, based on whether the project uses a Kit:
@@ -303,7 +305,7 @@ If the project or account is on Free (from the `.font-awesome.md` license field,
 
 > Note: `cart-shopping` requires a Font Awesome Pro [subscription](https://fontawesome.com/plans). Your project appears to be using Font Awesome Free.
 
-Don't show this notice to a user who already has Pro.
+Don't show this notice, or link the plans page, to a user whose account already has Pro. For a Pro account with a Free project, the question from step 3 is enough.
 
 ### 7. Update `.font-awesome.md` if needed
 
@@ -317,5 +319,7 @@ Review whether any information discovered during this run is missing from `.font
 If anything is missing or outdated, update `.font-awesome.md` with the new information — keep the same format, just fill in the gaps. Do not rewrite sections that are already accurate. Let the user know what was updated so they can commit the change.
 
 ## Before you finish
+
+If the project is on Free and the request needs Pro, your reply must be the question from step 3 (a Free style, or setting the project up for Pro first), with no files changed.
 
 If discovery found no Font Awesome setup and the user hasn't yet agreed to set it up, your reply must be that question, with no files changed (unless they asked for inline SVG).
