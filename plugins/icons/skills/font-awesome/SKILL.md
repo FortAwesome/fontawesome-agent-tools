@@ -6,17 +6,18 @@ description: >-
   searching for, or suggesting icons; whether an icon exists and in which
   families and styles; Free vs Pro and what the user's account includes; the
   user's kits, kit contents, and custom (uploaded) icons; releases and
-  versions; official SVG markup (never from memory); how-to questions about
-  setup, styling, troubleshooting, and upgrading; installing or setting up
-  Font Awesome in a project; and adding an icon to the user's code, including
-  when the icon is one part of a bigger task such as building a page, panel,
-  or component. Load this before writing any Font Awesome icon code. Includes
-  requests phrased about the user, such as "what vampire icons can I use?",
-  "list my kits", "am I on Pro?", "set up Font Awesome", or "add a cart icon
-  to the header".
+  versions; official SVG markup, including any request for an icon's SVG (even
+  "from memory"); how-to questions about setup, styling, troubleshooting, and
+  upgrading, such as "how do I set up Font Awesome with Vue?"; setting up Font
+  Awesome in a project; and adding an icon to the user's code, including when
+  the icon is one part of a bigger task such as building a page, panel, or
+  component. Load this before writing any Font Awesome icon code. Includes
+  requests about the user, such as "what vampire icons can I use?", "list my
+  kits", "which of my kits has bat?", "show my custom icons", "am I on Pro?",
+  or "add a cart icon to the header".
 ---
 
-This is the entry point for anything Font Awesome. Answer questions directly using the tools below. When the user wants their project's files changed, follow the matching workflow (see "Workflows").
+This is the entry point for anything Font Awesome. Answer questions directly using the tools below. When the user wants their project's files changed, follow the matching workflow (see "Workflows"). If the user invokes `/font-awesome` with no request, ask what they need help with, and change nothing.
 
 Your own knowledge of Font Awesome is probably stale or invalid for a particular user's kit. Icon names change between versions, new families ship, and kits are per-user and may include only a subset of icons. Verify against the API before stating facts.
 
