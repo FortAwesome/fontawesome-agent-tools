@@ -12,7 +12,7 @@ Versions refer to the `icons` plugin. While the version is below 1.0.0, a minor 
 Upgrade steps:
 
 - **Claude Code plugin:** update the `icons` plugin. The old skills are replaced automatically.
-- **npx skills:** updating won't add the new skill. Add it, then remove the old ones (add `--global` to both if you installed globally):
+- **npx skills:** `npx skills update` won't add the new skill, and it keeps the four old ones (it warns that they were deleted upstream). Add the new skill, then remove the old ones (add `--global` to both if you installed globally):
 
   ```
   npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome

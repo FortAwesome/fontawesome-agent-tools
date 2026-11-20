@@ -45,7 +45,7 @@ Setting up Font Awesome or adding an icon writes a `.font-awesome.md` file to yo
 Version 0.1.0 replaces the four skills `add-icon`, `setup-fa`, `suggest-icon`, and `fa-help` with the single `font-awesome` skill. The `/add-icon`, `/setup-fa`, `/suggest-icon`, and `/fa-help` commands are gone: ask in plain language, or type `/font-awesome <request>`.
 
 - **Claude Code plugin:** update as usual (`/plugin marketplace update fontawesome-agent-tools`, then update the `icons` plugin).
-- **npx skills:** updating won't add the new skill. Add `font-awesome`, then remove the old skills:
+- **npx skills:** `npx skills update` won't add the new skill, and it keeps the four old ones (it warns that they were deleted upstream). Add `font-awesome`, then remove the old skills:
 
   ```
   npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome
