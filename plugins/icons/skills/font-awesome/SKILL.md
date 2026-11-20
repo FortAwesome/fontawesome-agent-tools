@@ -2,19 +2,19 @@
 name: font-awesome
 description: >-
   Font Awesome icons, kits, and setup, through the `fa` CLI and the official
-  docs. Use for ANY question or task involving Font Awesome: finding,
-  searching for, or suggesting icons; whether an icon exists and in which
-  families and styles; Free vs Pro and what the user's account includes; the
-  user's kits, kit contents, and custom (uploaded) icons; releases and
-  versions; official SVG markup, including any request for an icon's SVG (even
-  "from memory"); how-to questions about setup, styling, troubleshooting, and
-  upgrading, such as "how do I set up Font Awesome with Vue?"; setting up Font
-  Awesome in a project; and adding an icon to the user's code, including when
-  the icon is one part of a bigger task such as building a page, panel, or
-  component. Load this before writing any Font Awesome icon code. Includes
-  requests about the user, such as "what vampire icons can I use?", "list my
-  kits", "which of my kits has bat?", "show my custom icons", "am I on Pro?",
-  or "add a cart icon to the header".
+  docs. Use for ANY question or task involving Font Awesome, and load it
+  before answering, not from memory: icon names, styles, and APIs change
+  between versions. Covers finding, searching for, or suggesting icons;
+  whether an icon exists and in which styles; Free vs Pro and what the user's
+  account includes; the user's kits, kit contents, and custom icons; releases
+  and versions; official SVG markup, including any request for an icon's SVG
+  (even "from memory"); how-to questions about setup, styling, animation,
+  troubleshooting, and upgrading; setting up Font Awesome in a project; and
+  adding an icon to the user's code, including when the icon is one part of a
+  bigger task (a page, panel, or component). Load this before writing any Font
+  Awesome icon code. Includes requests about the user, such as "what vampire
+  icons can I use?", "list my kits", "am I on Pro?", or "add a cart icon to
+  the header".
 ---
 
 This is the entry point for anything Font Awesome. Answer questions directly using the tools below. When the user wants their project's files changed, follow the matching workflow (see "Workflows"). If the user invokes `/font-awesome` with no request, ask what they need help with, and change nothing.
@@ -79,4 +79,5 @@ After answering a question about an icon, offer to add it to their code if they'
 - **Never recommend an icon a kit doesn't contain** when the project uses that kit. Say it's missing, offer the closest kit-available alternative, and note it can be added at https://fontawesome.com/kits.
 - **Say whether an icon, style or family is Free or Pro, and say it needs a [subscription](https://fontawesome.com/plans) only to a user you know is on Free, or who isn't authenticated.** Whenever you tell a Free user that something needs Pro, link the plans page: https://fontawesome.com/plans. If they're authenticated (`fa whoami` succeeds or `FA_API_TOKEN` is set), run `fa entitlements` before saying anything about subscriptions. If you still don't know their license, call the icon Pro and stop there: no subscription claim, no plans link. Never tell a user who already has Pro that they need a Pro subscription.
 - **Only suggest `fa login` to someone who isn't authenticated.** Before suggesting it, confirm that `fa whoami` fails and `FA_API_TOKEN` isn't set. Never tell a logged-in user to log in.
+- **For a how-to question, answer for the icon library the project actually uses.** If the project uses another icon library (such as Lucide or Heroicons) and has no Font Awesome, answer for that library. You may say in one sentence that Font Awesome isn't set up there, but don't lead with Font Awesome or offer to set it up unless the user asks about Font Awesome. This is for questions only: a request to add an icon follows `references/add-icon.md`, which stops and asks before changing any files when the project has no Font Awesome.
 - **Keep JSON out of the answer.** Summarize into a table or short list; `fa kits` output in particular is large.

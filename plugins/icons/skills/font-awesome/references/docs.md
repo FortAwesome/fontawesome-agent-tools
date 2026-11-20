@@ -8,6 +8,7 @@ Font Awesome publishes docs for LLMs at `https://docs.fontawesome.com`. The inde
 
 ## Steps
 
+0. **In a project, check which icon library it uses before answering:** `.font-awesome.md` if there is one, otherwise the icon packages in `package.json` or the imports in the file the user mentions. If it uses another library and not Font Awesome, answer for that library instead (see the ground rules in `SKILL.md`) and skip the steps below.
 1. **Fetch the index first, every time,** even if you think you know the page's URL. Page paths change between versions, and a guessed URL can 404 or return an outdated page. `WebFetch` `https://docs.fontawesome.com/llms.txt` with a prompt like: "Return the complete content of this file exactly as-is. I need to see every URL and its description."
 2. **Pick the page(s).** URLs end in `.md` and the paths are descriptive (e.g. `/web/setup/use-kit.md`, `/web/style/animate.md`, `/web/use-with/react/troubleshoot.md`). Most questions map to one or two pages. Start with the most specific.
 3. **Fetch them**, at most three per question, with a prompt like: "Return the full content of this documentation page as Markdown. Preserve all headings, code blocks, and tables."
