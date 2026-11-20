@@ -1,7 +1,6 @@
 ---
 name: suggest-icon
 description: Suggest a Font Awesome icon for a particular situation, noun, verb, or concept.
-disable-model-invocation: true
 ---
 
 This is the `/suggest-icon` command. It's kept so the command still works. Since version 0.1.0 of the Font Awesome agent tools, the guidance itself lives in the `font-awesome` skill. That skill is normally installed next to this one, at `../font-awesome/` relative to this skill's base directory. If it's installed somewhere else, use that location instead.
