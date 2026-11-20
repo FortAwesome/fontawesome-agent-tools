@@ -2,19 +2,17 @@
 name: font-awesome
 description: >-
   Font Awesome icons, kits, and setup. Use for ANY question or task involving
-  Font Awesome or code that uses it (`fa-` classes, `<FontAwesomeIcon>`,
-  `@fortawesome/*` packages, Kit scripts), and load it before answering or
-  writing icon code, not from memory: icon names, styles, and APIs change
-  between versions. Covers finding, searching for, or suggesting icons and
-  brand logos; whether an icon exists and in which styles; Free vs Pro and
-  what the user's account includes; the user's kits, kit contents, and custom
-  icons; releases and versions; official SVG markup, including any request for
-  an icon's SVG (even "from memory"); how-to questions about setup, styling,
-  animation, troubleshooting, and upgrading; setting up Font Awesome in a
-  project; and adding an icon to the user's code, including when the icon is
-  one part of a bigger task (a page, panel, or component). Includes requests
-  about the user, such as "what animal icons can I use?", "list my kits", "am
-  I on Pro?", or "add a cart icon to the header".
+  Font Awesome, and load it before answering or writing icon code, not from
+  memory: icon names, styles, and APIs change between versions. Covers
+  finding, searching for, or suggesting icons; whether an icon exists and in
+  which styles; Free vs Pro and what the user's account includes; the user's
+  kits, kit contents, and custom icons; releases and versions; official SVG
+  markup, including any request for an icon's SVG (even "from memory"); how-to
+  questions about setup, styling, animation, troubleshooting, and upgrading;
+  setting up Font Awesome in a project; and adding an icon to the user's code,
+  including when the icon is one part of a bigger task (a page, panel, or
+  component). Includes requests about the user, such as "what animal icons can
+  I use?", "list my kits", "am I on Pro?", or "add a cart icon to the header".
 ---
 
 Entry point for anything Font Awesome. Answer questions directly with the tools below. When the user wants project files changed, follow the matching workflow. If `/font-awesome` is invoked with no request, ask what they need and change nothing.
