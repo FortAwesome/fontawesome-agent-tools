@@ -9,26 +9,28 @@ This is a Claude Code plugin marketplace package (`fontawesome-agent-tools`) by 
 ## Architecture
 
 - **`.claude-plugin/marketplace.json`** — Top-level marketplace manifest. Declares the package name, owner, and lists all plugins.
-- **`plugins/icons/`** — The "icons" plugin. Its config lives at `plugins/icons/.claude-plugin/plugin.json`; its skills live under `plugins/icons/skills/`:
-  - **`font-awesome`** — The hub skill and the single entry point for any Font Awesome question or action (finding icons, kits, custom icons, entitlements, versions, docs). Its broad `description` is what makes Claude load it without the user naming a skill. It owns all shared material: `references/fa-cli.md` (the `fa` CLI command map, auth, and quirks), `references/suggest-icon.md` (icon suggestion workflow), `references/docs.md` (answering from docs.fontawesome.com), `references/font-awesome-md-format.md`, the fallback `scripts/`, and `evals/`.
-  - **`add-icon`** and **`setup-fa`** — Workflow skills for jobs that change a project's files. Their descriptions are deliberately narrow so they don't compete with the hub on questions, and they reference the hub's shared material via `../font-awesome/...` paths rather than duplicating it.
-  - **`suggest-icon`** and **`fa-help`** — Thin aliases kept so the existing `/suggest-icon` and `/fa-help` commands keep working. They can't set `disable-model-invocation` (claude.ai rejects it), so Claude may load them on its own; their descriptions are kept short so they compete with the hub as little as possible, and their bodies just point at the hub's references. Don't remove them, since that would break the commands for existing users.
+- **`plugins/icons/`** — The "icons" plugin. Its config lives at `plugins/icons/.claude-plugin/plugin.json`. It has one skill, **`font-awesome`** (`plugins/icons/skills/font-awesome/`), the single entry point for every Font Awesome question and task. Its broad `description` is what makes Claude load it without the user naming a skill, and `/font-awesome <request>` invokes it directly. It uses progressive disclosure: `SKILL.md` answers common questions and routes everything else to a file under `references/`:
+  - `fa-cli.md` (the `fa` CLI command map, auth, and quirks), `suggest-icon.md` (icon suggestions), `docs.md` (answering from docs.fontawesome.com), and `font-awesome-md-format.md`.
+  - **Workflows** that change a project's files: `add-icon.md` (add an icon to the user's code) and `setup.md` (set up Font Awesome, with one `setup-path-*.md` per integration method). `SKILL.md` tells Claude to read the whole workflow before touching any file.
+  - The fallback `scripts/` (used when the `fa` CLI isn't installed) and `evals/`.
 
 The manifest schema follows `https://anthropic.com/claude-code/marketplace.schema.json`.
 
-## Adding a New Skill
+## Adding a capability
 
-1. Create a directory under `plugins/<plugin-name>/skills/<skill-name>/`.
-2. Add a `SKILL.md` with YAML frontmatter using only `name`, `description`, `license`, `compatibility`, `metadata`, and `allowed-tools`, the keys every agent platform accepts. Other keys are rejected by at least one platform (claude.ai upload, the Skills API, the Agent Skills validator), even ones Claude Code respects such as `disable-model-invocation`. Document inputs in an "Inputs" section of the body instead. The `description` decides when an agent loads the skill, so say what the skill is for and when to use it, and keep it to 1,024 characters: most agent tools truncate past that, so terms beyond it don't help trigger the skill. `npm test` enforces these rules.
-   - Prefer extending the `font-awesome` hub (a new reference file plus a row in its "Answering common questions" table) over adding a new skill. Add a separate skill only for a multi-step workflow that changes project files.
-   - Put shared CLI guidance in `font-awesome/references/fa-cli.md`, not in individual skills.
-3. If it belongs to a new plugin, add the plugin entry to `.claude-plugin/marketplace.json` and create its `plugin.json`.
-4. If the skill reads anything from `../font-awesome/`, give it a "Requires the `font-awesome` skill" check like the one in `add-icon`. Users of `npx skills`, claude.ai, and the Skills API can install skills one at a time, so the skill must check that `font-awesome` is present, tell the user how to install it, and continue in a reduced mode. In any text a user might see, call it the `font-awesome` skill, never "the hub".
-5. Run `bash scripts/deploy-skills.sh` to create the top-level symlink (or let the pre-commit hook handle it).
+Prefer extending `font-awesome` over adding a skill. One skill means one description to trigger on, nothing for skills to compete over, and no dependency between skills that users of `npx skills`, claude.ai, or the Skills API could install one at a time.
+
+- **A new kind of question:** add a row to the "Answering common questions" table in `SKILL.md`, pointing to a new or existing reference file.
+- **A new workflow that changes project files:** add `references/<workflow>.md` and a row to the "Workflows" table in `SKILL.md`. Make sure the `description` still covers it.
+- Put shared CLI guidance in `references/fa-cli.md`. Paths in reference files are relative to the skill directory (`references/…`, `scripts/…`).
+
+`SKILL.md` frontmatter may use only `name`, `description`, `license`, `compatibility`, `metadata`, and `allowed-tools`, the keys every agent platform accepts. Other keys are rejected by at least one platform (claude.ai upload, the Skills API, the Agent Skills validator), even ones Claude Code respects such as `disable-model-invocation`. The `description` decides when an agent loads the skill: keep it to 1,024 characters, since most agent tools truncate past that and terms beyond it don't help trigger the skill. `npm test` enforces these rules.
+
+If you do add a skill, create `plugins/<plugin>/skills/<name>/SKILL.md` and run `bash scripts/deploy-skills.sh` to create the top-level symlink (or let the pre-commit hook handle it). If it belongs to a new plugin, add the plugin to `.claude-plugin/marketplace.json` and create its `plugin.json`.
 
 ## Tests
 
-`tests/skills.test.mjs` (Node's built-in test runner) checks every `plugins/*/skills/*/SKILL.md`: frontmatter keys are limited to the set every agent platform accepts, `description` is at most 1,024 characters, and the skill passes the Agent Skills reference validator. The validator is the Python `skills-ref` command, pinned in `tests/requirements.txt`; the test runs it once per skill. CI runs the tests on every push (`.github/workflows/test.yml`). Run them locally with:
+`tests/skills.test.mjs` (Node's built-in test runner) checks every `plugins/*/skills/*/SKILL.md`: frontmatter keys are limited to the set every agent platform accepts, `description` is at most 1,024 characters, every `references/…`, `scripts/…`, and relative Markdown link in the skill's files points to a file that exists, and the skill passes the Agent Skills reference validator. The validator is the Python `skills-ref` command, pinned in `tests/requirements.txt`; the test runs it once per skill. CI runs the tests on every push (`.github/workflows/test.yml`). Run them locally with:
 
 ```bash
 npm ci

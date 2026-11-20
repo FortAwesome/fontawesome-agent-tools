@@ -6,24 +6,24 @@ Versions refer to the `icons` plugin. While the version is below 1.0.0, a minor 
 
 ### Breaking
 
-- **New required skill: `font-awesome`.** `add-icon`, `setup-fa`, `/suggest-icon`, and `/fa-help` now depend on it. Claude Code plugin users get it automatically when they update. If you installed with `npx skills`, updating won't add it, so install it explicitly:
+- **One skill: `font-awesome`.** It replaces `add-icon`, `setup-fa`, `suggest-icon`, and `fa-help`, which are removed. It answers any Font Awesome question, sets up Font Awesome in a project, and adds icons to your code. Their guidance, scripts, and the `.font-awesome.md` format now live in it.
+- **The `/add-icon`, `/setup-fa`, `/suggest-icon`, and `/fa-help` commands are gone.** Ask in plain language ("add a cart icon to the header", "set up Font Awesome", "what icon should I use for settings?"), or type `/font-awesome <request>` in Claude Code.
+
+Upgrade steps:
+
+- **Claude Code plugin:** update the `icons` plugin. The old skills are replaced automatically.
+- **npx skills:** updating won't add the new skill. Add it, then remove the old ones (add `--global` to both if you installed globally):
 
   ```
   npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome
+  npx skills remove add-icon setup-fa suggest-icon fa-help
   ```
 
-  On claude.ai or the Skills API, upload the `font-awesome` skill.
-- **Shared files moved into `font-awesome`.** The fallback scripts (`latest-version.py`, `icon-exists.py`, `search.py`, `fetch-kit.py`) and `font-awesome-md-format.md` moved from `suggest-icon/` and `add-icon/` to `font-awesome/scripts/` and `font-awesome/references/`.
-- **`suggest-icon` and `fa-help` are now commands only.** Claude no longer loads them on its own; the `font-awesome` skill handles those questions instead. Typing `/suggest-icon` or `/fa-help` still works.
+- **claude.ai or the Skills API:** upload the `font-awesome` skill and delete the four old ones.
 
 ### Added
 
-- **`font-awesome` skill.** A single place for any Font Awesome question: icon search and suggestions, availability by family and style, Free vs Pro entitlements, your kits and their contents, custom icons and their SVGs, releases, official SVG markup, and answers from the docs. You can ask in plain language without naming a skill.
-- **Clear messages when `font-awesome` is missing.** Each skill that depends on it checks for it, tells you how to install it, and continues with reduced checks rather than failing.
-
-### Changed
-
-- `add-icon` and `setup-fa` have narrower descriptions, so Claude uses them only when you want to change your project's files.
+- **`font-awesome` skill.** A single place for anything Font Awesome: icon search and suggestions, availability by family and style, Free vs Pro entitlements, your kits and their contents, custom icons and their SVGs, releases, official SVG markup, answers from the docs, setting up Font Awesome, and adding icons to your code. You can ask in plain language without naming a skill.
 
 ## 0.0.9 and earlier
 

@@ -1,6 +1,6 @@
 # `.font-awesome.md` file format
 
-This file lives in the project root and records the project's Font Awesome configuration. The `font-awesome` skill reads it to scope answers to the project, `add-icon` reads it to generate correct code, and `setup-fa` creates it during initial setup. Commit it so the whole team benefits.
+This file lives in the project root and records the project's Font Awesome configuration. The `font-awesome` skill reads it to scope answers to the project and to generate correct code when adding icons, and creates it during initial setup. Commit it so the whole team benefits.
 
 ## Template
 
@@ -41,8 +41,8 @@ Detected by the Font Awesome agent tools. Commit this file so the whole team ben
 
 ## When to create
 
-- **`setup-fa`** creates this file at the end of initial setup.
-- **`add-icon`** creates this file during its discovery step if it doesn't already exist.
+- **Setup** ([setup.md](setup.md)) creates this file at the end of initial setup.
+- **Adding an icon** ([add-icon.md](add-icon.md)) creates this file during its discovery step if it doesn't already exist.
 
 ## When to update
 

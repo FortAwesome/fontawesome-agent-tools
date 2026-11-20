@@ -21,4 +21,4 @@ Font Awesome publishes docs for LLMs at `https://docs.fontawesome.com`. The inde
 - If the question is really about the user's account or kits ("does my kit support duotone?"), answer it with the `fa` CLI (see [fa-cli.md](fa-cli.md)), not the docs.
 - If the docs don't cover the question, say so. Don't make up an answer.
 - If the question isn't about Font Awesome (general CSS, an unrelated framework), say so and answer briefly without fetching docs.
-- If the answer leads to an action, offer it: add an icon (`add-icon` skill), set up Font Awesome (`setup-fa` skill), or find an icon ([suggest-icon.md](suggest-icon.md)).
+- If the answer leads to an action, offer it: add an icon ([add-icon.md](add-icon.md)), set up Font Awesome ([setup.md](setup.md)), or find an icon ([suggest-icon.md](suggest-icon.md)).

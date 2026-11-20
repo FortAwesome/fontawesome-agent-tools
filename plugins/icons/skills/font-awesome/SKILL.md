@@ -1,21 +1,22 @@
 ---
 name: font-awesome
 description: >-
-  Font Awesome knowledge and tooling through the `fa` CLI and the official docs.
-  Use for ANY question or action involving Font Awesome: finding, searching for,
-  or suggesting icons; checking whether an icon exists or which families and
-  styles it comes in; Free vs Pro and what the user's account is entitled to;
-  the user's kits, what a kit contains, kit subsets and family-styles; custom
-  (uploaded) icons and their SVGs; releases and versions; official SVG markup,
-  including any request for an icon's SVG (even "from memory"); and how-to
-  questions about setup, styling, troubleshooting, and upgrading, such as "how
-  do I set up Font Awesome with Vue?".
-  Includes questions phrased about the user, such as "what vampire icons can I
-  use?", "list my kits", "show my custom icons", "which of my kits has bat?",
-  or "am I on Pro?". To put an icon into project code, use add-icon instead.
+  Font Awesome icons, kits, and setup, through the `fa` CLI and the official
+  docs. Use for ANY question or task involving Font Awesome: finding,
+  searching for, or suggesting icons; whether an icon exists and in which
+  families and styles; Free vs Pro and what the user's account includes; the
+  user's kits, kit contents, and custom (uploaded) icons; releases and
+  versions; official SVG markup (never from memory); how-to questions about
+  setup, styling, troubleshooting, and upgrading; installing or setting up
+  Font Awesome in a project; and adding an icon to the user's code, including
+  when the icon is one part of a bigger task such as building a page, panel,
+  or component. Load this before writing any Font Awesome icon code. Includes
+  requests phrased about the user, such as "what vampire icons can I use?",
+  "list my kits", "am I on Pro?", "set up Font Awesome", or "add a cart icon
+  to the header".
 ---
 
-This is the entry point for anything Font Awesome. Answer the question directly using the tools below; there is no need for the user to pick a narrower skill. Hand off to a workflow skill only when the job is a multi-step change to a project (see "Workflows").
+This is the entry point for anything Font Awesome. Answer questions directly using the tools below. When the user wants their project's files changed, follow the matching workflow (see "Workflows").
 
 Your own knowledge of Font Awesome is probably stale or invalid for a particular user's kit. Icon names change between versions, new families ship, and kits are per-user and may include only a subset of icons. Verify against the API before stating facts.
 
@@ -60,10 +61,14 @@ When showing icons visually, render the SVG markup the API returned; don't redra
 
 ## Workflows
 
-Two jobs change a project's files and have their own skills with step-by-step procedures. Load them when the user asks for that change, not for questions about it.
+Two jobs change a project's files. Each has a step-by-step workflow. **Read the whole workflow file before you touch any project file**, and follow it, including where it says to stop and ask.
 
-- **`add-icon`**: put an icon into the user's code (it resolves the integration method, writes the right markup or import, and keeps `.font-awesome.md` current).
-- **`setup-fa`**: set up Font Awesome in a project from scratch (pick an integration method, install, and write `.font-awesome.md`).
+| The user wants | Workflow |
+|---|---|
+| An icon in their code: adding, inserting, or swapping one, or writing a page, panel, or component that should have an icon | [references/add-icon.md](references/add-icon.md). It resolves the icon and the integration method, writes the right markup or import, and keeps `.font-awesome.md` current. |
+| Font Awesome installed, set up, or reconfigured in their project | [references/setup.md](references/setup.md). It picks an integration method, follows one of the `references/setup-path-*.md` files, and writes `.font-awesome.md`. |
+
+A question about how to do one of these ("how do I set up Font Awesome with Vue?", "how do I add an icon in React?") is a question, not a request to change the project: answer it from [references/docs.md](references/docs.md), and offer to do it.
 
 After answering a question about an icon, offer to add it to their code if they're working in a project.
 

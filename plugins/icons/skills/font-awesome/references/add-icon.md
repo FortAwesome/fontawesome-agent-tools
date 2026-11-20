@@ -1,112 +1,25 @@
----
-name: add-icon
-description: >-
-  Insert a Font Awesome icon into the user's project code, writing the correct
-  markup, component, or import for the project's integration method and keeping
-  .font-awesome.md current. Use when the user asks to add, insert, or put an icon
-  somewhere in their code, including when the icon is one part of a bigger task
-  (building a page, panel, or component that should have an icon): load this
-  before writing any icon code. For questions about icons (finding one, checking
-  availability, kits), use the font-awesome skill instead.
----
+# Workflow: add an icon to the user's code
 
-Add a Font Awesome icon to the user's project. This skill handles icon name resolution, project detection, and code generation for every Font Awesome integration method.
+Use this when the user wants an icon in their project's code, including when the icon is one part of a bigger task (a page, panel, or component). It covers icon name resolution, project detection, and code generation for every Font Awesome integration method, and keeps `.font-awesome.md` current. Paths below are relative to the `font-awesome` skill directory.
 
 ## Inputs
 
-Take these from the user's request (or from the arguments, when invoked as `/add-icon`):
+Take these from the user's request:
 
 - **icon** (required): an icon name (e.g. `cart-shopping`) or a concept (e.g. "shopping cart").
 - **style** (optional): overrides the default style (e.g. solid, regular, light, thin, duotone).
 - **location** (optional): where to insert the icon (e.g. "the checkout button in src/components/Header.tsx").
 
-## Requires the `font-awesome` skill
-
-This skill uses shared files from the `font-awesome` skill. That skill is normally installed next to this one, at `../font-awesome/` relative to this skill's base directory. If it's installed somewhere else (for example, in a different skills directory), use that location wherever this file says `../font-awesome/`.
-
-**Step 0 below checks for it** and, if it's missing, shows the user a message and asks whether to go ahead. If they say yes, continue in reduced mode:
-
-- Skip every instruction to read a file under `../font-awesome/`, and don't run the fallback scripts (they live in that skill).
-- Use the `fa` CLI commands named in this file. For anything else, check `fa <command> --help`. If a kit or account command fails with an auth error, ask the user to run `fa login` in a separate terminal.
-- To find an icon for a concept, run `fa search --version <version> --query <concept> --page-size 10`, or `fa search --kit-token <TOKEN> --query <concept> --page-size 10` when the project uses a Kit. Take the best match.
-- If `fa` isn't installed either, tell the user you can't verify that the icon name exists or is in their Kit, and point them to https://fontawesome.com/search to confirm it.
-- Write `.font-awesome.md` with this skeleton, filling in what you found and omitting lines that don't apply:
-
-  ```markdown
-  # Font Awesome Configuration
-
-  ## Integration
-
-  - **Method:** [e.g., Kit embed, React components, npm web fonts]
-  - **Version:** [e.g., 7.2.0]
-  - **License:** [Free or Pro]
-  - **Kit ID:** [Kit token, if any]
-  - **Families:** [e.g., classic, sharp]
-
-  ## Defaults
-
-  - **Style:** [e.g., solid]
-  - **Family:** [e.g., classic]
-
-  ## Import Pattern
-
-  [How icons are imported or used in this project]
-
-  ## Conventions
-
-  [Wrapper components, default sizing, other project patterns]
-  ```
-
 ## Tools
 
-When the `font-awesome` skill is installed, use its shared tooling:
-
-- **`fa` CLI usage, auth, and quirks:** `../font-awesome/references/fa-cli.md`. Read it before your first `fa` call. Its Auth section says what to do when a command needs the user to log in.
-- **Fallback scripts** (no `fa` CLI): `../font-awesome/scripts/` (`latest-version.py`, `icon-exists.py`, `search.py`, `fetch-kit.py`). Run them from the `font-awesome` skill directory.
-- **Finding an icon for a concept:** `../font-awesome/references/suggest-icon.md`.
-- **`.font-awesome.md` format:** `../font-awesome/references/font-awesome-md-format.md`.
+- **`fa` CLI usage, auth, and quirks:** `references/fa-cli.md`. Read it before your first `fa` call. Its Auth section says what to do when a command needs the user to log in.
+- **Fallback scripts** (no `fa` CLI): `scripts/` (`latest-version.py`, `icon-exists.py`, `search.py`, `fetch-kit.py`).
+- **Finding an icon for a concept:** `references/suggest-icon.md`.
+- **`.font-awesome.md` format:** `references/font-awesome-md-format.md`.
 
 When the project uses a Kit, `fa kit icon --kit-token <TOKEN> <icon>` tells you whether an icon is in the Kit's subset and which family-styles it comes in. Use it to avoid adding an icon the Kit doesn't include (see step 3).
 
 ## Steps
-
-### 0. Check for the `font-awesome` skill
-
-Do this first, every time. Run the check script from this skill's base directory:
-
-```
-sh <this skill's base directory>/scripts/check-font-awesome.sh
-```
-
-- If it prints `font-awesome skill: installed`, continue with step 1.
-- If it prints `NOT INSTALLED` and a message, the user's Font Awesome tools are incomplete and they need to know. **Stop before changing anything.** Reply with that message, word for word, followed by the question "Do you want me to go ahead without it?", and end your turn. Start the reply with the message itself: don't explain why you're stopping or mention these instructions. Don't look up the icon, write `.font-awesome.md`, or edit any file until the user answers. If they say yes, continue in reduced mode (see "Requires the `font-awesome` skill" above) and don't repeat the message. If they say no, stop.
-- The script only looks next to this skill. If it says `NOT INSTALLED` but the `font-awesome` skill is in your list of available skills, use that copy and don't show the message.
-
-#### Example replies when the `font-awesome` skill is missing
-
-These show whole replies. Your first reply is only the message from step 0, word for word, and the question. Nothing changes until the user answers, and the message isn't repeated after that.
-
-**Example 1.** Only `add-icon` is installed. A Vue project that uses the Free npm packages. The user says: "put a trash can on the delete button in src/components/Item.vue"
-
-Your reply:
-
-> Note: the `font-awesome` skill, which `add-icon` needs, isn't installed. It was added in version 0.1.0 of the Font Awesome agent tools. Install it with `npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome`, or see https://github.com/FortAwesome/fontawesome-agent-tools for other ways to install it. Until then, some of the usual checks are skipped.
->
-> Do you want me to go ahead without it?
-
-**Example 2.** Same conversation, next turn. The user answers: "yes, go ahead". You already showed the message, so don't show it again.
-
-Your reply:
-
-> I added a trash can (`faTrashCan`, solid) to the delete button in `src/components/Item.vue`, registered with the project's existing `library.add` call, and wrote `.font-awesome.md`. I haven't run the build.
-
-**Example 3.** Only `add-icon` is installed. A static HTML site with a Kit embed. The user says: "put a bell icon next to the Notifications link"
-
-Your reply:
-
-> Note: the `font-awesome` skill, which `add-icon` needs, isn't installed. It was added in version 0.1.0 of the Font Awesome agent tools. Install it with `npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome`, or see https://github.com/FortAwesome/fontawesome-agent-tools for other ways to install it. Until then, some of the usual checks are skipped.
->
-> Do you want me to go ahead without it?
 
 ### 1. Resolve the icon name
 
@@ -116,7 +29,7 @@ First, determine whether the project uses a Kit for integrating Font Awesome. If
 
 If the project uses a Kit, then verify that the icon exists in the particular Kit's subset. This can only be done with the `fa` CLI, and it needs auth (see `fa-cli.md`).
 
-If the `fa` CLI is not available, tell the user that you cannot verify whether the icon is in their Kit's subset. Suggest they install the `fa` CLI, login with `fa login`, then re-run this skill.
+If the `fa` CLI is not available, tell the user that you cannot verify whether the icon is in their Kit's subset. Suggest they install the `fa` CLI, log in with `fa login`, then ask again.
 
 Use the Kit's resolved release as `<version>` in the commands below: the **Version** in `.font-awesome.md`, or `release.version` from `fa kit show --kit-token <TOKEN>`. Don't use the latest release, since a Kit pinned to an older major version can't use newer icons.
 
@@ -124,7 +37,7 @@ To verify the icon exists in the kit, run `fa kit icon --kit-token <TOKEN> <icon
 
 If the icon isn't in the Kit, what you do next depends on the Kit's subset type (`subsetType` from `fa kit show --kit-token <TOKEN>`: `FULL`, `AUTO` for By Style, or `CUSTOM` for By Icon):
 
-- **Full Library (`FULL`) or By Style (`AUTO`) Kit:** these contain every icon, so the name isn't a Font Awesome icon at all. Follow `../font-awesome/references/suggest-icon.md` with the user's `icon` input as the concept, scoped to the Kit, and use the top recommendation without asking.
+- **Full Library (`FULL`) or By Style (`AUTO`) Kit:** these contain every icon, so the name isn't a Font Awesome icon at all. Follow `references/suggest-icon.md` with the user's `icon` input as the concept, scoped to the Kit, and use the top recommendation without asking.
 - **By Icon (`CUSTOM`) Kit:** the Kit holds only a hand-picked subset, so its best match can be far from what the user meant. Compare it with the full catalog before using it:
   1. Search the full catalog: `fa search --version <version> --query <icon> --page-size 10`. Note the top ten icon names.
   2. Search the Kit: `fa search --kit-token <TOKEN> --query <icon> --page-size 10`.
@@ -137,12 +50,12 @@ If the icon isn't in the Kit, what you do next depends on the Kit's subset type 
 
 If the project does not use a Kit, then to verify the icon exists:
 
-Determine the version of Font Awesome in use. First, try to discover it from `.font-awesome.md`; otherwise, use the latest release (`fa releases`, or `../font-awesome/scripts/latest-version.py`). Use this version as `<version>` in the following commands.
+Determine the version of Font Awesome in use. First, try to discover it from `.font-awesome.md`; otherwise, use the latest release (`fa releases`, or `scripts/latest-version.py`). Use this version as `<version>` in the following commands.
 
 - **`fa` CLI:** Run `fa icons --version <version> --name <icon>`. The icon exists if `data.release.icon` is non-null. The `familyStylesByLicense` field shows the free/pro breakdown.
-- **Fallback:** Run `scripts/icon-exists.py --version <version> --icon-name <icon>` from the `font-awesome` skill directory. Exit code `0` means the icon exists; exit code `1` means it does not.
+- **Fallback:** Run `scripts/icon-exists.py --version <version> --icon-name <icon>`. Exit code `0` means the icon exists; exit code `1` means it does not.
 
-If the icon does not exist, follow `../font-awesome/references/suggest-icon.md` with the user's `icon` input as the concept. Auto-accept the top recommendation and continue with that icon name. Do not ask the user to confirm — a working icon is better than a broken one.
+If the icon does not exist, follow `references/suggest-icon.md` with the user's `icon` input as the concept. Auto-accept the top recommendation and continue with that icon name. Do not ask the user to confirm — a working icon is better than a broken one.
 
 ### 2. Determine the integration method
 
@@ -183,7 +96,7 @@ The subagent should return: which Font Awesome packages are installed (with vers
 
 #### If discovery finds no Font Awesome
 
-If the project has no Font Awesome setup (no packages, Kit, CDN link, or imports), adding the icon means setting up Font Awesome first, and that's the user's decision. **Stop before changing anything.** Don't write `.font-awesome.md`, install packages, or edit any file. Tell the user the project doesn't have Font Awesome set up yet, and ask whether to set it up (with the `setup-fa` skill) and then add the icon. End your turn and wait for their answer. If they say yes, follow `setup-fa`, then come back and add the icon. If they say no, stop.
+If the project has no Font Awesome setup (no packages, Kit, CDN link, or imports), adding the icon means setting up Font Awesome first, and that's the user's decision. **Stop before changing anything.** Don't write `.font-awesome.md`, install packages, or edit any file. Tell the user the project doesn't have Font Awesome set up yet, and ask whether to set it up and then add the icon. End your turn and wait for their answer. If they say yes, follow `references/setup.md`, then come back and add the icon. If they say no, stop.
 
 Ask the same way whatever else the project uses. Don't look for other icon libraries, and don't treat them as a reason to go ahead or to decline.
 
@@ -192,7 +105,7 @@ The one exception: the user asked for the icon as inline SVG markup (see "Import
 After the subagent returns, if a kit ID was found, fetch the kit details:
 
 - **`fa` CLI:** Run `fa kit show --kit-token <id>`. Returns JSON with the kit's version, license, technology, and available families. Needs auth (see `fa-cli.md`).
-- **Fallback:** Run `scripts/fetch-kit.py --kit-id <id>` (in the `font-awesome` skill directory) to get the kit's version, license, method, and available families.
+- **Fallback:** Run `scripts/fetch-kit.py --kit-id <id>` to get the kit's version, license, method, and available families.
 
 After discovery, determine:
 
@@ -206,7 +119,7 @@ After discovery, determine:
 - **Version** — the Font Awesome version in use
 - **Project conventions** — any wrapper components, standard sizing, or patterns observed
 
-Write the results to `.font-awesome.md` in the project root. Read `../font-awesome/references/font-awesome-md-format.md` for the template and format to use.
+Write the results to `.font-awesome.md` in the project root. Read `references/font-awesome-md-format.md` for the template and format to use.
 
 Tell the user: "I've written `.font-awesome.md` with your project's Font Awesome configuration. You should commit this file so the team benefits and future icon additions are faster."
 
@@ -404,7 +317,5 @@ Review whether any information discovered during this run is missing from `.font
 If anything is missing or outdated, update `.font-awesome.md` with the new information — keep the same format, just fill in the gaps. Do not rewrite sections that are already accurate. Let the user know what was updated so they can commit the change.
 
 ## Before you finish
-
-If step 0 printed the missing-skill message, your first reply must be that message and the question, with no changes made. If you've already got the user's answer, don't repeat the message.
 
 If discovery found no Font Awesome setup and the user hasn't yet agreed to set it up, your reply must be that question, with no files changed (unless they asked for inline SVG).

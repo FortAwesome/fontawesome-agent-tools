@@ -2,8 +2,8 @@
 
 1. Ask the user for their Kit code.
 2. Fetch Kit details to determine version and available families:
-   - **`fa` CLI:** Needs auth (see the `font-awesome` skill's `references/fa-cli.md`). Run `fa kit show --kit-token <code>` to get the Kit's technology setting, and `fa kit family-styles --kit-token <code>` to get the kit's family-styles. If the user can't log in, fall back below.
-   - **Fallback:** Run `scripts/fetch-kit.py --kit-id <code>` (in the `font-awesome` skill directory).
+   - **`fa` CLI:** Needs auth (see `references/fa-cli.md`). Run `fa kit show --kit-token <code>` to get the Kit's technology setting, and `fa kit family-styles --kit-token <code>` to get the kit's family-styles. If the user can't log in, fall back below.
+   - **Fallback:** Run `scripts/fetch-kit.py --kit-id <code>`.
 3. Configure the npm registry in `.npmrc` in the project root. It needs all three of these lines. Kit packages come from the `@awesome.me` scope, and the Pro packages a Kit package depends on come from `@fortawesome`. Both scopes use the same private registry and the same token:
    ```
    @awesome.me:registry=https://npm.fontawesome.com/

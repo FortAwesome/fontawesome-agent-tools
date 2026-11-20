@@ -1,1 +1,0 @@
-Note: the `font-awesome` skill, which `setup-fa` needs, isn't installed. It was added in version 0.1.0 of the Font Awesome agent tools. Install it with `npx skills add FortAwesome/fontawesome-agent-tools --skill font-awesome`, or see https://github.com/FortAwesome/fontawesome-agent-tools for other ways to install it. Until then, some of the usual checks are skipped.

@@ -9,7 +9,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
+import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parse as parseYaml } from 'yaml';
 
@@ -60,6 +60,14 @@ function frontmatter(skillDir) {
 
 const name = (skillDir) => skillDir.split('/').pop();
 
+function markdownFiles(dir) {
+  return readdirSync(dir, { withFileTypes: true }).flatMap((d) => {
+    const path = join(dir, d.name);
+    if (d.isDirectory()) return markdownFiles(path);
+    return d.name.endsWith('.md') ? [path] : [];
+  });
+}
+
 test('skills are found', () => {
   assert.ok(skillDirs.length > 0, 'no plugins/*/skills/*/SKILL.md files found');
 });
@@ -83,6 +91,24 @@ for (const skillDir of skillDirs) {
         `${MAX_DESCRIPTION_LENGTH}. Terms past the limit are truncated and don't help the agent ` +
         `decide when to load the skill.`,
     );
+  });
+
+  // Every file a skill's Markdown points to must exist: `references/…` and
+  // `scripts/…` paths (relative to the skill directory) and relative Markdown
+  // links (relative to the file that contains them).
+  test(`${name(skillDir)}: referenced files exist`, () => {
+    const missing = [];
+    for (const file of markdownFiles(skillDir)) {
+      const text = readFileSync(file, 'utf8');
+      for (const [ref] of text.matchAll(/\b(?:references|scripts)\/[\w.-]+\.(?:md|py|sh|json)\b/g)) {
+        if (!existsSync(join(skillDir, ref))) missing.push(`${relative(skillDir, file)}: ${ref}`);
+      }
+      for (const [, link] of text.matchAll(/\]\(([^)\s#]+)(?:#[^)]*)?\)/g)) {
+        if (/^[a-z]+:/i.test(link)) continue;
+        if (!existsSync(join(dirname(file), link))) missing.push(`${relative(skillDir, file)}: (${link})`);
+      }
+    }
+    assert.deepEqual(missing, [], `${name(skillDir)} points to files that don't exist:\n  ${missing.join('\n  ')}`);
   });
 
   // skills-ref is the Agent Skills reference validator:

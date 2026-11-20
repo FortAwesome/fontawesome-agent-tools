@@ -38,6 +38,6 @@ Keep the **Families** and **Availability** columns in every table, for every row
 
 ## 4. Offer the next step
 
-If you're running this as part of another workflow (such as `add-icon`), skip this step and hand the top pick back to that workflow without asking.
+If you're running this as part of another workflow (such as [add-icon.md](add-icon.md)), skip this step and hand the top pick back to that workflow without asking.
 
-Otherwise, if the user is working in a project, ask whether they'd like the icon added to their code. If yes, follow the `add-icon` skill with the chosen icon (and location, if given).
+Otherwise, if the user is working in a project, ask whether they'd like the icon added to their code. If yes, follow [add-icon.md](add-icon.md) with the chosen icon (and location, if given).

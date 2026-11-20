@@ -58,7 +58,7 @@
       "files": [],
       "assertions": [
         "The font-awesome skill is loaded without the user naming a skill",
-        "The output is produced from fa kits, not from setup-fa or a kit download",
+        "The output is produced from fa kits, not from the setup workflow or a kit download",
         "The output is a summarized table, not raw JSON"
       ]
     },
