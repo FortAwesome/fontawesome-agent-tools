@@ -1,0 +1,3 @@
+# Agent Skills reference validator (Python), run by tests/skills.test.mjs.
+# Not published to PyPI, so pinned to a commit.
+skills-ref @ git+https://github.com/agentskills/agentskills.git@83021e2be457a9b6679148719c1f6074f0ad975e#subdirectory=skills-ref

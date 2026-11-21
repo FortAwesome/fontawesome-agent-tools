@@ -12,6 +12,7 @@
    @fortawesome:registry=https://npm.fontawesome.com/
    //npm.fontawesome.com/:_authToken=${FA_PACKAGE_TOKEN}
    ```
+   If `.npmrc` already exists, keep its contents and add whichever of these lines are missing. Don't overwrite it, and don't add a second `_authToken` line for `npm.fontawesome.com`.
    Then install Pro packages as needed (e.g., `@fortawesome/pro-solid-svg-icons`).
 
 2. Install the framework-specific component package:
