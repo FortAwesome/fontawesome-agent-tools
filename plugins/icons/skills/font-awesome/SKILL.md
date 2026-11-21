@@ -47,7 +47,7 @@ Cheapest source first, and only as far as the question needs ("is there a bat ic
 | "What families / styles exist?" | `fa family-styles --version <v>`; for a kit, `fa kit family-styles --kit-token <t>`. |
 | How-to, setup concepts, troubleshooting | [references/docs.md](references/docs.md) |
 
-Show icons by rendering the SVG markup the API returned; don't redraw it.
+Show icons by putting the SVG markup the API returned in the answer itself, not only in a file; don't redraw it.
 
 ## Workflows
 
