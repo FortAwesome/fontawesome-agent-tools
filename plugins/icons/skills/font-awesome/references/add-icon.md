@@ -114,7 +114,7 @@ After discovery, determine:
 - **License** — `free` or `pro`. Detect from: kit config (via `fa kit show` or `fetch-kit.py`), npm package names (`fontawesome-free` vs `fontawesome-pro`, `free-*-svg-icons` vs `pro-*-svg-icons`), or CDN URL patterns.
 - **Default style** — the most commonly used style in the project (solid, regular, light, thin, duotone). If unclear, default to `solid`.
 - **Default family** — the most commonly used family (classic, duotone, sharp, sharp-duotone, chisel, etch, graphite, jelly, jelly-duo, jelly-fill, notdog, notdog-duo, slab, slab-press, thumbprint, utility, utility-duo, utility-fill, whiteboard). If unclear, default to `classic`.
-- **Configured defaults** — whether the project changes the family or style that class names without one get. SVG+JS: the `familyDefault` and `styleDefault` settings (`data-family-default` and `data-style-default` on the script tag, `window.FontAwesomeConfig`, or `config` from `@fortawesome/fontawesome-svg-core`). Web Fonts: the `--fa-family` and `--fa-style` custom properties (for example `:root { --fa-family: var(--fa-family-sharp); }`). Unset, they're classic and solid.
+- **Configured defaults** — whether the project changes the family and style of icons written with the legacy bare `fa` class and no family, style or prefix class (`<i class="fa fa-house">`). Only that construct uses them: `fa-thin fa-house` is Classic Thin whatever the configuration. SVG+JS: the `familyDefault` and `styleDefault` settings (`data-family-default` and `data-style-default` on the script tag, `window.FontAwesomeConfig`, or `config` from `@fortawesome/fontawesome-svg-core`). Web Fonts: the `--fa-family` and `--fa-style` custom properties (for example `:root { --fa-family: var(--fa-family-sharp); }`). Unset, bare `fa` icons are Classic Solid. Note which icons the project writes as bare `fa` icons: their family and style come from this configuration, not their classes.
 - **CSS prefix** — `fa` unless the project changes it (`cssPrefix` in the SVG+JS config, `$css-prefix` in the SCSS). With `xy`, Sharp Thin is `xy-sharp xy-thin`.
 - **Available families** — the set of families the project has access to. For kits, use the output of `fa kit show` (or `fetch-kit.py`). For npm, infer from installed packages. For free users, only `classic` is available.
 - **Import pattern** — for JS frameworks: individual imports per-file vs. library registration
@@ -139,14 +139,14 @@ So a user's "thin" could be the shorthand for Classic Thin, or a style in whatev
 **Family** — the operative family, in this precedence:
 
 1. If the user names a family, use that.
-2. If they're changing an icon that's already there ("switch it to thin"), keep that icon's family. A style named without a family never changes the family.
+2. If they're changing an icon that's already there ("switch it to thin"), keep the family it renders in. For a bare `fa` icon (`fa fa-house`), that's the configured default family (step 2), not Classic. A style named without a family never changes the family.
 3. Otherwise, the project's default family: `.font-awesome.md`, or the configured default (`familyDefault` or `--fa-family`, see step 2).
 4. If none of these, `classic`.
 
 **Style** — use this precedence:
 
 1. If the user specified a style, use that.
-2. If they're changing an icon that's already there and named only a family ("make it sharp"), keep that icon's style.
+2. If they're changing an icon that's already there and named only a family ("make it sharp"), keep the style it renders in. For a bare `fa` icon, that's the configured default style. Write that style's class too: `fa-sharp fa-house`, with a family class and no style class, is Sharp Solid, because the configured defaults apply only to the bare `fa` construct.
 3. Otherwise, the default style from `.font-awesome.md`, or the configured default (`styleDefault` or `--fa-style`).
 4. If none of these, `solid`.
 
@@ -226,7 +226,7 @@ Imports follow the same package/naming conventions as React.
 <i class="fa-solid fa-cart-shopping"></i>
 ```
 
-Class pattern depends on the family. A class without a family gets the project's default family, and one without a style gets the default style: Classic and solid unless the project configures others (step 2). Leave the family class out only for the default family; when the default isn't Classic, write Classic explicitly (`fa-classic fa-thin`). Use the project's CSS prefix in place of `fa` if it changed it. Any family-style's prefix also works as a class on its own, whatever the configuration: `<i class="fast fa-house"></i>` is Sharp Thin.
+Class pattern depends on the family. A missing family class means Classic and a missing style class means solid, whatever the configuration: `fa-thin fa-house` is Classic Thin. `fa-classic` is valid but normally left out. The configured defaults (step 2) apply only to the legacy bare `fa` class with no family, style or prefix class: `fa fa-house`. In a project that writes its icons that way, a new icon in the operative family and style can follow the convention. To change a bare `fa` icon's family or style, write both explicitly (`fa-sharp fa-thin fa-house`): adding only a style class (`fa fa-thin fa-house`) ends the bare `fa` construct, so it renders Classic. Use the project's CSS prefix in place of `fa` if it changed it. Any family-style's prefix also works as a class on its own, whatever the configuration: `<i class="fast fa-house"></i>` is Sharp Thin.
 
 - **classic** (the default family unless configured otherwise; no family class needed): `fa-{style} fa-{icon-name}`
   - `<i class="fa-solid fa-cart-shopping"></i>`

@@ -23,7 +23,7 @@ Detected by the Font Awesome agent tools. Commit this file so the whole team ben
 
 - **Style:** [e.g., solid]
 - **Family:** [e.g., classic]
-- **Configured defaults:** [only if the project sets them: `familyDefault`/`styleDefault` for SVG+JS, or `--fa-family`/`--fa-style` for Web Fonts, with where they're set. Class names without a family or style get these.]
+- **Configured defaults:** [only if the project sets them: `familyDefault`/`styleDefault` for SVG+JS, or `--fa-family`/`--fa-style` for Web Fonts, with where they're set. Only icons written with the bare `fa` class and no family or style class (`fa fa-house`) render in these.]
 - **CSS prefix:** [only if not `fa`, e.g. `xy`]
 
 ## Import Pattern
