@@ -114,6 +114,8 @@ After discovery, determine:
 - **License** — `free` or `pro`. Detect from: kit config (via `fa kit show` or `fetch-kit.py`), npm package names (`fontawesome-free` vs `fontawesome-pro`, `free-*-svg-icons` vs `pro-*-svg-icons`), or CDN URL patterns.
 - **Default style** — the most commonly used style in the project (solid, regular, light, thin, duotone). If unclear, default to `solid`.
 - **Default family** — the most commonly used family (classic, duotone, sharp, sharp-duotone, chisel, etch, graphite, jelly, jelly-duo, jelly-fill, notdog, notdog-duo, slab, slab-press, thumbprint, utility, utility-duo, utility-fill, whiteboard). If unclear, default to `classic`.
+- **Configured defaults** — whether the project changes the family or style that class names without one get. SVG+JS: the `familyDefault` and `styleDefault` settings (`data-family-default` and `data-style-default` on the script tag, `window.FontAwesomeConfig`, or `config` from `@fortawesome/fontawesome-svg-core`). Web Fonts: the `--fa-family` and `--fa-style` custom properties (for example `:root { --fa-family: var(--fa-family-sharp); }`). Unset, they're classic and solid.
+- **CSS prefix** — `fa` unless the project changes it (`cssPrefix` in the SVG+JS config, `$css-prefix` in the SCSS). With `xy`, Sharp Thin is `xy-sharp xy-thin`.
 - **Available families** — the set of families the project has access to. For kits, use the output of `fa kit show` (or `fetch-kit.py`). For npm, infer from installed packages. For free users, only `classic` is available.
 - **Import pattern** — for JS frameworks: individual imports per-file vs. library registration
 - **Version** — the Font Awesome version in use
@@ -127,17 +129,26 @@ Tell the user: "I've written `.font-awesome.md` with your project's Font Awesome
 
 ### 3. Determine the icon style and family
 
+**Family-style identifiers.** Each family-style has two identifiers, and each one alone names exactly one family-style. `fa family-styles` and `fa kit family-styles` return both:
+
+- **Shorthand**, human-readable: `solid`, `thin`, `sharp-thin`, `sharp-duotone-solid`. Classic's shorthands are the style alone; every other family's start with the family.
+- **Prefix** (`short_prefix_id`): `fas`, `fat`, `fast`, `fasds`.
+
+So a user's "thin" could be the shorthand for Classic Thin, or a style in whatever family is in play. Resolve it with the precedence below.
+
+**Family** — the operative family, in this precedence:
+
+1. If the user names a family, use that.
+2. If they're changing an icon that's already there ("switch it to thin"), keep that icon's family. A style named without a family never changes the family.
+3. Otherwise, the project's default family: `.font-awesome.md`, or the configured default (`familyDefault` or `--fa-family`, see step 2).
+4. If none of these, `classic`.
+
 **Style** — use this precedence:
 
 1. If the user specified a style, use that.
-2. Otherwise, use the default style from `.font-awesome.md`.
-3. If neither, default to `solid`.
-
-**Family** — use this precedence:
-
-1. If the user explicitly requested a family, use that.
-2. Otherwise, use the default family from `.font-awesome.md`.
-3. If neither, default to `classic`.
+2. If they're changing an icon that's already there and named only a family ("make it sharp"), keep that icon's style.
+3. Otherwise, the default style from `.font-awesome.md`, or the configured default (`styleDefault` or `--fa-style`).
+4. If none of these, `solid`.
 
 **The project's license decides what you can add, not the account's.** If the project is on Free (the License in `.font-awesome.md`, Free-only packages such as `@fortawesome/free-*-svg-icons`, or a Free Kit) and the request needs Pro (a Pro-only icon, or a Pro-only style or family such as light, thin, duotone, or sharp), don't write a Pro import, package, or class: the project can't load it, so the build or the icon breaks. This holds even when `fa entitlements` shows the account has Pro. **Stop before changing any files and ask** which they'd like: the icon in a Free style instead (name it, for example solid), or setting the project up for Pro first (follow `references/setup.md`) and then adding the icon. If the account is on Free too, include the Pro notice from step 6.
 
@@ -215,9 +226,9 @@ Imports follow the same package/naming conventions as React.
 <i class="fa-solid fa-cart-shopping"></i>
 ```
 
-Class pattern depends on the family:
+Class pattern depends on the family. A class without a family gets the project's default family, and one without a style gets the default style: Classic and solid unless the project configures others (step 2). Leave the family class out only for the default family; when the default isn't Classic, write Classic explicitly (`fa-classic fa-thin`). Use the project's CSS prefix in place of `fa` if it changed it. Any family-style's prefix also works as a class on its own, whatever the configuration: `<i class="fast fa-house"></i>` is Sharp Thin.
 
-- **classic** (default, no family prefix needed): `fa-{style} fa-{icon-name}`
+- **classic** (the default family unless configured otherwise; no family class needed): `fa-{style} fa-{icon-name}`
   - `<i class="fa-solid fa-cart-shopping"></i>`
 - **sharp**: `fa-sharp fa-{style} fa-{icon-name}`
   - `<i class="fa-sharp fa-regular fa-cart-shopping"></i>`
