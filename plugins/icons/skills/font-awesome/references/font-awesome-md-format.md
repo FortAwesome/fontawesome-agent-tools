@@ -1,6 +1,6 @@
 # `.font-awesome.md` file format
 
-This file lives in the project root and records the project's Font Awesome configuration. It is read by `/add-icon` to generate correct code and updated by `/setup-fa` when initially configuring Font Awesome. Commit it so the whole team benefits.
+This file lives in the project root and records the project's Font Awesome configuration. The `font-awesome` skill reads it to scope answers to the project and to generate correct code when adding icons, and creates it during initial setup. Commit it so the whole team benefits.
 
 ## Template
 
@@ -14,7 +14,7 @@ Detected by the Font Awesome agent tools. Commit this file so the whole team ben
 - **Method:** [e.g., React components via @fortawesome/react-fontawesome, Kit embed (SVG+JS), CDN, self-hosted web fonts]
 - **Version:** [e.g., 7.2.0]
 - **License:** [Free or Pro]
-- **Kit ID:** [if applicable, or omit — this is the Kit token, e.g. `abc123def4`. It's usable as `--kit-token` with the `fa` CLI (e.g. `fa kit icon ...`, `fa kit icons ...`, `fa kit family-styles ...`) to check what the Kit's subset includes, and `fa search --kit-token <TOKEN>` to search only kit-available icons. `/add-icon` and `/suggest-icon` use it to avoid adding or suggesting icons the Kit doesn't contain.]
+- **Kit ID:** [if applicable, or omit — this is the Kit token, e.g. `abc123def4`. It's usable as `--kit-token` with the `fa` CLI (e.g. `fa kit icon ...`, `fa kit icons ...`, `fa kit family-styles ...`) to check what the Kit's subset includes, and `fa search --kit-token <TOKEN>` to search only kit-available icons. The Font Awesome skills use it to avoid adding or suggesting icons the Kit doesn't contain.]
 - **Kit Revision:** [e.g. 42 -- this is the Kit's revision number, useful for tracking updates. It changes every time a kit is updated, whether by changing its subset, settings, or adding/removing/changing any custom icons. It's found as `kitRevision` in the kit detail from `fa kit show --kit-token <TOKEN>`]
 - **CDN URL:** [if applicable, or omit]
 - **Families:** [e.g., classic, duotone, sharp, sharp-duotone — list all available families]
@@ -23,6 +23,8 @@ Detected by the Font Awesome agent tools. Commit this file so the whole team ben
 
 - **Style:** [e.g., solid]
 - **Family:** [e.g., classic]
+- **Configured defaults:** [only if the project sets them: `familyDefault`/`styleDefault` for SVG+JS, or `--fa-family`/`--fa-style` for Web Fonts, with where they're set. Only icons written with the bare `fa` class and no family or style class (`fa fa-house`) render in these.]
+- **CSS prefix:** [only if not `fa`, e.g. `xy`]
 
 ## Import Pattern
 
@@ -41,8 +43,8 @@ Detected by the Font Awesome agent tools. Commit this file so the whole team ben
 
 ## When to create
 
-- **`/setup-fa`** creates this file at the end of initial setup.
-- **`/add-icon`** creates this file during its discovery step if it doesn't already exist.
+- **Setup** ([setup.md](setup.md)) creates this file at the end of initial setup.
+- **Adding an icon** ([add-icon.md](add-icon.md)) creates this file during its discovery step if it doesn't already exist.
 
 ## When to update
 
