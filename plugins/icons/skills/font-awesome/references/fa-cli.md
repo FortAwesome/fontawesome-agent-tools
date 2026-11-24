@@ -43,6 +43,7 @@ Catalog commands (`icons`, `search --version`, `releases`, `family-styles`, `ico
 | Kit details and custom icons | `fa kit show --kit-token <t>` |
 | Custom icons **with SVGs** | `fa kit show --kit-token <t> --svg-format html` (`iconUploads[].html`) |
 | Is an official icon in the kit? | `fa kit icon --kit-token <t> <icon>`. Null means it isn't in the subset. |
+| Which family-styles of an icon are in the kit? | `fa query` with the kit's icon variants, below. `fa kit icon` gives only prefixes; this names each family-style. |
 | Search official icons in the kit | `fa search --kit-token <t> --query <q>` |
 | Search custom icons in the kit | `fa search --kit-token <t> --query <q> --custom` |
 | Family-styles in the kit | `fa kit family-styles --kit-token <t>`, or `fa kit family-style --kit-token <t> --prefix fas` for one |
@@ -52,6 +53,14 @@ Catalog commands (`icons`, `search --version`, `releases`, `family-styles`, `ico
 ### Anything else
 
 `fa query -q '<graphql document>'` (or `-f file.graphql`, or STDIN) runs a raw query, authenticated if logged in. Use `--vars-json '{...}'` for variables. To discover fields, run an introspection query (for example `{ __type(name: "Kit") { fields { name } } }`).
+
+The family-styles a kit has an icon in, each named (null `icon` means the kit doesn't have it):
+
+```
+fa query -q 'query ($t: String!, $i: String!) { me { kit(token: $t) { icon(name: $i) { variants { familyStyle { family style prefix shorthand } } } } } }' --vars-json '{"t":"<kit token>","i":"<icon>"}'
+```
+
+Answer from the `variants` list it returns, and run it fresh rather than relying on an earlier lookup. List the family-styles grouped by family. Don't state a total of family-styles or families unless the user asks for one: totals counted by eye from a long list come out wrong. If they ask, count with a command on the JSON, for example `| jq '.data.me.kit.icon.variants | length'`.
 
 ## Quirks and gotchas
 
@@ -76,7 +85,7 @@ bat (Bat) | Pro | classic, duotone, sharp, sharp-duotone (16 family-styles)
 mug-saucer (Mug Saucer) | Free+Pro | classic, duotone, sharp, sharp-duotone, utility, utility-duo, utility-fill, whiteboard (20 family-styles) | free: classic/solid
 ```
 
-It also accepts `fa icons --name`, `fa search --kit-token` and `fa kit icon` output (kit results list the kit's family-styles). When you need the exact style list for one icon, for example to write its code, use the full JSON for that icon.
+It also accepts `fa icons --name`, `fa search --kit-token` and `fa kit icon` output (kit results list the kit's family-styles by prefix). For which family-styles of one icon a kit has, use the kit icon `variants` query above, which names them. When you need the exact style list for one icon, for example to write its code, use the full JSON for that icon.
 
 ## Fallback scripts (no `fa` CLI)
 

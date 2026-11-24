@@ -40,10 +40,11 @@ Cheapest source first, and only as far as the question needs ("is there a bat ic
 | "Is there an icon for X?" / "What icons can I use for X?" | [references/suggest-icon.md](references/suggest-icon.md). Scope to a kit when the project or user names one. For "can I use", check entitlements and say which "By Icon" kits contain it. |
 | "Is there an X icon?" / "Which styles?" | Fuzzy search, not an exact lookup: `fa search --version <v> --query <X> --page-size 10` (no `fa`: `scripts/search.py`, then `scripts/icon-exists.py` on the exact match). Read results through `scripts/summarize-icons.py`. Lead with an exact `id` match: Free or Pro, and its families and styles from `familyStylesByLicense` (a count is enough). Then the closest matches; if none is exact, say so. |
 | "List my kits" / "Which kits have X?" | `fa kits`. Membership: `fa kit icon --kit-token <t> <icon>` or `fa search --kit-token <t> --query <icon>`. |
+| "Which styles of X are in my kit?" | The kit icon `variants` query in [fa-cli.md](references/fa-cli.md), run fresh. Answer from its list. |
 | "Show my custom icons" | `fa kit show --kit-token <t> --svg-format html` (names, unicodes, SVGs). Search uploads: `fa search --kit-token <t> --query <q> --custom`. |
 | "Give me the SVG for X" | `fa icons --version <v> --name <icon> --svg-format html --svg-family-style <family>,<style>` |
 | "Am I on Pro?" | `fa entitlements`, plus each kit's license from `fa kits`. |
-| "What's the latest version?" | `fa releases` (the entry with `isLatest: true`) |
+| "What's the latest version?" | `fa releases` (`isLatest: true`) |
 | "What families / styles exist?" | `fa family-styles --version <v>`; for a kit, `fa kit family-styles --kit-token <t>`. |
 | How-to, setup concepts, troubleshooting | [references/docs.md](references/docs.md) |
 

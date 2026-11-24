@@ -113,7 +113,7 @@ After discovery, determine:
 - **Kit ID / CDN URL** — if using a kit or CDN
 - **License** — `free` or `pro`. Detect from: kit config (via `fa kit show` or `fetch-kit.py`), npm package names (`fontawesome-free` vs `fontawesome-pro`, `free-*-svg-icons` vs `pro-*-svg-icons`), or CDN URL patterns.
 - **Default style** — the most commonly used style in the project (solid, regular, light, thin, duotone). If unclear, default to `solid`.
-- **Default family** — the most commonly used family (classic, duotone, sharp, sharp-duotone, chisel, etch, graphite, jelly, jelly-duo, jelly-fill, notdog, notdog-duo, slab, slab-press, thumbprint, utility, utility-duo, utility-fill, whiteboard). If unclear, default to `classic`.
+- **Default family** — the most commonly used family. `fa family-styles --version <v>` (or `fa kit family-styles --kit-token <t>`) lists every family and style; don't rely on a remembered list, since new ones ship regularly. If unclear, default to `classic`.
 - **Configured defaults** — whether the project changes the family and style of icons written with the legacy bare `fa` class and no family, style or prefix class (`<i class="fa fa-house">`). Only that construct uses them: `fa-thin fa-house` is Classic Thin whatever the configuration. SVG+JS: the `familyDefault` and `styleDefault` settings (`data-family-default` and `data-style-default` on the script tag, `window.FontAwesomeConfig`, or `config` from `@fortawesome/fontawesome-svg-core`). Web Fonts: the `--fa-family` and `--fa-style` custom properties (for example `:root { --fa-family: var(--fa-family-sharp); }`). Unset, bare `fa` icons are Classic Solid. Note which icons the project writes as bare `fa` icons: their family and style come from this configuration, not their classes.
 - **CSS prefix** — `fa` unless the project changes it (`cssPrefix` in the SVG+JS config, `$css-prefix` in the SCSS). With `xy`, Sharp Thin is `xy-sharp xy-thin`.
 - **Available families** — the set of families the project has access to. For kits, use the output of `fa kit show` (or `fetch-kit.py`). For npm, infer from installed packages. For free users, only `classic` is available.
@@ -208,7 +208,7 @@ library.add(faCartShopping)
 <FontAwesomeIcon icon={['far', 'cart-shopping']} />
 ```
 
-Style prefixes: `fas` (solid), `far` (regular), `fal` (light), `fat` (thin), `fad` (duotone), `fass` (sharp solid), `fasr` (sharp regular), `fasl` (sharp light), `fast` (sharp thin), `fasd` (sharp duotone).
+Each family-style's prefix (for example `far` for Classic Regular) comes from `fa family-styles --version <v>`; look it up rather than recalling it.
 
 #### Vue (`@fortawesome/vue-fontawesome`)
 
@@ -236,7 +236,7 @@ Class pattern depends on the family. A missing family class means Classic and a 
   - `<i class="fa-sharp-duotone fa-solid fa-cart-shopping"></i>`
 - **duotone**: `fa-duotone fa-{style} fa-{icon-name}`
   - `<i class="fa-duotone fa-solid fa-cart-shopping"></i>`
-- **Other FA7 families** (chisel, etch, graphite, jelly, jelly-duo, jelly-fill, notdog, notdog-duo, slab, slab-press, thumbprint, utility, utility-duo, utility-fill, whiteboard): `fa-{family} fa-{style} fa-{icon-name}`
+- **Every other family** (see `fa family-styles --version <v>` for the current list): `fa-{family} fa-{style} fa-{icon-name}`
   - `<i class="fa-slab fa-solid fa-cart-shopping"></i>`
   - `<i class="fa-jelly fa-regular fa-cart-shopping"></i>`
 
