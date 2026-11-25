@@ -184,15 +184,25 @@ describe('icon-exists.py', () => {
     assert.equal(r.code, 1, r.stderr);
   });
 
-  test('an unknown version: non-zero exit and an error on stderr', async () => {
+  // add-icon.md reads exit 1 as "doesn't exist", so a failed check must not exit 1.
+  test('an unknown version: exit 2 (unknown), not 1, and an error on stderr', async () => {
     const r = await runStub('icon-exists.py', ['--version', '9.9.9', '--icon-name', 'house']);
-    assert.notEqual(r.code, 0);
-    assert.match(r.stderr, /not_found|error/i);
+    assert.equal(r.code, 2);
+    assert.match(r.stderr, /not_found/);
   });
 
-  test('requires --version and --icon-name', async () => {
+  test('an unreachable API: exit 2', async () => {
+    const r = await run('icon-exists.py', ['--version', VERSION, '--icon-name', 'house'], {
+      env: { FA_API_URL: 'http://127.0.0.1:9' },
+    });
+    assert.equal(r.code, 2);
+    assert.match(r.stderr, /could not reach/i);
+  });
+
+  test('a missing --icon-name: exit 2', async () => {
     const r = await runStub('icon-exists.py', ['--version', VERSION]);
-    assert.notEqual(r.code, 0);
+    assert.equal(r.code, 2);
+    assert.match(r.stderr, /--icon-name/);
   });
 });
 

@@ -94,7 +94,7 @@ Run these from this skill's directory (`font-awesome/`). They call the public AP
 | Script | Purpose |
 |---|---|
 | `scripts/latest-version.py` | Latest release version |
-| `scripts/icon-exists.py --version <v> --icon-name <icon>` | Exit code 0 if the icon exists, 1 if not. Prints families and styles. |
+| `scripts/icon-exists.py --version <v> --icon-name <icon>` | Exit code 0 if the icon exists, 1 if not, 2 if the check failed. Prints the icon's JSON (pipe it through `scripts/summarize-icons.py`). |
 | `scripts/search.py --version <v> --query <q>` | Search the catalog |
 | `scripts/fetch-kit.py --kit-id <t>` | A kit's version, license, method, and families |
 
