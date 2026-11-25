@@ -1,69 +1,21 @@
 #!/usr/bin/env python3
+"""Search the Font Awesome catalog (fallback for `fa search --version`).
 
-import argparse
-import json
-import os
-import sys
-import urllib.error
-import urllib.request
+  python3 scripts/search.py --version 7.3.1 --query cup [--first 10]
 
-GRAPHQL_URL = os.environ.get("FA_API_URL", "https://api.fontawesome.com")
+Prints the API's JSON: data.search[] with id, label, unicode and
+familyStylesByLicense. Pipe it through summarize-icons.py for one line per icon:
 
-parser = argparse.ArgumentParser(description="Search Font Awesome icons")
-parser.add_argument("--version", required=True, help="Font Awesome version (e.g. 6.7.2)")
-parser.add_argument("--query", required=True, help="Search query")
-parser.add_argument("--first", type=int, default=10, help="Max results to return (default: 10)")
-args = parser.parse_args()
+  python3 scripts/search.py --version 7.3.1 --query cup | python3 scripts/summarize-icons.py
 
-query = """
-query ($version: String!, $query: String!, $first: Int) {
-  search(version: $version, query: $query, first: $first) {
-    id
-    label
-    unicode
-    familyStylesByLicense {
-      free { family style }
-      pro { family style }
-    }
-  }
-}
+Runs queries/search.graphql.
 """
 
-req = urllib.request.Request(
-    GRAPHQL_URL,
-    data=json.dumps({
-        "query": query,
-        "variables": {
-            "version": args.version,
-            "query": args.query,
-            "first": args.first,
-        },
-    }).encode(),
-    headers={
-        "Content-Type": "application/json",
-        "User-Agent": "fontawesome-agent-tools",
-    },
-)
+import os
+import sys
 
-try:
-    with urllib.request.urlopen(req) as resp:
-        data = json.loads(resp.read())
-except urllib.error.URLError as e:
-    print(f"Error: could not reach Font Awesome API: {e}", file=sys.stderr)
-    sys.exit(1)
+sys.dont_write_bytecode = True
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from query_runner import main  # noqa: E402
 
-if "errors" in data:
-    print(f"Error: API returned errors: {data['errors']}", file=sys.stderr)
-    sys.exit(1)
-
-results = data["data"]["search"]
-
-if not results:
-    print(f"No icons found for '{args.query}' in version {args.version}")
-else:
-    for icon in results:
-        styles = icon["familyStylesByLicense"]
-        free = styles.get("free") or []
-        pro = styles.get("pro") or []
-        availability = "free" if free else "pro-only"
-        print(f"{icon['id']} — {icon['label']} (unicode: {icon['unicode']}, {availability})")
+main("search", sys.argv[1:], require=None, usage=__doc__)

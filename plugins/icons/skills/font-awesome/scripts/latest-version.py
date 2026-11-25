@@ -1,43 +1,17 @@
 #!/usr/bin/env python3
+"""Every Font Awesome release (fallback for `fa releases`).
 
-import json
-import os
-import sys
-import urllib.error
-import urllib.request
+  python3 scripts/latest-version.py
 
-GRAPHQL_URL = os.environ.get("FA_API_URL", "https://api.fontawesome.com")
-
-query = """
-{
-  releases {
-    version
-    isLatest
-  }
-}
+Prints the API's JSON: data.releases[] with version and isLatest. The latest
+release is the one with isLatest: true. Runs queries/latest-version.graphql.
 """
 
-req = urllib.request.Request(
-    GRAPHQL_URL,
-    data=json.dumps({"query": query}).encode(),
-    headers={
-        "Content-Type": "application/json",
-        "User-Agent": "fontawesome-agent-tools",
-    },
-)
+import os
+import sys
 
-try:
-    with urllib.request.urlopen(req) as resp:
-        data = json.loads(resp.read())
-except urllib.error.URLError as e:
-    print(f"Error: could not reach Font Awesome API: {e}", file=sys.stderr)
-    sys.exit(1)
+sys.dont_write_bytecode = True
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from query_runner import main  # noqa: E402
 
-if "errors" in data:
-    print(f"Error: API returned errors: {data['errors']}", file=sys.stderr)
-    sys.exit(1)
-
-for release in data["data"]["releases"]:
-    if release["isLatest"]:
-        print(release["version"])
-        break
+main("latest-version", sys.argv[1:], require=None, usage=__doc__)

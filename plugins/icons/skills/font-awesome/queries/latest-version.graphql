@@ -1,0 +1,7 @@
+# Every release, with the latest one flagged by isLatest: true.
+{
+  releases {
+    version
+    isLatest
+  }
+}

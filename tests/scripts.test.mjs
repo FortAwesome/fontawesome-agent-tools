@@ -122,20 +122,21 @@ const fsKey = (fs) => `${fs.family} ${fs.style}`;
 // ---------------------------------------------------------------------------
 // Output parsers. These are the only code that knows each script's format.
 
+const fsKeys = (list) => (list ?? []).map(fsKey);
 const parse = {
   latestVersion(stdout) {
-    return stdout.trim();
+    return JSON.parse(stdout).data.releases.find((r) => r.isLatest).version;
   },
   iconExists(stdout) {
-    const list = (label) => (stdout.match(new RegExp(`^\\s+${label}: (.*)$`, 'm'))?.[1].split(', ') ?? []);
-    return { free: list('Free'), pro: list('Pro') };
+    const { free, pro } = JSON.parse(stdout).data.release.icon.familyStylesByLicense;
+    return { free: fsKeys(free), pro: fsKeys(pro) };
   },
   search(stdout) {
-    return [...stdout.matchAll(/^(\S+) — (.*) \(unicode: (\w+), (free|pro-only)\)$/gm)].map(([, id, label, unicode, availability]) => ({
-      id,
-      label,
-      unicode,
-      availability,
+    return JSON.parse(stdout).data.search.map((icon) => ({
+      id: icon.id,
+      label: icon.label,
+      unicode: icon.unicode,
+      availability: icon.familyStylesByLicense.free.length ? 'free' : 'pro-only',
     }));
   },
   fetchKit(stdout) {
@@ -169,6 +170,13 @@ describe('icon-exists.py', () => {
     const icon = houseIcon();
     assert.deepEqual(new Set(free), new Set(icon.familyStylesByLicense.free.map(fsKey)));
     assert.deepEqual(new Set(pro), new Set(icon.familyStylesByLicense.pro.map(fsKey)));
+  });
+
+  test('pipes into summarize-icons.py', async () => {
+    const r = await runStub('icon-exists.py', ['--version', VERSION, '--icon-name', 'house']);
+    const s = await summarize(r.stdout);
+    assert.equal(s.code, 0, s.stderr);
+    assert.match(s.stdout, /^house \| Free\+Pro \| /);
   });
 
   test('an icon that does not exist: exit 1', async () => {
@@ -207,8 +215,41 @@ describe('search.py', () => {
     const r = await runStub('search.py', ['--version', VERSION, '--query', 'zzqqxxnothing', '--first', '3']);
     assert.equal(r.code, 0, r.stderr);
     assert.deepEqual(parse.search(r.stdout), []);
-    assert.match(r.stdout, /no icons/i);
   });
+
+  test('--first is sent as an Int, and the document defaults it to 10', async () => {
+    requests.length = 0;
+    await runStub('search.py', ['--version', VERSION, '--query', 'cup', '--first', '3']);
+    const sent = JSON.parse(requests.find((q) => q.method === 'POST').body);
+    assert.strictEqual(sent.variables.first, 3);
+    assert.match(sent.query, /\$first: Int = 10/);
+  });
+
+  test('pipes into summarize-icons.py: one line per result', async () => {
+    const r = await runStub('search.py', ['--version', VERSION, '--query', 'cup', '--first', '3']);
+    const s = await summarize(r.stdout);
+    assert.equal(s.code, 0, s.stderr);
+    assert.deepEqual(
+      s.stdout.trim().split('\n').map((line) => line.split(' ')[0]),
+      cupResults().map((icon) => icon.id),
+    );
+  });
+
+  test('an unknown option: exit 2 and lists the options', async () => {
+    const r = await runStub('search.py', ['--version', VERSION, '--qeury', 'cup']);
+    assert.equal(r.code, 2);
+    assert.match(r.stderr, /--query/);
+  });
+});
+
+describe('resolve-version.py', () => {
+  for (const [version, expected] of [['7.x', '7.3.1'], ['6.x', '6.7.2'], ['7.3.1', '7.3.1']]) {
+    test(`${version} resolves to the release the API names (${expected})`, async () => {
+      const r = await runStub('resolve-version.py', ['--version', version]);
+      assert.equal(r.code, 0, r.stderr);
+      assert.equal(JSON.parse(r.stdout).data.release.version, graphqlData('resolve', { version }).release.version);
+    });
+  }
 });
 
 describe('fetch-kit.py', () => {

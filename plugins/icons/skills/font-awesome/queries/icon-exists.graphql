@@ -1,0 +1,14 @@
+# One icon by exact name in a release. icon is null if the release has no
+# icon by that name. familyStylesByLicense lists the Free and Pro family-styles.
+query ($version: String!, $iconName: String!) {
+  release(version: $version) {
+    icon(name: $iconName) {
+      id
+      label
+      familyStylesByLicense {
+        free { family style }
+        pro { family style }
+      }
+    }
+  }
+}
