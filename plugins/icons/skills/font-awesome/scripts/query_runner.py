@@ -26,8 +26,29 @@ import urllib.request
 API_URL = os.environ.get("FA_API_URL", "https://api.fontawesome.com")
 QUERIES_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "queries")
 USER_AGENT = "fontawesome-agent-tools"
-# Seconds to wait for the API to connect or send data before giving up.
-TIMEOUT = float(os.environ.get("FA_API_TIMEOUT", "30"))
+DEFAULT_TIMEOUT = 30.0
+
+
+def _timeout():
+    """Seconds to wait for the API to connect or send data: FA_API_TIMEOUT, else 30.
+
+    Read at import, before main() can turn a crash into exit 2, so it must not
+    raise: a bad value falls back to the default with a warning.
+    """
+    raw = os.environ.get("FA_API_TIMEOUT")
+    if raw is None:
+        return DEFAULT_TIMEOUT
+    try:
+        value = float(raw)
+        if value > 0:
+            return value
+    except ValueError:
+        pass
+    print(f"Warning: ignoring FA_API_TIMEOUT={raw!r} (not a positive number); using {DEFAULT_TIMEOUT:g}s", file=sys.stderr)
+    return DEFAULT_TIMEOUT
+
+
+TIMEOUT = _timeout()
 
 EXIT_NULL = 1
 EXIT_ERROR = 2
@@ -130,6 +151,11 @@ def post(document, variables):
         raise QueryError(f"the connection to the Font Awesome API failed: {type(e).__name__}: {e}")
     if not isinstance(response, dict):
         raise QueryError(f"the Font Awesome API returned JSON that isn't an object: {json.dumps(response)[:100]}")
+    # A GraphQL response has errors, or a data object. Anything else (a proxy's
+    # {"error": ...}, or {"data": null} with no errors) must not read as a
+    # query that found nothing.
+    if not response.get("errors") and not isinstance(response.get("data"), dict):
+        raise QueryError(f"the Font Awesome API returned no data and no errors: {json.dumps(response)[:100]}")
     return response
 
 

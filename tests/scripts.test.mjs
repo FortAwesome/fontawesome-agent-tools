@@ -91,7 +91,7 @@ before(async () => {
       requests.push({ method: req.method, url: req.url, body });
       const send = (status, data, type = 'application/json') => {
         res.writeHead(status, { 'Content-Type': type });
-        res.end(typeof data === 'string' ? data : JSON.stringify(data));
+        res.end(typeof data === 'string' || Buffer.isBuffer(data) ? data : JSON.stringify(data));
       };
       if (req.method === 'POST' && req.url === '/') {
         const hit = graphqlHit(JSON.parse(body));
@@ -109,9 +109,9 @@ before(async () => {
       const kit = req.url.match(/^\/kit\/(\w+)\.js$/);
       if (kit) {
         if (kit[1] === 'forbidden') return send(403, 'Forbidden', 'text/plain');
-        const name = { freepinned: 'free-pinned', procurrent: 'pro-current', symbolic: 'symbolic', propinned: 'pro-pinned', freenoversion: 'free-noversion', garbage: 'garbage' }[kit[1]];
+        const name = { freepinned: 'free-pinned', procurrent: 'pro-current', symbolic: 'symbolic', propinned: 'pro-pinned', freenoversion: 'free-noversion', latestkit: 'latest', nolicense: 'no-license', notobject: 'not-object', badutf8: 'bad-utf8', garbage: 'garbage' }[kit[1]];
         if (!name) return send(404, 'Not Found', 'text/plain');
-        return send(200, readFileSync(join(fixtures, 'kits', `${name}.js`), 'utf8'), 'application/javascript');
+        return send(200, readFileSync(join(fixtures, 'kits', `${name}.js`)), 'application/javascript');
       }
       send(404, { error: `unexpected ${req.method} ${req.url}` });
     });
@@ -257,6 +257,24 @@ describe('the runner: failures exit 2, never 1', () => {
         assert.equal(r.code, 2, r.stderr);
         assert.match(r.stderr, /isn't an object/);
       });
+    });
+  }
+
+  for (const raw of ['{}', '{"data":null}', '{"error":"bad gateway"}']) {
+    test(`a JSON object with no data and no errors (${raw}): exit 2, not "not found"`, async () => {
+      await withOverrides([{ kind: 'icon', variables: houseVars, raw }], async () => {
+        const r = await iconExists();
+        assert.equal(r.code, 2, r.stderr);
+        assert.match(r.stderr, /no data and no errors/);
+      });
+    });
+  }
+
+  for (const value of ['30s', '', '-1']) {
+    test(`a bad FA_API_TIMEOUT (${JSON.stringify(value)}): warns and uses the default, never exit 1`, async () => {
+      const r = await iconExists({ FA_API_TIMEOUT: value });
+      assert.equal(r.code, 0, r.stderr);
+      assert.match(r.stderr, /ignoring FA_API_TIMEOUT/);
     });
   }
 
@@ -455,7 +473,9 @@ describe('fetch-kit.py', () => {
     requests.length = 0;
     const r = await runStub('fetch-kit.py', ['--kit-id', 'freenoversion']);
     assert.equal(r.code, 0, r.stderr);
-    assert.ok(parse.fetchKit(r.stdout).version.startsWith(`${latestRelease()} `));
+    const { version } = parse.fetchKit(r.stdout);
+    assert.ok(version.startsWith(`unknown (the kit JS names no version; ${latestRelease()} is the latest release`), version);
+    assert.doesNotMatch(version, /serves now/);
     assert.ok(!requests.some((q) => /"latest"/.test(q.body)), 'sent "latest" as a version');
   });
 
@@ -468,6 +488,8 @@ describe('fetch-kit.py', () => {
       assert.equal(out.method, 'css');
       assert.ok(out.version.startsWith("6.7.2 (couldn't check it against the API"), out.version);
       assert.match(out.warning, WARNING);
+      assert.match(out.warning, /couldn't list the family-styles its license allows either/);
+      assert.doesNotMatch(out.warning, /its release|assumes all/);
       assert.deepEqual(out.assumed, []);
       assert.match(r.stdout, /^Couldn't check: couldn't resolve the kit's version/m);
     });
@@ -483,6 +505,41 @@ describe('fetch-kit.py', () => {
       assert.deepEqual(out.assumed, []);
       assert.match(r.stdout, /^Couldn't check: couldn't list the family-styles its license allows: .*HTTP 404/m);
     });
+  });
+
+  test('a "latest" kit version: sent as 5.x, never "latest", and labelled as 5.x', async () => {
+    requests.length = 0;
+    const r = await runStub('fetch-kit.py', ['--kit-id', 'latestkit']);
+    assert.equal(r.code, 0, r.stderr);
+    const resolved = graphqlData('resolve', { version: '5.x' }).release.version;
+    const out = parse.fetchKit(r.stdout);
+    assert.equal(out.version, `latest (the kits service reads it as the latest 5.x release, ${resolved} now)`);
+    assert.deepEqual(out.assumed, allFamilyStyles(resolved));
+    assert.ok(!requests.some((q) => /"latest"/.test(q.body)), 'sent "latest" as a version');
+  });
+
+  test('no license in the kit JS: no assumed list, and not called Pro', async () => {
+    const r = await runStub('fetch-kit.py', ['--kit-id', 'nolicense']);
+    assert.equal(r.code, 0, r.stderr);
+    const out = parse.fetchKit(r.stdout);
+    assert.equal(out.license, 'unknown');
+    assert.deepEqual(out.assumed, []);
+    assert.doesNotMatch(r.stdout, /Pro allows/);
+    assert.match(r.stdout, /^Couldn't check: the kit JS gives license 'unknown'/m);
+  });
+
+  for (const [kitId, what] of [['notobject', "a config that isn't an object"], ['badutf8', 'a config that isn\'t UTF-8']]) {
+    test(`${what}: exit 1 with an error, no traceback`, async () => {
+      const r = await runStub('fetch-kit.py', ['--kit-id', kitId]);
+      assert.equal(r.code, 1);
+      assert.match(r.stderr, /^Error: could not parse kit config/m);
+      assert.doesNotMatch(r.stderr, /Traceback/);
+    });
+  }
+
+  test('no --kit-id: exit 2', async () => {
+    const r = await runStub('fetch-kit.py', []);
+    assert.equal(r.code, 2);
   });
 
   test('a kit the server refuses (403): exit 1 and says so', async () => {

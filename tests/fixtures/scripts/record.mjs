@@ -5,8 +5,9 @@
 //
 // Written by hand, since kits need an account and the tests need no real one:
 // - kits/*.js: the first line of a kit's JS. The kits service writes the
-//   release a kit serves into `version` (7.3.1, never 7.x); symbolic.js is the
-//   exception, to check a symbolic version would still be resolved.
+//   release a kit serves into `version` (7.3.1, never 7.x); symbolic.js and
+//   latest.js check other values would still be handled, and no-license.js,
+//   not-object.js and bad-utf8.js check malformed configs.
 // - fa-kit-*.json, fa-search-kit.json: shaped like the fa CLI's own test
 //   fixtures (fa-cli tests/integration_kit.rs, integration_search.rs).
 //
@@ -23,6 +24,7 @@ const headers = { 'Content-Type': 'application/json', 'User-Agent': 'fontawesome
 
 const VERSION = '7.3.1';
 const OLD_VERSION = '6.7.2';
+const V5_VERSION = '5.15.4';
 
 const queriesDir = join(here, '../../../plugins/icons/skills/font-awesome/queries');
 const doc = (name) => readFileSync(join(queriesDir, `${name}.graphql`), 'utf8');
@@ -42,6 +44,7 @@ const requests = [
   ['search', SEARCH, { version: VERSION, query: 'zzqqxxnothing', first: 3 }],
   ['resolve', RESOLVE, { version: '7.x' }],
   ['resolve', RESOLVE, { version: '6.x' }],
+  ['resolve', RESOLVE, { version: '5.x' }],
   ['resolve', RESOLVE, { version: VERSION }],
   ['resolve', RESOLVE, { version: OLD_VERSION }],
 ];
@@ -53,7 +56,7 @@ for (const [kind, query, variables] of requests) {
 }
 write('graphql.json', graphql);
 
-for (const version of [VERSION, OLD_VERSION]) {
+for (const version of [VERSION, OLD_VERSION, V5_VERSION]) {
   for (const endpoint of ['family-styles', 'icon-packs']) {
     const res = await fetch(`${API}/releases/${version}/${endpoint}`, { headers });
     const body = await res.json();

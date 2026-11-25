@@ -1,0 +1,34 @@
+{
+  "familyStyles": [
+    {
+      "family": "classic",
+      "prefix": "fas",
+      "shorthand": "solid",
+      "style": "solid"
+    },
+    {
+      "family": "classic",
+      "prefix": "far",
+      "shorthand": "regular",
+      "style": "regular"
+    },
+    {
+      "family": "classic",
+      "prefix": "fal",
+      "shorthand": "light",
+      "style": "light"
+    },
+    {
+      "family": "classic",
+      "prefix": "fab",
+      "shorthand": "brands",
+      "style": "brands"
+    },
+    {
+      "family": "duotone",
+      "prefix": "fad",
+      "shorthand": "duotone",
+      "style": "solid"
+    }
+  ]
+}
