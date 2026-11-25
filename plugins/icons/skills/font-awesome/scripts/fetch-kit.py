@@ -3,8 +3,9 @@
 
   python3 scripts/fetch-kit.py --kit-id <kit token>
 
-Prints the kit's version and the release it resolves to now, its license,
-method and startup file. Without `fa` there's no way to see which
+Prints the release the kit serves now (the kit JS doesn't say whether the kit
+is pinned to it or follows a major version such as 7.x), its license, method
+and startup file. Without `fa` there's no way to see which
 family-styles the kit includes, so it prints a warning and then every
 family-style the kit's license allows in that release, as an assumption, not
 the kit's own list. With `fa`, use `fa kit show` and `fa kit family-styles`.
@@ -106,13 +107,15 @@ def main():
     license_type = config.get("license", "unknown")
     release = resolve(version)
 
+    # The kit JS names the release the kit serves now (7.3.1), even for a kit
+    # set to follow a major version (7.x). Only `fa kit show` has the setting.
     if version and version != release:
-        version_line = (
-            f"{version} (resolves to {release} now; a {version} kit picks up new releases "
-            f"as they ship, so resolve it again next time)"
-        )
+        version_line = f"{version} (resolves to {release} now; it moves with each new release)"
     else:
-        version_line = release
+        version_line = (
+            f"{release} (the release this kit serves now. A kit set to follow a major version, "
+            "such as 7.x, moves to each new release; only `fa kit show` shows the kit's setting)"
+        )
 
     by_family = {}
     for fs in allowed_family_styles(license_type, release):

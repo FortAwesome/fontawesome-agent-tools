@@ -93,7 +93,7 @@ before(async () => {
       const kit = req.url.match(/^\/kit\/(\w+)\.js$/);
       if (kit) {
         if (kit[1] === 'forbidden') return send(403, 'Forbidden', 'text/plain');
-        const name = { freepinned: 'free-pinned', freemajor: 'free-major', promajor: 'pro-major', proold: 'pro-old', propinned: 'pro-pinned', freenoversion: 'free-noversion', garbage: 'garbage' }[kit[1]];
+        const name = { freepinned: 'free-pinned', procurrent: 'pro-current', symbolic: 'symbolic', propinned: 'pro-pinned', freenoversion: 'free-noversion', garbage: 'garbage' }[kit[1]];
         if (!name) return send(404, 'Not Found', 'text/plain');
         return send(200, readFileSync(join(fixtures, 'kits', `${name}.js`), 'utf8'), 'application/javascript');
       }
@@ -309,43 +309,43 @@ describe('fetch-kit.py', () => {
     assert.deepEqual(out.assumed, allFamilyStyles('6.7.2'));
   });
 
-  test('a 7.x kit: resolves 7.x now, says it moves, and uses that release', async () => {
-    requests.length = 0;
-    const r = await runStub('fetch-kit.py', ['--kit-id', 'promajor']);
-    assert.equal(r.code, 0, r.stderr);
-    const out = parse.fetchKit(r.stdout);
-    const resolved = graphqlData('resolve', { version: '7.x' }).release.version;
-    assert.match(out.version, new RegExp(`^7\\.x \\(resolves to ${resolved.replace(/\./g, '\\.')} now; .*resolve it again`));
-    assert.deepEqual(out.assumed, allFamilyStyles(resolved));
-    assert.ok(requests.some((q) => q.url === `/releases/${resolved}/family-styles`));
+  // The kits service writes the release a kit serves now into the kit JS
+  // (7.3.1), even for a kit set to follow 7.x. Only `fa kit show` has the setting.
+  test("the version is the release the kit serves now, and says the kit's setting needs fa", async () => {
+    const r = await runStub('fetch-kit.py', ['--kit-id', 'propinned']);
+    const { version } = parse.fetchKit(r.stdout);
+    assert.ok(version.startsWith('6.7.2 (the release this kit serves now'), version);
+    assert.match(version, /7\.x/);
+    assert.match(version, /fa kit show/);
   });
 
-  test('a 6.x kit: uses the 6.x release, not the latest', async () => {
+  test("an older release: that release's family-styles, never the latest's", async () => {
     requests.length = 0;
-    const r = await runStub('fetch-kit.py', ['--kit-id', 'proold']);
-    assert.equal(r.code, 0, r.stderr);
-    const resolved = graphqlData('resolve', { version: '6.x' }).release.version;
-    assert.match(parse.fetchKit(r.stdout).version, new RegExp(`resolves to ${resolved.replace(/\./g, '\\.')}`));
-    assert.deepEqual(parse.fetchKit(r.stdout).assumed, allFamilyStyles(resolved));
+    const r = await runStub('fetch-kit.py', ['--kit-id', 'propinned']);
+    assert.deepEqual(parse.fetchKit(r.stdout).assumed, allFamilyStyles('6.7.2'));
     assert.ok(!requests.some((q) => q.url.includes(latestRelease())), 'requested the latest release');
   });
 
-  test('a Free 7.x kit: the free-collection subset of the resolved release', async () => {
-    const r = await runStub('fetch-kit.py', ['--kit-id', 'freemajor']);
+  test('a current Pro kit: every family-style in its release', async () => {
+    const r = await runStub('fetch-kit.py', ['--kit-id', 'procurrent']);
     assert.equal(r.code, 0, r.stderr);
-    assert.deepEqual(parse.fetchKit(r.stdout).assumed, freeCollection('7.3.1'));
+    assert.deepEqual(parse.fetchKit(r.stdout).assumed, allFamilyStyles('7.3.1'));
   });
 
-  test('a pinned version is reported as is', async () => {
-    const r = await runStub('fetch-kit.py', ['--kit-id', 'propinned']);
-    assert.equal(parse.fetchKit(r.stdout).version, '6.7.2');
+  test('a symbolic version, if a kit config ever has one, is resolved now and said to move', async () => {
+    const r = await runStub('fetch-kit.py', ['--kit-id', 'symbolic']);
+    assert.equal(r.code, 0, r.stderr);
+    const resolved = graphqlData('resolve', { version: '7.x' }).release.version;
+    const { version, assumed } = parse.fetchKit(r.stdout);
+    assert.ok(version.startsWith(`7.x (resolves to ${resolved} now`), version);
+    assert.deepEqual(assumed, allFamilyStyles(resolved));
   });
 
   test('a kit config with no version: the latest release, never "latest"', async () => {
     requests.length = 0;
     const r = await runStub('fetch-kit.py', ['--kit-id', 'freenoversion']);
     assert.equal(r.code, 0, r.stderr);
-    assert.equal(parse.fetchKit(r.stdout).version, latestRelease());
+    assert.ok(parse.fetchKit(r.stdout).version.startsWith(`${latestRelease()} `));
     assert.ok(!requests.some((q) => /"latest"/.test(q.body)), 'sent "latest" as a version');
   });
 
@@ -420,6 +420,12 @@ describe('summarize-icons.py', () => {
     assert.equal(r.stdout.trim(), 'house | in kit | fas, far');
   });
 
+  test('fa search --kit-token: kit results with their family-styles', async () => {
+    const r = await summarize(readFileSync(join(fixtures, 'fa-search-kit.json'), 'utf8'));
+    assert.equal(r.code, 0, r.stderr);
+    assert.equal(r.stdout.trim(), 'mug-saucer | in kit | classic/solid');
+  });
+
   test('the kit icon variants query: the icon is in the kit, in each named family-style', async () => {
     const r = await summarize(readFileSync(join(fixtures, 'fa-kit-icon-variants.json'), 'utf8'));
     assert.equal(r.code, 0, r.stderr);
@@ -458,6 +464,12 @@ describe('live API', { skip: !process.env.FA_LIVE && 'set FA_LIVE=1 to run' }, (
     const version = parse.latestVersion((await run('latest-version.py')).stdout);
     assert.equal((await run('icon-exists.py', ['--version', version, '--icon-name', 'house'])).code, 0);
     assert.equal((await run('icon-exists.py', ['--version', version, '--icon-name', 'not-an-icon'])).code, 1);
+  });
+
+  test('resolve-version.py resolves 7.x to a 7 release', async () => {
+    const r = await run('resolve-version.py', ['--version', '7.x']);
+    assert.equal(r.code, 0, r.stderr);
+    assert.match(JSON.parse(r.stdout).data.release.version, /^7\.\d+\.\d+$/);
   });
 
   test('search.py returns results for cup', async () => {

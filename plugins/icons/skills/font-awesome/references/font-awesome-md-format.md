@@ -12,7 +12,7 @@ Detected by the Font Awesome agent tools. Commit this file so the whole team ben
 ## Integration
 
 - **Method:** [e.g., React components via @fortawesome/react-fontawesome, Kit embed (SVG+JS), CDN, self-hosted web fonts]
-- **Version:** [e.g., 7.2.0. For a Kit, the version as the Kit sets it, which may be symbolic, e.g. `7.x`: record that, not the release it resolves to today, since a `7.x` Kit moves to each new 7.x release. Resolve it fresh when you need a release.]
+- **Version:** [e.g., 7.2.0. For a Kit, the version as the Kit sets it (`version` from `fa kit show`), which may be symbolic, e.g. `7.x`: record that, not the release it resolves to today, since a `7.x` Kit moves to each new 7.x release. Resolve it fresh when you need a release. Without `fa`, `scripts/fetch-kit.py` gives only the release the Kit serves today: record it with a note that the Kit may follow its major version.]
 - **License:** [Free or Pro]
 - **Kit ID:** [if applicable, or omit — this is the Kit token, e.g. `abc123def4`. It's usable as `--kit-token` with the `fa` CLI (e.g. `fa kit icon ...`, `fa kit icons ...`, `fa kit family-styles ...`) to check what the Kit's subset includes, and `fa search --kit-token <TOKEN>` to search only kit-available icons. The Font Awesome skills use it to avoid adding or suggesting icons the Kit doesn't contain.]
 - **Kit Revision:** [e.g. 42 -- this is the Kit's revision number, useful for tracking updates. It changes every time a kit is updated, whether by changing its subset, settings, or adding/removing/changing any custom icons. It's found as `kitRevision` in the kit detail from `fa kit show --kit-token <TOKEN>`]

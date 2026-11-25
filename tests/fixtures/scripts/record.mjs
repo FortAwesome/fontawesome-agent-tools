@@ -3,11 +3,17 @@
 //
 //   node tests/fixtures/scripts/record.mjs
 //
-// The kit JS files (kits/*.js) and fa-kit-*.json are written by hand: kit
-// tokens and kit queries need an account, and the tests don't need real ones.
+// Written by hand, since kits need an account and the tests need no real one:
+// - kits/*.js: the first line of a kit's JS. The kits service writes the
+//   release a kit serves into `version` (7.3.1, never 7.x); symbolic.js is the
+//   exception, to check a symbolic version would still be resolved.
+// - fa-kit-*.json, fa-search-kit.json: shaped like the fa CLI's own test
+//   fixtures (fa-cli tests/integration_kit.rs, integration_search.rs).
+//
+// The GraphQL requests use the skill's own queries/*.graphql documents.
 
 import { spawnSync } from 'node:child_process';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -18,11 +24,12 @@ const headers = { 'Content-Type': 'application/json', 'User-Agent': 'fontawesome
 const VERSION = '7.3.1';
 const OLD_VERSION = '6.7.2';
 
-const RELEASES = '{ releases { version isLatest } }';
-const ICON = 'query ($version: String!, $iconName: String!) { release(version: $version) { icon(name: $iconName) { id label familyStylesByLicense { free { family style } pro { family style } } } } }';
-const SEARCH = 'query ($version: String!, $query: String!, $first: Int) { search(version: $version, query: $query, first: $first) { id label unicode familyStylesByLicense { free { family style } pro { family style } } } }';
-const FAMILY_STYLES = 'query ($version: String!) { release(version: $version) { familyStyles { family style } } }';
-const RESOLVE = 'query ($version: String!) { release(version: $version) { version } }';
+const queriesDir = join(here, '../../../plugins/icons/skills/font-awesome/queries');
+const doc = (name) => readFileSync(join(queriesDir, `${name}.graphql`), 'utf8');
+const RELEASES = doc('latest-version');
+const ICON = doc('icon-exists');
+const SEARCH = doc('search');
+const RESOLVE = doc('resolve-version');
 
 const requests = [
   ['releases', RELEASES, {}],
@@ -31,8 +38,6 @@ const requests = [
   ['icon', ICON, { version: '9.9.9', iconName: 'house' }],
   ['search', SEARCH, { version: VERSION, query: 'cup', first: 3 }],
   ['search', SEARCH, { version: VERSION, query: 'zzqqxxnothing', first: 3 }],
-  ['familyStyles', FAMILY_STYLES, { version: VERSION }],
-  ['familyStyles', FAMILY_STYLES, { version: OLD_VERSION }],
   ['resolve', RESOLVE, { version: '7.x' }],
   ['resolve', RESOLVE, { version: '6.x' }],
   ['resolve', RESOLVE, { version: VERSION }],

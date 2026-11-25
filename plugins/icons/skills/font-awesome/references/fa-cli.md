@@ -97,6 +97,6 @@ Run these with `python3` from this skill's directory (`font-awesome/`). They cal
 | `scripts/resolve-version.py --version <v>` | The release a version resolves to now (`7.x` gives the latest 7.x) |
 | `scripts/icon-exists.py --version <v> --icon-name <icon>` | Exit code 0 if the icon exists, 1 if not, 2 if the check failed. Prints the icon's JSON (pipe it through `scripts/summarize-icons.py`). |
 | `scripts/search.py --version <v> --query <q> [--first 10]` | Search the catalog. Pipe it through `scripts/summarize-icons.py`. |
-| `scripts/fetch-kit.py --kit-id <t>` | A kit's version (and the release it resolves to now), license, and method, from its public kit JS. It can't see which family-styles the kit includes: it warns, then lists everything the license allows as an assumption. Tell the user the warning, and don't present or record that list as the kit's. |
+| `scripts/fetch-kit.py --kit-id <t>` | The release a kit serves now, its license, and method, from its public kit JS. It can't tell whether the kit is pinned to that release or follows a major version such as `7.x`. It can't see which family-styles the kit includes: it warns, then lists everything the license allows as an assumption. Tell the user the warning, and don't present or record that list as the kit's. |
 
 Without the CLI you can't search within a kit, see which family-styles it includes, or see custom icons. Say so when it matters to the answer.

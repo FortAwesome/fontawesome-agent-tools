@@ -150,7 +150,7 @@ def main(name, argv=None, require=None, usage=None):
     except QueryError as e:
         print(f"Error: {e}", file=sys.stderr)
         sys.exit(EXIT_ERROR)
-    print(json.dumps(response, indent=2))
+    print(json.dumps(response, separators=(",", ":")))
     if response.get("errors"):
         print(f"Error: the API returned errors: {json.dumps(response['errors'])}", file=sys.stderr)
         sys.exit(EXIT_ERROR)

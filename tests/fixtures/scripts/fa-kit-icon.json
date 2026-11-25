@@ -1,16 +1,1 @@
-{
-  "data": {
-    "me": {
-      "kit": {
-        "icon": {
-          "id": "house",
-          "label": "House",
-          "variants": [
-            { "prefix": "fas" },
-            { "prefix": "far" }
-          ]
-        }
-      }
-    }
-  }
-}
+{"data":{"me":{"kit":{"icon":{"name":"house","unicodeHex":"f015","variants":[{"familyStyle":{"prefix":"fas"}},{"familyStyle":{"prefix":"far"}}]}}}}}
