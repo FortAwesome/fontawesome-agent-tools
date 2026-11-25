@@ -1,0 +1,1052 @@
+[
+  {
+    "kind": "releases",
+    "variables": {},
+    "response": {
+      "data": {
+        "releases": [
+          {
+            "isLatest": false,
+            "version": "5.0.1"
+          },
+          {
+            "isLatest": false,
+            "version": "5.0.2"
+          },
+          {
+            "isLatest": false,
+            "version": "5.0.3"
+          },
+          {
+            "isLatest": false,
+            "version": "5.0.4"
+          },
+          {
+            "isLatest": false,
+            "version": "5.0.6"
+          },
+          {
+            "isLatest": false,
+            "version": "5.0.8"
+          },
+          {
+            "isLatest": false,
+            "version": "5.0.9"
+          },
+          {
+            "isLatest": false,
+            "version": "5.0.10"
+          },
+          {
+            "isLatest": false,
+            "version": "5.0.12"
+          },
+          {
+            "isLatest": false,
+            "version": "5.0.13"
+          },
+          {
+            "isLatest": false,
+            "version": "5.1.0"
+          },
+          {
+            "isLatest": false,
+            "version": "5.1.1"
+          },
+          {
+            "isLatest": false,
+            "version": "5.2.0"
+          },
+          {
+            "isLatest": false,
+            "version": "5.3.1"
+          },
+          {
+            "isLatest": false,
+            "version": "5.4.1"
+          },
+          {
+            "isLatest": false,
+            "version": "5.4.2"
+          },
+          {
+            "isLatest": false,
+            "version": "5.5.0"
+          },
+          {
+            "isLatest": false,
+            "version": "5.6.0"
+          },
+          {
+            "isLatest": false,
+            "version": "5.6.1"
+          },
+          {
+            "isLatest": false,
+            "version": "5.6.3"
+          },
+          {
+            "isLatest": false,
+            "version": "5.7.0"
+          },
+          {
+            "isLatest": false,
+            "version": "5.7.1"
+          },
+          {
+            "isLatest": false,
+            "version": "5.7.2"
+          },
+          {
+            "isLatest": false,
+            "version": "5.8.0"
+          },
+          {
+            "isLatest": false,
+            "version": "5.8.1"
+          },
+          {
+            "isLatest": false,
+            "version": "5.8.2"
+          },
+          {
+            "isLatest": false,
+            "version": "5.9.0"
+          },
+          {
+            "isLatest": false,
+            "version": "5.10.0"
+          },
+          {
+            "isLatest": false,
+            "version": "5.10.1"
+          },
+          {
+            "isLatest": false,
+            "version": "5.10.2"
+          },
+          {
+            "isLatest": false,
+            "version": "5.11.0"
+          },
+          {
+            "isLatest": false,
+            "version": "5.11.1"
+          },
+          {
+            "isLatest": false,
+            "version": "5.11.2"
+          },
+          {
+            "isLatest": false,
+            "version": "5.12.0"
+          },
+          {
+            "isLatest": false,
+            "version": "5.12.1"
+          },
+          {
+            "isLatest": false,
+            "version": "5.13.0"
+          },
+          {
+            "isLatest": false,
+            "version": "5.13.1"
+          },
+          {
+            "isLatest": false,
+            "version": "5.14.0"
+          },
+          {
+            "isLatest": false,
+            "version": "5.15.1"
+          },
+          {
+            "isLatest": false,
+            "version": "5.15.2"
+          },
+          {
+            "isLatest": false,
+            "version": "5.15.3"
+          },
+          {
+            "isLatest": false,
+            "version": "5.15.4"
+          },
+          {
+            "isLatest": false,
+            "version": "6.0.0-beta1"
+          },
+          {
+            "isLatest": false,
+            "version": "6.0.0-beta2"
+          },
+          {
+            "isLatest": false,
+            "version": "6.0.0-beta3"
+          },
+          {
+            "isLatest": false,
+            "version": "6.0.0"
+          },
+          {
+            "isLatest": false,
+            "version": "6.1.0"
+          },
+          {
+            "isLatest": false,
+            "version": "6.1.1"
+          },
+          {
+            "isLatest": false,
+            "version": "6.1.2"
+          },
+          {
+            "isLatest": false,
+            "version": "6.2.0"
+          },
+          {
+            "isLatest": false,
+            "version": "6.2.1"
+          },
+          {
+            "isLatest": false,
+            "version": "6.3.0"
+          },
+          {
+            "isLatest": false,
+            "version": "6.4.0"
+          },
+          {
+            "isLatest": false,
+            "version": "6.4.1"
+          },
+          {
+            "isLatest": false,
+            "version": "6.4.2"
+          },
+          {
+            "isLatest": false,
+            "version": "6.5.0"
+          },
+          {
+            "isLatest": false,
+            "version": "6.5.1"
+          },
+          {
+            "isLatest": false,
+            "version": "6.5.2"
+          },
+          {
+            "isLatest": false,
+            "version": "6.6.0"
+          },
+          {
+            "isLatest": false,
+            "version": "6.7.0"
+          },
+          {
+            "isLatest": false,
+            "version": "6.7.1"
+          },
+          {
+            "isLatest": false,
+            "version": "6.7.2"
+          },
+          {
+            "isLatest": false,
+            "version": "7.0.0"
+          },
+          {
+            "isLatest": false,
+            "version": "7.0.1"
+          },
+          {
+            "isLatest": false,
+            "version": "7.1.0"
+          },
+          {
+            "isLatest": false,
+            "version": "7.2.0"
+          },
+          {
+            "isLatest": false,
+            "version": "7.3.0"
+          },
+          {
+            "isLatest": true,
+            "version": "7.3.1"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "kind": "icon",
+    "variables": {
+      "version": "7.3.1",
+      "iconName": "house"
+    },
+    "response": {
+      "data": {
+        "release": {
+          "icon": {
+            "familyStylesByLicense": {
+              "free": [
+                {
+                  "family": "classic",
+                  "style": "regular"
+                },
+                {
+                  "family": "classic",
+                  "style": "solid"
+                }
+              ],
+              "pro": [
+                {
+                  "family": "chisel",
+                  "style": "regular"
+                },
+                {
+                  "family": "classic",
+                  "style": "light"
+                },
+                {
+                  "family": "classic",
+                  "style": "regular"
+                },
+                {
+                  "family": "classic",
+                  "style": "solid"
+                },
+                {
+                  "family": "classic",
+                  "style": "thin"
+                },
+                {
+                  "family": "duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "duotone",
+                  "style": "thin"
+                },
+                {
+                  "family": "etch",
+                  "style": "solid"
+                },
+                {
+                  "family": "graphite",
+                  "style": "thin"
+                },
+                {
+                  "family": "jelly",
+                  "style": "regular"
+                },
+                {
+                  "family": "jelly-duo",
+                  "style": "regular"
+                },
+                {
+                  "family": "jelly-fill",
+                  "style": "regular"
+                },
+                {
+                  "family": "mosaic",
+                  "style": "solid"
+                },
+                {
+                  "family": "notdog",
+                  "style": "solid"
+                },
+                {
+                  "family": "notdog-duo",
+                  "style": "solid"
+                },
+                {
+                  "family": "pixel",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "thin"
+                },
+                {
+                  "family": "slab",
+                  "style": "regular"
+                },
+                {
+                  "family": "slab-duo",
+                  "style": "regular"
+                },
+                {
+                  "family": "slab-press",
+                  "style": "regular"
+                },
+                {
+                  "family": "slab-press-duo",
+                  "style": "regular"
+                },
+                {
+                  "family": "thumbprint",
+                  "style": "light"
+                },
+                {
+                  "family": "utility",
+                  "style": "semibold"
+                },
+                {
+                  "family": "utility-duo",
+                  "style": "semibold"
+                },
+                {
+                  "family": "utility-fill",
+                  "style": "semibold"
+                },
+                {
+                  "family": "vellum",
+                  "style": "solid"
+                },
+                {
+                  "family": "whiteboard",
+                  "style": "semibold"
+                }
+              ]
+            },
+            "id": "house",
+            "label": "House"
+          }
+        }
+      }
+    }
+  },
+  {
+    "kind": "icon",
+    "variables": {
+      "version": "7.3.1",
+      "iconName": "not-an-icon"
+    },
+    "response": {
+      "data": {
+        "release": {
+          "icon": null
+        }
+      }
+    }
+  },
+  {
+    "kind": "icon",
+    "variables": {
+      "version": "9.9.9",
+      "iconName": "house"
+    },
+    "response": {
+      "data": {
+        "release": null
+      },
+      "errors": [
+        {
+          "message": "not_found",
+          "path": [
+            "release"
+          ],
+          "locations": [
+            {
+              "line": 1,
+              "column": 49
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "kind": "search",
+    "variables": {
+      "version": "7.3.1",
+      "query": "cup",
+      "first": 3
+    },
+    "response": {
+      "data": {
+        "search": [
+          {
+            "familyStylesByLicense": {
+              "free": [],
+              "pro": [
+                {
+                  "family": "classic",
+                  "style": "light"
+                },
+                {
+                  "family": "classic",
+                  "style": "regular"
+                },
+                {
+                  "family": "classic",
+                  "style": "solid"
+                },
+                {
+                  "family": "classic",
+                  "style": "thin"
+                },
+                {
+                  "family": "duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "duotone",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "thin"
+                }
+              ]
+            },
+            "id": "cup-togo",
+            "label": "Cup Togo",
+            "unicode": "f6c5"
+          },
+          {
+            "familyStylesByLicense": {
+              "free": [],
+              "pro": [
+                {
+                  "family": "classic",
+                  "style": "light"
+                },
+                {
+                  "family": "classic",
+                  "style": "regular"
+                },
+                {
+                  "family": "classic",
+                  "style": "solid"
+                },
+                {
+                  "family": "classic",
+                  "style": "thin"
+                },
+                {
+                  "family": "duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "duotone",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "thin"
+                }
+              ]
+            },
+            "id": "cup-straw-swoosh",
+            "label": "Cup Straw Swoosh",
+            "unicode": "e364"
+          },
+          {
+            "familyStylesByLicense": {
+              "free": [],
+              "pro": [
+                {
+                  "family": "classic",
+                  "style": "light"
+                },
+                {
+                  "family": "classic",
+                  "style": "regular"
+                },
+                {
+                  "family": "classic",
+                  "style": "solid"
+                },
+                {
+                  "family": "classic",
+                  "style": "thin"
+                },
+                {
+                  "family": "duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "duotone",
+                  "style": "thin"
+                },
+                {
+                  "family": "notdog",
+                  "style": "solid"
+                },
+                {
+                  "family": "notdog-duo",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "thin"
+                }
+              ]
+            },
+            "id": "cup-straw",
+            "label": "Cup Straw",
+            "unicode": "e363"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "kind": "search",
+    "variables": {
+      "version": "7.3.1",
+      "query": "zzqqxxnothing",
+      "first": 3
+    },
+    "response": {
+      "data": {
+        "search": []
+      }
+    }
+  },
+  {
+    "kind": "familyStyles",
+    "variables": {
+      "version": "7.3.1"
+    },
+    "response": {
+      "data": {
+        "release": {
+          "familyStyles": [
+            {
+              "family": "classic",
+              "style": "solid"
+            },
+            {
+              "family": "classic",
+              "style": "regular"
+            },
+            {
+              "family": "classic",
+              "style": "light"
+            },
+            {
+              "family": "classic",
+              "style": "thin"
+            },
+            {
+              "family": "classic",
+              "style": "brands"
+            },
+            {
+              "family": "duotone",
+              "style": "solid"
+            },
+            {
+              "family": "duotone",
+              "style": "regular"
+            },
+            {
+              "family": "duotone",
+              "style": "light"
+            },
+            {
+              "family": "duotone",
+              "style": "thin"
+            },
+            {
+              "family": "sharp",
+              "style": "solid"
+            },
+            {
+              "family": "sharp",
+              "style": "regular"
+            },
+            {
+              "family": "sharp",
+              "style": "light"
+            },
+            {
+              "family": "sharp",
+              "style": "thin"
+            },
+            {
+              "family": "sharp-duotone",
+              "style": "solid"
+            },
+            {
+              "family": "sharp-duotone",
+              "style": "regular"
+            },
+            {
+              "family": "sharp-duotone",
+              "style": "light"
+            },
+            {
+              "family": "sharp-duotone",
+              "style": "thin"
+            },
+            {
+              "family": "chisel",
+              "style": "regular"
+            },
+            {
+              "family": "etch",
+              "style": "solid"
+            },
+            {
+              "family": "graphite",
+              "style": "thin"
+            },
+            {
+              "family": "jelly",
+              "style": "regular"
+            },
+            {
+              "family": "jelly-duo",
+              "style": "regular"
+            },
+            {
+              "family": "jelly-fill",
+              "style": "regular"
+            },
+            {
+              "family": "mosaic",
+              "style": "solid"
+            },
+            {
+              "family": "notdog",
+              "style": "solid"
+            },
+            {
+              "family": "notdog-duo",
+              "style": "solid"
+            },
+            {
+              "family": "pixel",
+              "style": "regular"
+            },
+            {
+              "family": "slab",
+              "style": "regular"
+            },
+            {
+              "family": "slab-duo",
+              "style": "regular"
+            },
+            {
+              "family": "slab-press",
+              "style": "regular"
+            },
+            {
+              "family": "slab-press-duo",
+              "style": "regular"
+            },
+            {
+              "family": "thumbprint",
+              "style": "light"
+            },
+            {
+              "family": "utility",
+              "style": "semibold"
+            },
+            {
+              "family": "utility-duo",
+              "style": "semibold"
+            },
+            {
+              "family": "utility-fill",
+              "style": "semibold"
+            },
+            {
+              "family": "vellum",
+              "style": "solid"
+            },
+            {
+              "family": "whiteboard",
+              "style": "semibold"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "kind": "familyStyles",
+    "variables": {
+      "version": "6.7.2"
+    },
+    "response": {
+      "data": {
+        "release": {
+          "familyStyles": [
+            {
+              "family": "classic",
+              "style": "solid"
+            },
+            {
+              "family": "classic",
+              "style": "regular"
+            },
+            {
+              "family": "classic",
+              "style": "light"
+            },
+            {
+              "family": "classic",
+              "style": "thin"
+            },
+            {
+              "family": "classic",
+              "style": "brands"
+            },
+            {
+              "family": "duotone",
+              "style": "solid"
+            },
+            {
+              "family": "duotone",
+              "style": "regular"
+            },
+            {
+              "family": "duotone",
+              "style": "light"
+            },
+            {
+              "family": "duotone",
+              "style": "thin"
+            },
+            {
+              "family": "sharp",
+              "style": "solid"
+            },
+            {
+              "family": "sharp",
+              "style": "regular"
+            },
+            {
+              "family": "sharp",
+              "style": "light"
+            },
+            {
+              "family": "sharp",
+              "style": "thin"
+            },
+            {
+              "family": "sharp-duotone",
+              "style": "solid"
+            },
+            {
+              "family": "sharp-duotone",
+              "style": "regular"
+            },
+            {
+              "family": "sharp-duotone",
+              "style": "light"
+            },
+            {
+              "family": "sharp-duotone",
+              "style": "thin"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "kind": "resolve",
+    "variables": {
+      "version": "7.x"
+    },
+    "response": {
+      "data": {
+        "release": {
+          "version": "7.3.1"
+        }
+      }
+    }
+  },
+  {
+    "kind": "resolve",
+    "variables": {
+      "version": "6.x"
+    },
+    "response": {
+      "data": {
+        "release": {
+          "version": "6.7.2"
+        }
+      }
+    }
+  },
+  {
+    "kind": "resolve",
+    "variables": {
+      "version": "7.3.1"
+    },
+    "response": {
+      "data": {
+        "release": {
+          "version": "7.3.1"
+        }
+      }
+    }
+  },
+  {
+    "kind": "resolve",
+    "variables": {
+      "version": "6.7.2"
+    },
+    "response": {
+      "data": {
+        "release": {
+          "version": "6.7.2"
+        }
+      }
+    }
+  }
+]

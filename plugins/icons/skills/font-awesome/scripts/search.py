@@ -2,11 +2,12 @@
 
 import argparse
 import json
+import os
 import sys
 import urllib.error
 import urllib.request
 
-GRAPHQL_URL = "https://api.fontawesome.com"
+GRAPHQL_URL = os.environ.get("FA_API_URL", "https://api.fontawesome.com")
 
 parser = argparse.ArgumentParser(description="Search Font Awesome icons")
 parser.add_argument("--version", required=True, help="Font Awesome version (e.g. 6.7.2)")

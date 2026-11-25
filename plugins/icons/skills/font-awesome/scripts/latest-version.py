@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 
 import json
+import os
 import sys
 import urllib.error
 import urllib.request
 
-GRAPHQL_URL = "https://api.fontawesome.com"
+GRAPHQL_URL = os.environ.get("FA_API_URL", "https://api.fontawesome.com")
 
 query = """
 {

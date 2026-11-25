@@ -1,0 +1,291 @@
+{
+  "iconCollections": [
+    {
+      "iconPacks": [
+        "brands",
+        "classic"
+      ],
+      "label": "Font Awesome Free",
+      "labelIconName": "bolt",
+      "labelIconPrefix": "fas",
+      "name": "free-collection",
+      "subset": [
+        {
+          "family": "classic",
+          "only": [
+            "0",
+            "1",
+            "2"
+          ],
+          "style": "solid"
+        },
+        {
+          "family": "classic",
+          "only": [
+            "address-book",
+            "address-card",
+            "bell"
+          ],
+          "style": "regular"
+        },
+        {
+          "family": "classic",
+          "style": "brands"
+        }
+      ]
+    },
+    {
+      "iconPacks": [
+        "brands",
+        "classic",
+        "duotone",
+        "sharp",
+        "sharp-duotone"
+      ],
+      "label": "Font Awesome Pro",
+      "labelIconName": "icons",
+      "labelIconPrefix": "fas",
+      "name": "pro-collection"
+    }
+  ],
+  "iconPacks": [
+    {
+      "description": "FA Brands is your go-to icon pack for when you need to showcase a company's logo. Whether it's for social media, software, or big-name products, this pack has all the icons you need to represent recognizable brands with style.",
+      "designerName": "Font Awesome",
+      "designerUrl": "https://fontawesome.com",
+      "familyStyles": [
+        {
+          "family": "classic",
+          "style": "brands",
+          "visualTags": []
+        }
+      ],
+      "label": "Brands",
+      "labelIconName": "font-awesome",
+      "labelIconPrefix": "fab",
+      "name": "brands",
+      "sourceCanvasHeight": 16,
+      "sourceGridHeight": 16
+    },
+    {
+      "description": "With more icons than you can shake a stick at, FA Classic is the seasoned pro of Font Awesome. Thousands of icons in a timeless, versatile style that work just about anywhere. Classic is like the little black dress of icons.",
+      "designerName": "Font Awesome",
+      "designerUrl": "https://fontawesome.com",
+      "familyStyles": [
+        {
+          "family": "classic",
+          "style": "solid",
+          "visualTags": [
+            "filled",
+            "round"
+          ]
+        },
+        {
+          "family": "classic",
+          "style": "regular",
+          "visualTags": [
+            "line",
+            "round"
+          ]
+        },
+        {
+          "family": "classic",
+          "style": "light",
+          "visualTags": [
+            "line",
+            "round"
+          ]
+        },
+        {
+          "family": "classic",
+          "style": "thin",
+          "visualTags": [
+            "line",
+            "round"
+          ]
+        }
+      ],
+      "label": "Classic",
+      "labelIconName": "house",
+      "labelIconPrefix": "fas",
+      "name": "classic",
+      "sourceCanvasHeight": 16,
+      "sourceGridHeight": 16
+    },
+    {
+      "description": "FA Duotone is double-layered companion to FA Classic, which icon-for-icon matches. These beauties bring contrast, clarity, and a little pizzazz - because when it comes to making an impact, sometimes two tones are better than one!",
+      "designerName": "Font Awesome",
+      "designerUrl": "https://fontawesome.com",
+      "familyStyles": [
+        {
+          "family": "duotone",
+          "style": "solid",
+          "visualTags": [
+            "duotone",
+            "filled",
+            "round"
+          ]
+        },
+        {
+          "family": "duotone",
+          "style": "regular",
+          "visualTags": [
+            "duotone",
+            "line",
+            "round"
+          ]
+        },
+        {
+          "family": "duotone",
+          "style": "light",
+          "visualTags": [
+            "duotone",
+            "line",
+            "round"
+          ]
+        },
+        {
+          "family": "duotone",
+          "style": "thin",
+          "visualTags": [
+            "duotone",
+            "line",
+            "round"
+          ]
+        }
+      ],
+      "label": "Duotone",
+      "labelIconName": "house",
+      "labelIconPrefix": "fad",
+      "name": "duotone",
+      "sourceCanvasHeight": 16,
+      "sourceGridHeight": 16
+    },
+    {
+      "description": "FA Sharp icons take clean lines and tight angles to the next level. Designed as a modern counterpart to our Classic icon pack, these icons slice through the clutter with razor precision for projects that need a high-definition edge.",
+      "designerName": "Font Awesome",
+      "designerUrl": "https://fontawesome.com",
+      "familyStyles": [
+        {
+          "family": "sharp",
+          "style": "solid",
+          "visualTags": [
+            "filled",
+            "sharp"
+          ]
+        },
+        {
+          "family": "sharp",
+          "style": "regular",
+          "visualTags": [
+            "line",
+            "sharp"
+          ]
+        },
+        {
+          "family": "sharp",
+          "style": "light",
+          "visualTags": [
+            "line",
+            "sharp"
+          ]
+        },
+        {
+          "family": "sharp",
+          "style": "thin",
+          "visualTags": [
+            "line",
+            "sharp"
+          ]
+        }
+      ],
+      "label": "Sharp",
+      "labelIconName": "house",
+      "labelIconPrefix": "fass",
+      "name": "sharp",
+      "sourceCanvasHeight": 16,
+      "sourceGridHeight": 16
+    },
+    {
+      "description": "FA Sharp-Duotone rocks twice the tone and twice the attitude, with razor-sharp lines and layered depth for extra impact. Whether you're after clean, modern, or downright daring, these icons deliver. One layer is fine, but two? Now that's cutting-edge.",
+      "designerName": "Font Awesome",
+      "designerUrl": "https://fontawesome.com",
+      "familyStyles": [
+        {
+          "family": "sharp-duotone",
+          "style": "solid",
+          "visualTags": [
+            "duotone",
+            "filled",
+            "sharp"
+          ]
+        },
+        {
+          "family": "sharp-duotone",
+          "style": "regular",
+          "visualTags": [
+            "duotone",
+            "line",
+            "sharp"
+          ]
+        },
+        {
+          "family": "sharp-duotone",
+          "style": "light",
+          "visualTags": [
+            "duotone",
+            "line",
+            "sharp"
+          ]
+        },
+        {
+          "family": "sharp-duotone",
+          "style": "thin",
+          "visualTags": [
+            "duotone",
+            "line",
+            "sharp"
+          ]
+        }
+      ],
+      "label": "Sharp Duotone",
+      "labelIconName": "house",
+      "labelIconPrefix": "fasds",
+      "name": "sharp-duotone",
+      "sourceCanvasHeight": 16,
+      "sourceGridHeight": 16
+    }
+  ],
+  "visualTags": [
+    {
+      "label": "Duotone",
+      "labelIconName": "circle-half",
+      "labelIconPrefix": "fad",
+      "name": "duotone"
+    },
+    {
+      "label": "Filled",
+      "labelIconName": "square",
+      "labelIconPrefix": "fas",
+      "name": "filled"
+    },
+    {
+      "label": "Line",
+      "labelIconName": "bars",
+      "labelIconPrefix": "fas",
+      "name": "line"
+    },
+    {
+      "label": "Round",
+      "labelIconName": "circle",
+      "labelIconPrefix": "fas",
+      "name": "round"
+    },
+    {
+      "label": "Sharp",
+      "labelIconName": "diamond",
+      "labelIconPrefix": "fass",
+      "name": "sharp"
+    }
+  ]
+}

@@ -2,12 +2,13 @@
 
 import argparse
 import json
+import os
 import sys
 import urllib.error
 import urllib.request
 
-KIT_BASE_URL = "https://kit.fontawesome.com"
-GRAPHQL_URL = "https://api.fontawesome.com"
+KIT_BASE_URL = os.environ.get("FA_KIT_URL", "https://kit.fontawesome.com")
+GRAPHQL_URL = os.environ.get("FA_API_URL", "https://api.fontawesome.com")
 
 # Families included in the free tier (used to filter when license is "free")
 FREE_FAMILIES = {"classic"}

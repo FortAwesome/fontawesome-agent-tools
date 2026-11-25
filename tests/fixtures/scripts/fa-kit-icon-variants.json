@@ -1,0 +1,16 @@
+{
+  "data": {
+    "me": {
+      "kit": {
+        "icon": {
+          "id": "house",
+          "variants": [
+            { "familyStyle": { "family": "classic", "style": "solid", "prefix": "fas", "shorthand": "solid" } },
+            { "familyStyle": { "family": "classic", "style": "regular", "prefix": "far", "shorthand": "regular" } },
+            { "familyStyle": { "family": "sharp", "style": "solid", "prefix": "fass", "shorthand": "sharp-solid" } }
+          ]
+        }
+      }
+    }
+  }
+}

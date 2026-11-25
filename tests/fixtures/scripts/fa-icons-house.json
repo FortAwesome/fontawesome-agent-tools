@@ -1,0 +1,207 @@
+{
+  "data": {
+    "release": {
+      "icon": {
+        "familyStylesByLicense": {
+          "free": [
+            {
+              "family": "classic",
+              "prefix": "far",
+              "style": "regular"
+            },
+            {
+              "family": "classic",
+              "prefix": "fas",
+              "style": "solid"
+            }
+          ],
+          "pro": [
+            {
+              "family": "chisel",
+              "prefix": "facr",
+              "style": "regular"
+            },
+            {
+              "family": "classic",
+              "prefix": "fal",
+              "style": "light"
+            },
+            {
+              "family": "classic",
+              "prefix": "far",
+              "style": "regular"
+            },
+            {
+              "family": "classic",
+              "prefix": "fas",
+              "style": "solid"
+            },
+            {
+              "family": "classic",
+              "prefix": "fat",
+              "style": "thin"
+            },
+            {
+              "family": "duotone",
+              "prefix": "fadl",
+              "style": "light"
+            },
+            {
+              "family": "duotone",
+              "prefix": "fadr",
+              "style": "regular"
+            },
+            {
+              "family": "duotone",
+              "prefix": "fad",
+              "style": "solid"
+            },
+            {
+              "family": "duotone",
+              "prefix": "fadt",
+              "style": "thin"
+            },
+            {
+              "family": "etch",
+              "prefix": "faes",
+              "style": "solid"
+            },
+            {
+              "family": "graphite",
+              "prefix": "fagt",
+              "style": "thin"
+            },
+            {
+              "family": "jelly",
+              "prefix": "fajr",
+              "style": "regular"
+            },
+            {
+              "family": "jelly-duo",
+              "prefix": "fajdr",
+              "style": "regular"
+            },
+            {
+              "family": "jelly-fill",
+              "prefix": "fajfr",
+              "style": "regular"
+            },
+            {
+              "family": "mosaic",
+              "prefix": "fams",
+              "style": "solid"
+            },
+            {
+              "family": "notdog",
+              "prefix": "fans",
+              "style": "solid"
+            },
+            {
+              "family": "notdog-duo",
+              "prefix": "fands",
+              "style": "solid"
+            },
+            {
+              "family": "pixel",
+              "prefix": "fapr",
+              "style": "regular"
+            },
+            {
+              "family": "sharp",
+              "prefix": "fasl",
+              "style": "light"
+            },
+            {
+              "family": "sharp",
+              "prefix": "fasr",
+              "style": "regular"
+            },
+            {
+              "family": "sharp",
+              "prefix": "fass",
+              "style": "solid"
+            },
+            {
+              "family": "sharp",
+              "prefix": "fast",
+              "style": "thin"
+            },
+            {
+              "family": "sharp-duotone",
+              "prefix": "fasdl",
+              "style": "light"
+            },
+            {
+              "family": "sharp-duotone",
+              "prefix": "fasdr",
+              "style": "regular"
+            },
+            {
+              "family": "sharp-duotone",
+              "prefix": "fasds",
+              "style": "solid"
+            },
+            {
+              "family": "sharp-duotone",
+              "prefix": "fasdt",
+              "style": "thin"
+            },
+            {
+              "family": "slab",
+              "prefix": "faslr",
+              "style": "regular"
+            },
+            {
+              "family": "slab-duo",
+              "prefix": "fasldr",
+              "style": "regular"
+            },
+            {
+              "family": "slab-press",
+              "prefix": "faslpr",
+              "style": "regular"
+            },
+            {
+              "family": "slab-press-duo",
+              "prefix": "faslpdr",
+              "style": "regular"
+            },
+            {
+              "family": "thumbprint",
+              "prefix": "fatl",
+              "style": "light"
+            },
+            {
+              "family": "utility",
+              "prefix": "fausb",
+              "style": "semibold"
+            },
+            {
+              "family": "utility-duo",
+              "prefix": "faudsb",
+              "style": "semibold"
+            },
+            {
+              "family": "utility-fill",
+              "prefix": "faufsb",
+              "style": "semibold"
+            },
+            {
+              "family": "vellum",
+              "prefix": "favs",
+              "style": "solid"
+            },
+            {
+              "family": "whiteboard",
+              "prefix": "fawsb",
+              "style": "semibold"
+            }
+          ]
+        },
+        "id": "house",
+        "label": "House",
+        "unicodeHex": "f015"
+      }
+    }
+  }
+}

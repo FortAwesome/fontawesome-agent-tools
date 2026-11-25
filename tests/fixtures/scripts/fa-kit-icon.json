@@ -1,0 +1,16 @@
+{
+  "data": {
+    "me": {
+      "kit": {
+        "icon": {
+          "id": "house",
+          "label": "House",
+          "variants": [
+            { "prefix": "fas" },
+            { "prefix": "far" }
+          ]
+        }
+      }
+    }
+  }
+}
