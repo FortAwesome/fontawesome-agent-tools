@@ -63,10 +63,20 @@ const valuesKey = (vars) => JSON.stringify(Object.values(vars ?? {}).map(String)
 /** Responses a test sets in place of the recorded ones: {kind, variables, response}. */
 const overrides = [];
 
-function graphqlResponse(body) {
+/** The override or recorded entry for a request. An override may instead `drop`, `hang`, or send a `raw` body. */
+function graphqlHit(body) {
   const kind = kindOf(body.query ?? '');
-  const hit = [...overrides, ...graphqlFixtures].find((f) => f.kind === kind && valuesKey(f.variables) === valuesKey(body.variables));
-  return hit?.response;
+  return [...overrides, ...graphqlFixtures].find((f) => f.kind === kind && valuesKey(f.variables) === valuesKey(body.variables));
+}
+
+/** Runs fn with these overrides in place. */
+async function withOverrides(entries, fn) {
+  overrides.push(...entries);
+  try {
+    return await fn();
+  } finally {
+    overrides.length = 0;
+  }
 }
 
 let server;
@@ -84,8 +94,11 @@ before(async () => {
         res.end(typeof data === 'string' ? data : JSON.stringify(data));
       };
       if (req.method === 'POST' && req.url === '/') {
-        const response = graphqlResponse(JSON.parse(body));
-        return response ? send(200, response) : send(500, { error: `no fixture for ${body}` });
+        const hit = graphqlHit(JSON.parse(body));
+        if (hit?.drop) return req.socket.destroy(); // the connection closes with no response
+        if (hit?.hang) return; // never answers
+        if (hit?.raw !== undefined) return send(200, hit.raw);
+        return hit ? send(200, hit.response) : send(500, { error: `no fixture for ${body}` });
       }
       const rest = req.url.match(/^\/releases\/([^/]+)\/(family-styles|icon-packs)$/);
       if (rest) {
@@ -202,15 +215,57 @@ describe('latest-version.py', () => {
     try {
       const r = await runStub('latest-version.py');
       assert.equal(r.code, 2);
-      assert.match(r.stderr, /8\.x doesn't resolve to a release/);
+      assert.match(r.stderr, /couldn't resolve 8\.x \(7\.x isn't the latest release\)/);
     } finally {
       overrides.length = 0;
     }
   });
 
+  test("the first request fails: says so, and doesn't claim 6.x was checked", async () => {
+    await withOverrides([{ kind: 'latest', variables: { version: '7.x' }, drop: true }], async () => {
+      const r = await runStub('latest-version.py');
+      assert.equal(r.code, 2);
+      assert.match(r.stderr, /couldn't resolve 7\.x: the connection to the Font Awesome API failed/);
+      assert.doesNotMatch(r.stderr, /6\.x/);
+    });
+  });
+
   test('takes no arguments: exit 2', async () => {
     const r = await runStub('latest-version.py', ['--version', '7.x']);
     assert.equal(r.code, 2);
+  });
+});
+
+// add-icon.md reads icon-exists.py's exit 1 as "doesn't exist" and swaps in
+// another icon, so every kind of failure must exit 2.
+describe('the runner: failures exit 2, never 1', () => {
+  const houseVars = { version: VERSION, iconName: 'house' };
+  const iconExists = (env = {}) => runStub('icon-exists.py', ['--version', VERSION, '--icon-name', 'house'], { env });
+
+  test('the connection closes with no response', async () => {
+    await withOverrides([{ kind: 'icon', variables: houseVars, drop: true }], async () => {
+      const r = await iconExists();
+      assert.equal(r.code, 2, r.stderr);
+      assert.match(r.stderr, /connection to the Font Awesome API failed/);
+    });
+  });
+
+  for (const raw of ['[]', 'null', '"text"']) {
+    test(`a JSON response that isn't an object (${raw})`, async () => {
+      await withOverrides([{ kind: 'icon', variables: houseVars, raw }], async () => {
+        const r = await iconExists();
+        assert.equal(r.code, 2, r.stderr);
+        assert.match(r.stderr, /isn't an object/);
+      });
+    });
+  }
+
+  test('the API never answers: times out (FA_API_TIMEOUT)', async () => {
+    await withOverrides([{ kind: 'icon', variables: houseVars, hang: true }], async () => {
+      const r = await iconExists({ FA_API_TIMEOUT: '1' });
+      assert.equal(r.code, 2, r.stderr);
+      assert.match(r.stderr, /timed out/i);
+    });
   });
 });
 
@@ -279,12 +334,22 @@ describe('search.py', () => {
     assert.deepEqual(parse.search(r.stdout), []);
   });
 
-  test('--first is sent as an Int, and the document defaults it to 10', async () => {
+  test('--first is sent as an Int', async () => {
     requests.length = 0;
     await runStub('search.py', ['--version', VERSION, '--query', 'cup', '--first', '3']);
     const sent = JSON.parse(requests.find((q) => q.method === 'POST').body);
     assert.strictEqual(sent.variables.first, 3);
+  });
+
+  test('without --first: sends no first, so the API applies the default of 10', async () => {
+    requests.length = 0;
+    const r = await runStub('search.py', ['--version', VERSION, '--query', 'cup']);
+    assert.equal(r.code, 0, r.stderr);
+    const sent = JSON.parse(requests.find((q) => q.method === 'POST').body);
+    assert.ok(!('first' in sent.variables), `sent first: ${sent.variables.first}`);
     assert.match(sent.query, /\$first: Int = 10/);
+    // Recorded from the live API with no `first`: the document's default applied.
+    assert.equal(parse.search(r.stdout).length, 10);
   });
 
   test('pipes into summarize-icons.py: one line per result', async () => {
@@ -392,6 +457,32 @@ describe('fetch-kit.py', () => {
     assert.equal(r.code, 0, r.stderr);
     assert.ok(parse.fetchKit(r.stdout).version.startsWith(`${latestRelease()} `));
     assert.ok(!requests.some((q) => /"latest"/.test(q.body)), 'sent "latest" as a version');
+  });
+
+  test("the API fails resolving the version: still prints the kit JS's details, exit 0", async () => {
+    await withOverrides([{ kind: 'resolve', variables: { version: '6.7.2' }, drop: true }], async () => {
+      const r = await runStub('fetch-kit.py', ['--kit-id', 'propinned']);
+      assert.equal(r.code, 0, r.stderr);
+      const out = parse.fetchKit(r.stdout);
+      assert.equal(out.license, 'pro');
+      assert.equal(out.method, 'css');
+      assert.ok(out.version.startsWith("6.7.2 (couldn't check it against the API"), out.version);
+      assert.match(out.warning, WARNING);
+      assert.deepEqual(out.assumed, []);
+      assert.match(r.stdout, /^Couldn't check: couldn't resolve the kit's version/m);
+    });
+  });
+
+  test("the API fails listing family-styles: still prints the kit JS's details, no assumed list", async () => {
+    // 7.0.0 has no recorded family-styles, so the stub answers 404.
+    await withOverrides([{ kind: 'resolve', variables: { version: '7.3.1' }, response: { data: { release: { version: '7.0.0' } } } }], async () => {
+      const r = await runStub('fetch-kit.py', ['--kit-id', 'procurrent']);
+      assert.equal(r.code, 0, r.stderr);
+      const out = parse.fetchKit(r.stdout);
+      assert.equal(out.method, 'js');
+      assert.deepEqual(out.assumed, []);
+      assert.match(r.stdout, /^Couldn't check: couldn't list the family-styles its license allows: .*HTTP 404/m);
+    });
   });
 
   test('a kit the server refuses (403): exit 1 and says so', async () => {

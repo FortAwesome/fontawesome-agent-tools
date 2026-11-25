@@ -38,6 +38,7 @@ const requests = [
   ['icon', ICON, { version: VERSION, iconName: 'not-an-icon' }],
   ['icon', ICON, { version: '9.9.9', iconName: 'house' }],
   ['search', SEARCH, { version: VERSION, query: 'cup', first: 3 }],
+  ['search', SEARCH, { version: VERSION, query: 'cup' }],
   ['search', SEARCH, { version: VERSION, query: 'zzqqxxnothing', first: 3 }],
   ['resolve', RESOLVE, { version: '7.x' }],
   ['resolve', RESOLVE, { version: '6.x' }],

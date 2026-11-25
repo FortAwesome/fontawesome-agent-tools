@@ -14,16 +14,20 @@ errors), with a message on stderr.
 Only public catalog queries work here: requests are sent without auth.
 """
 
+import http.client
 import json
 import os
 import re
 import sys
+import traceback
 import urllib.error
 import urllib.request
 
 API_URL = os.environ.get("FA_API_URL", "https://api.fontawesome.com")
 QUERIES_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "queries")
 USER_AGENT = "fontawesome-agent-tools"
+# Seconds to wait for the API to connect or send data before giving up.
+TIMEOUT = float(os.environ.get("FA_API_TIMEOUT", "30"))
 
 EXIT_NULL = 1
 EXIT_ERROR = 2
@@ -110,8 +114,8 @@ def post(document, variables):
         headers={"Content-Type": "application/json", "User-Agent": USER_AGENT},
     )
     try:
-        with urllib.request.urlopen(req) as resp:
-            return json.loads(resp.read())
+        with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
+            response = json.loads(resp.read())
     except urllib.error.HTTPError as e:
         hint = " (rate limited; wait a minute and try again)" if e.code == 429 else ""
         body = e.read().decode("utf-8", "replace")[:300]
@@ -120,6 +124,13 @@ def post(document, variables):
         raise QueryError(f"could not reach the Font Awesome API: {e.reason}")
     except json.JSONDecodeError as e:
         raise QueryError(f"the Font Awesome API returned something other than JSON: {e}")
+    except (http.client.HTTPException, OSError) as e:
+        # A dropped connection (RemoteDisconnected), a cut-short body
+        # (IncompleteRead) or a timeout: urllib raises these as they are.
+        raise QueryError(f"the connection to the Font Awesome API failed: {type(e).__name__}: {e}")
+    if not isinstance(response, dict):
+        raise QueryError(f"the Font Awesome API returned JSON that isn't an object: {json.dumps(response)[:100]}")
+    return response
 
 
 def run_query(name, variables=None):
@@ -143,12 +154,14 @@ def latest_release():
     so try "8.x", then "9.x", and so on.
     """
     for major in range(FIRST_MAJOR, FIRST_MAJOR + MAX_MAJORS):
+        # Why this major is being checked, for the error message.
+        context = "" if major == FIRST_MAJOR else f" ({major - 1}.x isn't the latest release)"
         try:
             release = run_query("latest-version", {"version": f"{major}.x"}).get("release")
         except QueryError as e:
-            raise QueryError(f"{major}.x doesn't resolve to a release, but {major - 1}.x isn't the latest: {e}")
+            raise QueryError(f"couldn't resolve {major}.x{context}: {e}")
         if not release:
-            raise QueryError(f"{major}.x doesn't resolve to a release, but {major - 1}.x isn't the latest")
+            raise QueryError(f"{major}.x doesn't resolve to a release{context}")
         if release.get("isLatest"):
             return release["version"]
     raise QueryError(f"no major version from {FIRST_MAJOR} to {FIRST_MAJOR + MAX_MAJORS - 1} is the latest")
@@ -163,8 +176,27 @@ def lookup(response, path):
     return node
 
 
+def exit_on_unexpected_error(fn):
+    """Exit 2, not Python's 1, if fn raises something unexpected.
+
+    Exit 1 means "not found" (icon-exists.py), so a crash must never exit 1.
+    """
+    try:
+        return fn()
+    except SystemExit:
+        raise
+    except BaseException as e:  # noqa: BLE001
+        traceback.print_exc()
+        print(f"Error: unexpected {type(e).__name__}: {e}", file=sys.stderr)
+        sys.exit(EXIT_ERROR)
+
+
 def main(name, argv=None, require=None, usage=None):
     """Run queries/<name>.graphql with variables from argv, print the response, and exit."""
+    exit_on_unexpected_error(lambda: _main(name, argv, require, usage))
+
+
+def _main(name, argv, require, usage):
     argv = sys.argv[1:] if argv is None else argv
     if any(a in ("-h", "--help") for a in argv):
         print((usage or "").strip() or f"Runs queries/{name}.graphql")
