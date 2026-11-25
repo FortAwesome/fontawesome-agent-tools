@@ -1,6 +1,8 @@
-# Every release, with the latest one flagged by isLatest: true.
-{
-  releases {
+# The release a major version ("7.x") resolves to now, and whether it's the
+# latest release of all. scripts/latest-version.py starts at "7.x" and tries
+# the next major until isLatest is true.
+query ($version: String!) {
+  release(version: $version) {
     version
     isLatest
   }

@@ -20,7 +20,7 @@ import urllib.request
 
 sys.dont_write_bytecode = True
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from query_runner import API_URL, USER_AGENT, QueryError, run_query  # noqa: E402
+from query_runner import API_URL, USER_AGENT, QueryError, latest_release, run_query  # noqa: E402
 
 KIT_BASE_URL = os.environ.get("FA_KIT_URL", "https://kit.fontawesome.com")
 FA_CLI_DOCS = "https://docs.fontawesome.com/web/use-with/fa-cli"
@@ -64,11 +64,7 @@ def resolve(version):
             if not release:
                 fail(f"version '{version}' not found in the API")
             return release["version"]
-        releases = run_query("latest-version").get("releases") or []
-        latest = next((r["version"] for r in releases if r.get("isLatest")), None)
-        if not latest:
-            fail("the API named no latest release")
-        return latest
+        return latest_release()
     except QueryError as e:
         fail(str(e))
 

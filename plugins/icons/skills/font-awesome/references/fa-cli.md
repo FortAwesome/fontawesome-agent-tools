@@ -89,11 +89,11 @@ It also accepts `fa icons --name`, `fa search --kit-token` and `fa kit icon` out
 
 ## Fallback scripts (no `fa` CLI)
 
-Run these with `python3` from this skill's directory (`font-awesome/`). They call the public API without auth, and cover only catalog lookups and a kit's version and license. The catalog scripts print the API's JSON (like `fa query`), each running one query from `queries/`:
+Run these with `python3` from this skill's directory (`font-awesome/`). They call the public API without auth, and cover only catalog lookups and a kit's version and license. The catalog scripts run queries from `queries/`, and all but `latest-version.py` print the API's JSON (like `fa query`):
 
 | Script | Purpose |
 |---|---|
-| `scripts/latest-version.py` | Every release; the latest is the one with `isLatest: true` |
+| `scripts/latest-version.py` | The latest release's version, such as `7.3.1` |
 | `scripts/resolve-version.py --version <v>` | The release a version resolves to now (`7.x` gives the latest 7.x) |
 | `scripts/icon-exists.py --version <v> --icon-name <icon>` | Exit code 0 if the icon exists, 1 if not, 2 if the check failed. Prints the icon's JSON (pipe it through `scripts/summarize-icons.py`). |
 | `scripts/search.py --version <v> --query <q> [--first 10]` | Search the catalog. Pipe it through `scripts/summarize-icons.py`. |

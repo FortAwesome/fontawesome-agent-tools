@@ -26,13 +26,14 @@ const OLD_VERSION = '6.7.2';
 
 const queriesDir = join(here, '../../../plugins/icons/skills/font-awesome/queries');
 const doc = (name) => readFileSync(join(queriesDir, `${name}.graphql`), 'utf8');
-const RELEASES = doc('latest-version');
+const LATEST = doc('latest-version');
 const ICON = doc('icon-exists');
 const SEARCH = doc('search');
 const RESOLVE = doc('resolve-version');
 
 const requests = [
-  ['releases', RELEASES, {}],
+  ['latest', LATEST, { version: '7.x' }],
+  ['latest', LATEST, { version: '8.x' }],
   ['icon', ICON, { version: VERSION, iconName: 'house' }],
   ['icon', ICON, { version: VERSION, iconName: 'not-an-icon' }],
   ['icon', ICON, { version: '9.9.9', iconName: 'house' }],

@@ -49,7 +49,7 @@ function run(script, args = [], { env = {}, input } = {}) {
 
 /** Which recorded request a GraphQL query is, whatever its exact text. */
 function kindOf(query) {
-  if (/\breleases\b/.test(query)) return 'releases';
+  if (/\bisLatest\b/.test(query)) return 'latest';
   if (/\bsearch\s*\(/.test(query)) return 'search';
   if (/\bicon\s*\(/.test(query)) return 'icon';
   if (/\bfamilyStyles\b/.test(query)) return 'familyStyles';
@@ -60,9 +60,12 @@ function kindOf(query) {
 // Variables match by value, so a renamed variable ($name, $iconName) still matches.
 const valuesKey = (vars) => JSON.stringify(Object.values(vars ?? {}).map(String).sort());
 
+/** Responses a test sets in place of the recorded ones: {kind, variables, response}. */
+const overrides = [];
+
 function graphqlResponse(body) {
   const kind = kindOf(body.query ?? '');
-  const hit = graphqlFixtures.find((f) => f.kind === kind && valuesKey(f.variables) === valuesKey(body.variables));
+  const hit = [...overrides, ...graphqlFixtures].find((f) => f.kind === kind && valuesKey(f.variables) === valuesKey(body.variables));
   return hit?.response;
 }
 
@@ -113,7 +116,7 @@ const runStub = (script, args, opts = {}) => run(script, args, { ...opts, env: {
 // What the fixtures say the answers are
 
 const graphqlData = (kind, vars) => graphqlFixtures.find((f) => f.kind === kind && valuesKey(f.variables) === valuesKey(vars)).response.data;
-const latestRelease = () => graphqlData('releases', {}).releases.find((r) => r.isLatest).version;
+const latestRelease = () => graphqlData('latest', { version: '7.x' }).release.version;
 const VERSION = '7.3.1';
 const houseIcon = () => graphqlData('icon', { version: VERSION, iconName: 'house' }).release.icon;
 const cupResults = () => graphqlData('search', { version: VERSION, query: 'cup', first: 3 }).search;
@@ -125,7 +128,7 @@ const fsKey = (fs) => `${fs.family} ${fs.style}`;
 const fsKeys = (list) => (list ?? []).map(fsKey);
 const parse = {
   latestVersion(stdout) {
-    return JSON.parse(stdout).data.releases.find((r) => r.isLatest).version;
+    return stdout.trim();
   },
   iconExists(stdout) {
     const { free, pro } = JSON.parse(stdout).data.release.icon.familyStylesByLicense;
@@ -162,10 +165,52 @@ const parse = {
 // Without `fa`: the fallback scripts
 
 describe('latest-version.py', () => {
-  test('outputs the release flagged isLatest', async () => {
+  const latestRequests = () =>
+    requests.filter((q) => q.method === 'POST').map((q) => JSON.parse(q.body).variables.version);
+
+  test('7.x is the latest of all: prints its release, from one request', async () => {
+    assert.equal(graphqlData('latest', { version: '7.x' }).release.isLatest, true, 'fixture: 7.x is the latest');
+    requests.length = 0;
     const r = await runStub('latest-version.py');
     assert.equal(r.code, 0, r.stderr);
     assert.equal(parse.latestVersion(r.stdout), latestRelease());
+    assert.deepEqual(latestRequests(), ['7.x']);
+  });
+
+  test('a newer major exists: tries 8.x next, and prints its release', async () => {
+    overrides.push(
+      { kind: 'latest', variables: { version: '7.x' }, response: { data: { release: { version: '7.9.0', isLatest: false } } } },
+      { kind: 'latest', variables: { version: '8.x' }, response: { data: { release: { version: '8.1.0', isLatest: true } } } },
+    );
+    try {
+      requests.length = 0;
+      const r = await runStub('latest-version.py');
+      assert.equal(r.code, 0, r.stderr);
+      assert.equal(parse.latestVersion(r.stdout), '8.1.0');
+      assert.deepEqual(latestRequests(), ['7.x', '8.x']);
+    } finally {
+      overrides.length = 0;
+    }
+  });
+
+  test('7.x is not the latest but 8.x does not exist: exit 2', async () => {
+    overrides.push({
+      kind: 'latest',
+      variables: { version: '7.x' },
+      response: { data: { release: { version: '7.9.0', isLatest: false } } },
+    });
+    try {
+      const r = await runStub('latest-version.py');
+      assert.equal(r.code, 2);
+      assert.match(r.stderr, /8\.x doesn't resolve to a release/);
+    } finally {
+      overrides.length = 0;
+    }
+  });
+
+  test('takes no arguments: exit 2', async () => {
+    const r = await runStub('latest-version.py', ['--version', '7.x']);
+    assert.equal(r.code, 2);
   });
 });
 

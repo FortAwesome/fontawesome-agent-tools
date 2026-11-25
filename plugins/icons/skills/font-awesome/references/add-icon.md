@@ -50,7 +50,7 @@ If the icon isn't in the Kit, what you do next depends on the Kit's subset type 
 
 If the project does not use a Kit, then to verify the icon exists:
 
-Determine the version of Font Awesome in use. First, try to discover it from `.font-awesome.md`; otherwise, use the latest release (`fa releases`, or `scripts/latest-version.py`: the entry with `isLatest: true`). Use this version as `<version>` in the following commands.
+Determine the version of Font Awesome in use. First, try to discover it from `.font-awesome.md`; otherwise, use the latest release (`fa releases`, or `scripts/latest-version.py`). Use this version as `<version>` in the following commands.
 
 - **`fa` CLI:** Run `fa icons --version <version> --name <icon>`. The icon exists if `data.release.icon` is non-null. The `familyStylesByLicense` field shows the free/pro breakdown.
 - **Fallback:** Run `scripts/icon-exists.py --version <version> --icon-name <icon>`. Exit code `0` means the icon exists and `1` means it does not. Exit code `2` means the check failed (an unknown version, or a network or API error; the message says which), so you don't know yet: fix the cause and run it again rather than treating the icon as missing.

@@ -1,7 +1,8 @@
 """Run a GraphQL document from queries/ against the public Font Awesome API.
 
-The fallback scripts (latest-version.py, icon-exists.py, search.py,
-resolve-version.py) are thin wrappers around main(). Each `--kebab-name value`
+The fallback scripts icon-exists.py, search.py and resolve-version.py are
+thin wrappers around main(); latest-version.py and fetch-kit.py use
+latest_release() and run_query(). Each `--kebab-name value`
 argument sets the `$camelName` variable the document declares, converted to
 the declared type. The API's JSON response is printed as `fa query` prints it,
 so the same documents also run with `fa query -f queries/<name>.graphql`.
@@ -127,6 +128,30 @@ def run_query(name, variables=None):
     if response.get("errors"):
         raise QueryError(f"the API returned errors: {json.dumps(response['errors'])}")
     return response.get("data") or {}
+
+
+# latest_release() starts here and walks up one major version at a time.
+FIRST_MAJOR = 7
+MAX_MAJORS = 20
+
+
+def latest_release():
+    """The latest release, without listing them all.
+
+    "7.x" resolves to the latest 7.x release. If that release is also the
+    latest of all (isLatest), it's the answer; otherwise a newer major exists,
+    so try "8.x", then "9.x", and so on.
+    """
+    for major in range(FIRST_MAJOR, FIRST_MAJOR + MAX_MAJORS):
+        try:
+            release = run_query("latest-version", {"version": f"{major}.x"}).get("release")
+        except QueryError as e:
+            raise QueryError(f"{major}.x doesn't resolve to a release, but {major - 1}.x isn't the latest: {e}")
+        if not release:
+            raise QueryError(f"{major}.x doesn't resolve to a release, but {major - 1}.x isn't the latest")
+        if release.get("isLatest"):
+            return release["version"]
+    raise QueryError(f"no major version from {FIRST_MAJOR} to {FIRST_MAJOR + MAX_MAJORS - 1} is the latest")
 
 
 def lookup(response, path):

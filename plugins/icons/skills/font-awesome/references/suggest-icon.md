@@ -6,7 +6,7 @@ Your own knowledge of Font Awesome icons is good for a first guess, but it may b
 
 ## 1. Settle the scope
 
-- **Version:** the version the user names, else the one in `.font-awesome.md`, else the latest (`fa releases`, or `scripts/latest-version.py`: the entry with `isLatest: true`). A symbolic kit version such as `7.x` must be resolved fresh each time (see [fa-cli.md](fa-cli.md)).
+- **Version:** the version the user names, else the one in `.font-awesome.md`, else the latest (`fa releases`, or `scripts/latest-version.py`). A symbolic kit version such as `7.x` must be resolved fresh each time (see [fa-cli.md](fa-cli.md)).
 - **Kit:** if `.font-awesome.md` records a Kit token, or the user names a kit, every suggestion must come from that kit. A kit holds only a subset of Font Awesome, and suggesting an icon outside it gives a broken result. Scoping needs the `fa` CLI and auth. If `fa` isn't installed or the user can't log in, search unscoped instead and tell the user you couldn't verify Kit coverage, so some suggestions may not be in their Kit.
 - **"Can I use":** if the question is about what the user can use and there's no project kit, check `fa entitlements` (Free vs Pro). If `fa kits` shows "By Icon" (`CUSTOM`) kits, note which of them contain your picks.
 
