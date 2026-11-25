@@ -93,7 +93,7 @@ before(async () => {
       const kit = req.url.match(/^\/kit\/(\w+)\.js$/);
       if (kit) {
         if (kit[1] === 'forbidden') return send(403, 'Forbidden', 'text/plain');
-        const name = { freepinned: 'free-pinned', freemajor: 'free-major', promajor: 'pro-major', proold: 'pro-old', propinned: 'pro-pinned', garbage: 'garbage' }[kit[1]];
+        const name = { freepinned: 'free-pinned', freemajor: 'free-major', promajor: 'pro-major', proold: 'pro-old', propinned: 'pro-pinned', freenoversion: 'free-noversion', garbage: 'garbage' }[kit[1]];
         if (!name) return send(404, 'Not Found', 'text/plain');
         return send(200, readFileSync(join(fixtures, 'kits', `${name}.js`), 'utf8'), 'application/javascript');
       }
@@ -147,6 +147,13 @@ const parse = {
       license: field('License'),
       method: field('Method'),
       startup: field('Startup file'),
+      warning: field('Warning'),
+      // "  family: style, style" lines after the "Assumed family-styles" heading
+      assumed: (stdout.split(/^Assumed family-styles.*$/m)[1] ?? '')
+        .split('\n')
+        .map((line) => line.match(/^\s+([\w-]+): (.*)$/))
+        .filter(Boolean)
+        .flatMap(([, family, styles]) => styles.split(', ').map((style) => `${family} ${style}`)),
     };
   },
 };
@@ -278,6 +285,68 @@ describe('fetch-kit.py', () => {
     const r = await runStub('fetch-kit.py', ['--kit-id', 'freepinned']);
     assert.equal(r.code, 0, r.stderr);
     assert.equal(parse.fetchKit(r.stdout).license, 'free');
+  });
+
+  const restFixture = (version, endpoint) => fixture(`rest/${version}/${endpoint}.json`);
+  const freeCollection = (version) =>
+    restFixture(version, 'icon-packs').iconCollections.find((c) => c.name === 'free-collection').subset.map(fsKey);
+  const allFamilyStyles = (version) => restFixture(version, 'family-styles').familyStyles.map(fsKey);
+  const WARNING = /Without the `fa` CLI I can't tell which family-styles this kit includes.*Install the `fa` CLI for more accurate results/;
+
+  test('a Free kit: warns, and assumes exactly the free-collection subset', async () => {
+    const r = await runStub('fetch-kit.py', ['--kit-id', 'freepinned']);
+    assert.equal(r.code, 0, r.stderr);
+    const out = parse.fetchKit(r.stdout);
+    assert.match(out.warning, WARNING);
+    assert.deepEqual(out.assumed, freeCollection('7.3.1'));
+  });
+
+  test('a Pro kit: warns, and assumes every family-style in the release', async () => {
+    const r = await runStub('fetch-kit.py', ['--kit-id', 'propinned']);
+    assert.equal(r.code, 0, r.stderr);
+    const out = parse.fetchKit(r.stdout);
+    assert.match(out.warning, WARNING);
+    assert.deepEqual(out.assumed, allFamilyStyles('6.7.2'));
+  });
+
+  test('a 7.x kit: resolves 7.x now, says it moves, and uses that release', async () => {
+    requests.length = 0;
+    const r = await runStub('fetch-kit.py', ['--kit-id', 'promajor']);
+    assert.equal(r.code, 0, r.stderr);
+    const out = parse.fetchKit(r.stdout);
+    const resolved = graphqlData('resolve', { version: '7.x' }).release.version;
+    assert.match(out.version, new RegExp(`^7\\.x \\(resolves to ${resolved.replace(/\./g, '\\.')} now; .*resolve it again`));
+    assert.deepEqual(out.assumed, allFamilyStyles(resolved));
+    assert.ok(requests.some((q) => q.url === `/releases/${resolved}/family-styles`));
+  });
+
+  test('a 6.x kit: uses the 6.x release, not the latest', async () => {
+    requests.length = 0;
+    const r = await runStub('fetch-kit.py', ['--kit-id', 'proold']);
+    assert.equal(r.code, 0, r.stderr);
+    const resolved = graphqlData('resolve', { version: '6.x' }).release.version;
+    assert.match(parse.fetchKit(r.stdout).version, new RegExp(`resolves to ${resolved.replace(/\./g, '\\.')}`));
+    assert.deepEqual(parse.fetchKit(r.stdout).assumed, allFamilyStyles(resolved));
+    assert.ok(!requests.some((q) => q.url.includes(latestRelease())), 'requested the latest release');
+  });
+
+  test('a Free 7.x kit: the free-collection subset of the resolved release', async () => {
+    const r = await runStub('fetch-kit.py', ['--kit-id', 'freemajor']);
+    assert.equal(r.code, 0, r.stderr);
+    assert.deepEqual(parse.fetchKit(r.stdout).assumed, freeCollection('7.3.1'));
+  });
+
+  test('a pinned version is reported as is', async () => {
+    const r = await runStub('fetch-kit.py', ['--kit-id', 'propinned']);
+    assert.equal(parse.fetchKit(r.stdout).version, '6.7.2');
+  });
+
+  test('a kit config with no version: the latest release, never "latest"', async () => {
+    requests.length = 0;
+    const r = await runStub('fetch-kit.py', ['--kit-id', 'freenoversion']);
+    assert.equal(r.code, 0, r.stderr);
+    assert.equal(parse.fetchKit(r.stdout).version, latestRelease());
+    assert.ok(!requests.some((q) => /"latest"/.test(q.body)), 'sent "latest" as a version');
   });
 
   test('a kit the server refuses (403): exit 1 and says so', async () => {

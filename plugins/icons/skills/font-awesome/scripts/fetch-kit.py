@@ -1,4 +1,14 @@
 #!/usr/bin/env python3
+"""A kit's basic settings from its public kit JS (fallback when `fa` isn't installed).
+
+  python3 scripts/fetch-kit.py --kit-id <kit token>
+
+Prints the kit's version and the release it resolves to now, its license,
+method and startup file. Without `fa` there's no way to see which
+family-styles the kit includes, so it prints a warning and then every
+family-style the kit's license allows in that release, as an assumption, not
+the kit's own list. With `fa`, use `fa kit show` and `fa kit family-styles`.
+"""
 
 import argparse
 import json
@@ -7,124 +17,125 @@ import sys
 import urllib.error
 import urllib.request
 
+sys.dont_write_bytecode = True
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from query_runner import API_URL, USER_AGENT, QueryError, run_query  # noqa: E402
+
 KIT_BASE_URL = os.environ.get("FA_KIT_URL", "https://kit.fontawesome.com")
-GRAPHQL_URL = os.environ.get("FA_API_URL", "https://api.fontawesome.com")
+FA_CLI_DOCS = "https://docs.fontawesome.com/web/use-with/fa-cli"
 
-# Families included in the free tier (used to filter when license is "free")
-FREE_FAMILIES = {"classic"}
 
-# Families included in the standard Pro tier (not "plus")
-PRO_FAMILIES = {"classic", "duotone", "sharp", "sharp-duotone"}
+def fail(message):
+    print(f"Error: {message}", file=sys.stderr)
+    sys.exit(1)
 
-parser = argparse.ArgumentParser(description="Fetch Font Awesome Kit configuration")
-parser.add_argument("--kit-id", required=True, help="Kit token (e.g. e8aa7b71da)")
-args = parser.parse_args()
 
-# --- Step 1: Fetch the kit JS to extract config ---
+def fetch_kit_config(kit_id):
+    """window.FontAwesomeKitConfig from the first line of the kit's JS."""
+    req = urllib.request.Request(
+        f"{KIT_BASE_URL}/{kit_id}.js",
+        headers={"Origin": "http://fa.local", "User-Agent": USER_AGENT},
+    )
+    try:
+        with urllib.request.urlopen(req) as resp:
+            first_line = resp.readline().decode("utf-8")
+    except urllib.error.HTTPError as e:
+        if e.code == 403:
+            fail(f"kit '{kit_id}' not found or access denied (HTTP 403)")
+        if e.code == 404:
+            fail(f"kit '{kit_id}' not found (HTTP 404)")
+        fail(f"HTTP {e.code} fetching kit '{kit_id}'")
+    except urllib.error.URLError as e:
+        fail(f"could not reach kit server: {e.reason}")
+    try:
+        json_start = first_line.index("= ") + 2
+        json_end = first_line.rindex(";")
+        return json.loads(first_line[json_start:json_end])
+    except (ValueError, json.JSONDecodeError) as e:
+        fail(f"could not parse kit config from response: {e}")
 
-url = f"{KIT_BASE_URL}/{args.kit_id}.js"
 
-req = urllib.request.Request(
-    url,
-    headers={
-        "Origin": "http://fa.local",
-        "User-Agent": "fontawesome-agent-tools",
-    },
-)
+def resolve(version):
+    """The release a kit's version resolves to now. "7.x" moves with each new 7.x release."""
+    try:
+        if version:
+            release = run_query("resolve-version", {"version": version}).get("release")
+            if not release:
+                fail(f"version '{version}' not found in the API")
+            return release["version"]
+        releases = run_query("latest-version").get("releases") or []
+        latest = next((r["version"] for r in releases if r.get("isLatest")), None)
+        if not latest:
+            fail("the API named no latest release")
+        return latest
+    except QueryError as e:
+        fail(str(e))
 
-try:
-    with urllib.request.urlopen(req) as resp:
-        first_line = resp.readline().decode("utf-8")
-except urllib.error.HTTPError as e:
-    if e.code == 403:
-        print(f"Error: kit '{args.kit_id}' not found or access denied (HTTP 403)", file=sys.stderr)
-    elif e.code == 404:
-        print(f"Error: kit '{args.kit_id}' not found (HTTP 404)", file=sys.stderr)
+
+def rest(path):
+    req = urllib.request.Request(f"{API_URL}{path}", headers={"User-Agent": USER_AGENT})
+    try:
+        with urllib.request.urlopen(req) as resp:
+            return json.loads(resp.read())
+    except urllib.error.HTTPError as e:
+        fail(f"the Font Awesome API returned HTTP {e.code} for {path}")
+    except urllib.error.URLError as e:
+        fail(f"could not reach the Font Awesome API: {e.reason}")
+    except json.JSONDecodeError as e:
+        fail(f"the Font Awesome API returned something other than JSON for {path}: {e}")
+
+
+def allowed_family_styles(license_type, release):
+    """Every family-style the license allows in the release, from the API."""
+    if license_type == "free":
+        packs = rest(f"/releases/{release}/icon-packs")
+        free = next((c for c in packs.get("iconCollections") or [] if c.get("name") == "free-collection"), None)
+        if free is None:
+            fail(f"the API lists no free-collection for {release}")
+        return free.get("subset") or []
+    return rest(f"/releases/{release}/family-styles").get("familyStyles") or []
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Fetch a Font Awesome kit's basic settings")
+    parser.add_argument("--kit-id", required=True, help="Kit token (e.g. e8aa7b71da)")
+    args = parser.parse_args()
+
+    config = fetch_kit_config(args.kit_id)
+    version = config.get("version")
+    license_type = config.get("license", "unknown")
+    release = resolve(version)
+
+    if version and version != release:
+        version_line = (
+            f"{version} (resolves to {release} now; a {version} kit picks up new releases "
+            f"as they ship, so resolve it again next time)"
+        )
     else:
-        print(f"Error: HTTP {e.code} fetching kit '{args.kit_id}'", file=sys.stderr)
-    sys.exit(1)
-except urllib.error.URLError as e:
-    print(f"Error: could not reach kit server: {e}", file=sys.stderr)
-    sys.exit(1)
+        version_line = release
 
-# Parse window.FontAwesomeKitConfig = {...}; from the first line
-try:
-    json_start = first_line.index("= ") + 2
-    json_end = first_line.rindex(";")
-    config = json.loads(first_line[json_start:json_end])
-except (ValueError, json.JSONDecodeError) as e:
-    print(f"Error: could not parse kit config from response: {e}", file=sys.stderr)
-    sys.exit(1)
+    by_family = {}
+    for fs in allowed_family_styles(license_type, release):
+        if fs.get("family") and fs.get("style"):
+            by_family.setdefault(fs["family"], []).append(fs["style"])
 
-version = config.get("version", "unknown")
-license_type = config.get("license", "unknown")
-method = config.get("method", "unknown")
-token = config.get("token", args.kit_id)
-startup = config.get("startupFilename", "")
+    print(f"Kit ID: {config.get('token', args.kit_id)}")
+    print(f"Version: {version_line}")
+    print(f"License: {license_type}")
+    print(f"Method: {config.get('method', 'unknown')}")
+    print(f"Startup file: {config.get('startupFilename', '')}")
+    print()
+    print(
+        "Warning: Without the `fa` CLI I can't tell which family-styles this kit includes, "
+        "so this assumes all of the family-styles its license allows in Font Awesome "
+        f"{release}. Install the `fa` CLI for more accurate results: {FA_CLI_DOCS}"
+    )
+    print()
+    label = "Free" if license_type == "free" else "Pro"
+    print(f"Assumed family-styles (everything {label} allows in {release}, not the kit's own list):")
+    for family, styles in by_family.items():
+        print(f"  {family}: {', '.join(styles)}")
 
-# --- Step 2: Query the GraphQL API for available families in this version ---
 
-query = """
-query ($version: String!) {
-  release(version: $version) {
-    familyStyles { family style }
-  }
-}
-"""
-
-req = urllib.request.Request(
-    GRAPHQL_URL,
-    data=json.dumps({
-        "query": query,
-        "variables": {"version": version},
-    }).encode(),
-    headers={
-        "Content-Type": "application/json",
-        "User-Agent": "fontawesome-agent-tools",
-    },
-)
-
-try:
-    with urllib.request.urlopen(req) as resp:
-        data = json.loads(resp.read())
-except urllib.error.URLError as e:
-    print(f"Error: could not reach Font Awesome API: {e}", file=sys.stderr)
-    sys.exit(1)
-
-if "errors" in data:
-    print(f"Error: API returned errors: {data['errors']}", file=sys.stderr)
-    sys.exit(1)
-
-release = data["data"]["release"]
-if release is None:
-    print(f"Error: version '{version}' not found in API", file=sys.stderr)
-    sys.exit(1)
-
-# Collect all families available in this release
-all_families = sorted({fs["family"] for fs in release["familyStyles"]})
-
-# Filter families based on kit license and tier
-is_plus = "plus" in startup
-if license_type == "free":
-    families = [f for f in all_families if f in FREE_FAMILIES]
-elif is_plus:
-    families = all_families
-else:
-    families = [f for f in all_families if f in PRO_FAMILIES]
-
-# Build a family → styles mapping for the available families
-family_styles = {}
-for fs in release["familyStyles"]:
-    if fs["family"] in families:
-        family_styles.setdefault(fs["family"], []).append(fs["style"])
-
-print(f"Kit ID: {token}")
-print(f"Version: {version}")
-print(f"License: {license_type}")
-print(f"Method: {method}")
-print(f"Startup file: {startup}")
-print(f"Families: {', '.join(families)}")
-print()
-for family in families:
-    styles = sorted(family_styles.get(family, []))
-    print(f"  {family}: {', '.join(styles)}")
+if __name__ == "__main__":
+    main()
