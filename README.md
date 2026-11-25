@@ -34,7 +34,7 @@ Upload the [`skills/font-awesome`](skills/font-awesome) directory.
 ## Requirements
 
 - **The [`fa` CLI](https://docs.fontawesome.com/web/use-with/fa-cli)** (recommended, version 0.8.0 or newer). The skill uses it to search icons, look up your account and kits, and fetch official SVGs. Run `fa login` once for anything involving your account or kits.
-- **Python 3** for the fallback scripts used when `fa` isn't installed. They cover catalog lookups and basic kit metadata only.
+- **Python 3** for the fallback scripts used when `fa` isn't installed. They cover catalog lookups and a kit's version and license only, not which family-styles a kit includes.
 
 ## `.font-awesome.md`
 

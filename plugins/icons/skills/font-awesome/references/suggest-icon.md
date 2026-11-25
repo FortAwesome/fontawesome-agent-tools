@@ -6,7 +6,7 @@ Your own knowledge of Font Awesome icons is good for a first guess, but it may b
 
 ## 1. Settle the scope
 
-- **Version:** the version the user names, else the one in `.font-awesome.md`, else the latest (`fa releases`, or `scripts/latest-version.py`).
+- **Version:** the version the user names, else the one in `.font-awesome.md`, else the latest (`fa releases`, or `scripts/latest-version.py`: the entry with `isLatest: true`). A symbolic kit version such as `7.x` must be resolved fresh each time (see [fa-cli.md](fa-cli.md)).
 - **Kit:** if `.font-awesome.md` records a Kit token, or the user names a kit, every suggestion must come from that kit. A kit holds only a subset of Font Awesome, and suggesting an icon outside it gives a broken result. Scoping needs the `fa` CLI and auth. If `fa` isn't installed or the user can't log in, search unscoped instead and tell the user you couldn't verify Kit coverage, so some suggestions may not be in their Kit.
 - **"Can I use":** if the question is about what the user can use and there's no project kit, check `fa entitlements` (Free vs Pro). If `fa kits` shows "By Icon" (`CUSTOM`) kits, note which of them contain your picks.
 
@@ -18,7 +18,7 @@ Always use fuzzy search, not an exact-name lookup. Search turns up the exact ico
    - Kit in scope: `fa search --kit-token <t> --query <q> --page-size 10`. Every result is safe to recommend. Add `--custom` to also check the kit's uploaded icons.
    - No kit: `fa search --version <v> --query <q> --page-size 10` (fallback: `scripts/search.py`).
    - Try a couple of related queries if the first is thin (for "vampire": `bat`, `coffin`, `fangs`, `blood`).
-   - To read `fa` results compactly, pipe them (`--json`) through `scripts/summarize-icons.py` (see [fa-cli.md](fa-cli.md)) rather than writing your own filter. It keeps the families and Free/Pro you need for the table below. It reads `fa` JSON only; read `scripts/search.py` output directly.
+   - To read the results compactly, pipe them through `scripts/summarize-icons.py` (see [fa-cli.md](fa-cli.md)) rather than writing your own filter: `fa search ... --json | python3 scripts/summarize-icons.py`, or `python3 scripts/search.py ... | python3 scripts/summarize-icons.py`. It keeps the families and Free/Pro you need for the table below.
 2. **Find the exact match.** If a result's `id` is exactly the name the user asked for (or your guess), that's the lead answer. With a kit in scope, a result from the kit search is in the kit. An icon can exist in Font Awesome and still be missing from the kit.
 
 ## 3. Present

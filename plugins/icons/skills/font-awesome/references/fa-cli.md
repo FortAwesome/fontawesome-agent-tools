@@ -69,12 +69,12 @@ Answer from the `variants` list it returns, and run it fresh rather than relying
 - **`fa kit icons` is large on Full and By Style kits** (thousands of variants). For membership checks, use `fa kit icon` or `fa search --kit-token` instead of paging through it.
 - **`fa kits` output is large.** It includes every kit's uploads. Summarize it instead of echoing it.
 - **Kit search covers official icons only** unless you pass `--custom`. To answer "which of my icons match X", run both.
-- **Kits record a major version (`version: "7.x"`) and a resolved release (`release.version`).** Use `release.version` for `--version` arguments.
+- **A kit's version can be symbolic (`version: "7.x"`), with the release it resolves to now in `release.version`.** Use `release.version` for `--version` arguments, from a fresh `fa kit show`: a `7.x` kit moves to each new 7.x release, so a release resolved earlier (or recorded in `.font-awesome.md`) may be stale. Without `fa`, resolve it with `scripts/resolve-version.py --version 7.x`. Never pass `latest` as a version: the API resolves it to the last 5.x release.
 - `fa kits --kit-token` and `fa kits --download` are deprecated. Use `fa kit show` and `fa kit download`.
 
 ## Summarizing icon results
 
-`fa search` and `fa icons` return every family-style of every icon. That's often 16 to 36 entries per icon, which is a lot to read. Don't write your own filter to shorten it: a filter that keeps only Free/Pro drops the families, which you need to answer. Pipe the output through `scripts/summarize-icons.py` (in this skill's directory) instead. It prints one line per icon with Free/Pro, the families, the family-style count, and the Free family-styles:
+`fa search` and `fa icons` return every family-style of every icon. That's often 16 to 36 entries per icon, which is a lot to read. Don't write your own filter to shorten it: a filter that keeps only Free/Pro drops the families, which you need to answer. Pipe the output (`--json`) through `scripts/summarize-icons.py` (in this skill's directory) instead, as you would the fallback `scripts/search.py` and `scripts/icon-exists.py` output. It prints one line per icon with Free/Pro, the families, the family-style count, and the Free family-styles:
 
 ```
 fa search --version <v> --query <q> --page-size 10 --json | python3 <this skill's directory>/scripts/summarize-icons.py
@@ -89,13 +89,14 @@ It also accepts `fa icons --name`, `fa search --kit-token` and `fa kit icon` out
 
 ## Fallback scripts (no `fa` CLI)
 
-Run these from this skill's directory (`font-awesome/`). They call the public API and cover only catalog lookups and kit metadata:
+Run these with `python3` from this skill's directory (`font-awesome/`). They call the public API without auth, and cover only catalog lookups and a kit's version and license. The catalog scripts print the API's JSON (like `fa query`), each running one query from `queries/`:
 
 | Script | Purpose |
 |---|---|
-| `scripts/latest-version.py` | Latest release version |
+| `scripts/latest-version.py` | Every release; the latest is the one with `isLatest: true` |
+| `scripts/resolve-version.py --version <v>` | The release a version resolves to now (`7.x` gives the latest 7.x) |
 | `scripts/icon-exists.py --version <v> --icon-name <icon>` | Exit code 0 if the icon exists, 1 if not, 2 if the check failed. Prints the icon's JSON (pipe it through `scripts/summarize-icons.py`). |
-| `scripts/search.py --version <v> --query <q>` | Search the catalog |
-| `scripts/fetch-kit.py --kit-id <t>` | A kit's version, license, method, and families |
+| `scripts/search.py --version <v> --query <q> [--first 10]` | Search the catalog. Pipe it through `scripts/summarize-icons.py`. |
+| `scripts/fetch-kit.py --kit-id <t>` | A kit's version (and the release it resolves to now), license, and method, from its public kit JS. It can't see which family-styles the kit includes: it warns, then lists everything the license allows as an assumption. Tell the user the warning, and don't present or record that list as the kit's. |
 
-Without the CLI you can't search within a kit or see custom icons. Say so when it matters to the answer.
+Without the CLI you can't search within a kit, see which family-styles it includes, or see custom icons. Say so when it matters to the answer.

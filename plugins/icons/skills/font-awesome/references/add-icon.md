@@ -13,7 +13,7 @@ Take these from the user's request:
 ## Tools
 
 - **`fa` CLI usage, auth, and quirks:** `references/fa-cli.md`. Read it before your first `fa` call. Its Auth section says what to do when a command needs the user to log in.
-- **Fallback scripts** (no `fa` CLI): `scripts/` (`latest-version.py`, `icon-exists.py`, `search.py`, `fetch-kit.py`).
+- **Fallback scripts** (no `fa` CLI): `scripts/` (`latest-version.py`, `resolve-version.py`, `icon-exists.py`, `search.py`, `fetch-kit.py`), described in `references/fa-cli.md`.
 - **Finding an icon for a concept:** `references/suggest-icon.md`.
 - **`.font-awesome.md` format:** `references/font-awesome-md-format.md`.
 
@@ -31,7 +31,7 @@ If the project uses a Kit, then verify that the icon exists in the particular Ki
 
 If the `fa` CLI is not available, tell the user that you cannot verify whether the icon is in their Kit's subset. Suggest they install the `fa` CLI, log in with `fa login`, then ask again.
 
-Use the Kit's resolved release as `<version>` in the commands below: the **Version** in `.font-awesome.md`, or `release.version` from `fa kit show --kit-token <TOKEN>`. Don't use the latest release, since a Kit pinned to an older major version can't use newer icons.
+Use the Kit's resolved release as `<version>` in the commands below: `release.version` from a fresh `fa kit show --kit-token <TOKEN>`. If the **Version** in `.font-awesome.md` is symbolic (such as `7.x`), it moves with each new release, so resolve it now rather than reusing an earlier answer. Don't use the latest release, since a Kit pinned to an older major version can't use newer icons.
 
 To verify the icon exists in the kit, run `fa kit icon --kit-token <TOKEN> <icon>`.
 
@@ -50,7 +50,7 @@ If the icon isn't in the Kit, what you do next depends on the Kit's subset type 
 
 If the project does not use a Kit, then to verify the icon exists:
 
-Determine the version of Font Awesome in use. First, try to discover it from `.font-awesome.md`; otherwise, use the latest release (`fa releases`, or `scripts/latest-version.py`). Use this version as `<version>` in the following commands.
+Determine the version of Font Awesome in use. First, try to discover it from `.font-awesome.md`; otherwise, use the latest release (`fa releases`, or `scripts/latest-version.py`: the entry with `isLatest: true`). Use this version as `<version>` in the following commands.
 
 - **`fa` CLI:** Run `fa icons --version <version> --name <icon>`. The icon exists if `data.release.icon` is non-null. The `familyStylesByLicense` field shows the free/pro breakdown.
 - **Fallback:** Run `scripts/icon-exists.py --version <version> --icon-name <icon>`. Exit code `0` means the icon exists and `1` means it does not. Exit code `2` means the check failed (an unknown version, or a network or API error; the message says which), so you don't know yet: fix the cause and run it again rather than treating the icon as missing.
@@ -104,19 +104,19 @@ The one exception: the user asked for the icon as inline SVG markup (see "Import
 
 After the subagent returns, if a kit ID was found, fetch the kit details:
 
-- **`fa` CLI:** Run `fa kit show --kit-token <id>`. Returns JSON with the kit's version, license, technology, and available families. Needs auth (see `fa-cli.md`).
-- **Fallback:** Run `scripts/fetch-kit.py --kit-id <id>` to get the kit's version, license, method, and available families.
+- **`fa` CLI:** Run `fa kit show --kit-token <id>` for the kit's version, license, and technology, and `fa kit family-styles --kit-token <id>` for the exact family-styles it includes. Both need auth (see `fa-cli.md`). If `fa` is installed but not logged in, don't use the fallback script: tell the user to run `fa login` in a separate terminal so you can read the kit's details.
+- **Fallback** (only when `command -v fa` fails): Run `scripts/fetch-kit.py --kit-id <id>` for the kit's version, license, and method. It can't see which family-styles the kit includes. Tell the user its warning: without the `fa` CLI you can't tell which family-styles the kit includes, so you're assuming all that its license allows, and installing `fa` gives accurate results. Don't treat its "Assumed family-styles" list as the kit's.
 
 After discovery, determine:
 
 - **Integration method** — the primary way icons are rendered
 - **Kit ID / CDN URL** — if using a kit or CDN
-- **License** — `free` or `pro`. Detect from: kit config (via `fa kit show` or `fetch-kit.py`), npm package names (`fontawesome-free` vs `fontawesome-pro`, `free-*-svg-icons` vs `pro-*-svg-icons`), or CDN URL patterns.
+- **License** — `free` or `pro`. Detect from: kit config (via `fa kit show`, or `fetch-kit.py` without `fa`), npm package names (`fontawesome-free` vs `fontawesome-pro`, `free-*-svg-icons` vs `pro-*-svg-icons`), or CDN URL patterns.
 - **Default style** — the most commonly used style in the project (solid, regular, light, thin, duotone). If unclear, default to `solid`.
 - **Default family** — the most commonly used family. `fa family-styles --version <v>` (or `fa kit family-styles --kit-token <t>`) lists every family and style; don't rely on a remembered list, since new ones ship regularly. If unclear, default to `classic`.
 - **Configured defaults** — whether the project changes the family and style of icons written with the legacy bare `fa` class and no family, style or prefix class (`<i class="fa fa-house">`). Only that construct uses them: `fa-thin fa-house` is Classic Thin whatever the configuration. SVG+JS: the `familyDefault` and `styleDefault` settings (`data-family-default` and `data-style-default` on the script tag, `window.FontAwesomeConfig`, or `config` from `@fortawesome/fontawesome-svg-core`). Web Fonts: the `--fa-family` and `--fa-style` custom properties (for example `:root { --fa-family: var(--fa-family-sharp); }`). Unset, bare `fa` icons are Classic Solid. Note which icons the project writes as bare `fa` icons: their family and style come from this configuration, not their classes.
 - **CSS prefix** — `fa` unless the project changes it (`cssPrefix` in the SVG+JS config, `$css-prefix` in the SCSS). With `xy`, Sharp Thin is `xy-sharp xy-thin`.
-- **Available families** — the set of families the project has access to. For kits, use the output of `fa kit show` (or `fetch-kit.py`). For npm, infer from installed packages. For free users, only `classic` is available.
+- **Available families** — the set of families the project has access to. For kits, these come only from `fa kit family-styles --kit-token <id>`, run fresh when needed, since editing the kit changes them; don't record them in `.font-awesome.md`. Without `fa`, they're unknown. For npm, infer from installed packages. For a Free project, the Free family-styles in `fa icon-packs --version <v>` (the `free-collection` subset).
 - **Import pattern** — for JS frameworks: individual imports per-file vs. library registration
 - **Version** — the Font Awesome version in use
 - **Project conventions** — any wrapper components, standard sizing, or patterns observed
@@ -168,7 +168,7 @@ To list what the Kit does contain, `fa kit family-styles --kit-token <TOKEN>` sh
 
 #### If the project does not use a Kit
 
-Use the `fa icons --version <version> --name <icon>` output from step 1 (or `icon-exists.py`). It shows available families and styles. If the icon is not available in the requested style or family, tell the user and suggest available alternatives. Also check that the chosen family is in the project's available families list — if not, warn the user.
+Use the `fa icons --version <version> --name <icon>` output from step 1 (or `icon-exists.py`). It shows available families and styles. If the icon is not available in the requested style or family, tell the user and suggest available alternatives. Also check that the chosen family is in the project's available families — if not, warn the user.
 
 ### 4. Generate the code
 
@@ -323,7 +323,7 @@ Don't show this notice, or link the plans page, to a user whose account already 
 Review whether any information discovered during this run is missing from `.font-awesome.md`. Examples of things that might be incomplete:
 
 - A new import pattern was used that isn't documented under **Import Pattern**
-- A family or style was encountered that isn't listed under **Families**
+- A family or style was encountered that isn't listed under **Families** (not for Kit projects, which don't record families)
 - A wrapper component or project convention was observed that isn't in **Conventions**
 - The version, license, or integration method has changed
 

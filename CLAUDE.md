@@ -12,7 +12,7 @@ This is a Claude Code plugin marketplace package (`fontawesome-agent-tools`) by 
 - **`plugins/icons/`** — The "icons" plugin. Its config lives at `plugins/icons/.claude-plugin/plugin.json`. It has one skill, **`font-awesome`** (`plugins/icons/skills/font-awesome/`), the single entry point for every Font Awesome question and task. Its broad `description` is what makes Claude load it without the user naming a skill, and `/font-awesome <request>` invokes it directly. It uses progressive disclosure: `SKILL.md` answers common questions and routes everything else to a file under `references/`:
   - `fa-cli.md` (the `fa` CLI command map, auth, and quirks), `suggest-icon.md` (icon suggestions), `docs.md` (answering from docs.fontawesome.com), and `font-awesome-md-format.md`.
   - **Workflows** that change a project's files: `add-icon.md` (add an icon to the user's code) and `setup.md` (set up Font Awesome, with one `setup-path-*.md` per integration method). `SKILL.md` tells Claude to read the whole workflow before touching any file.
-  - The fallback `scripts/` (used when the `fa` CLI isn't installed) and `evals/`.
+  - The fallback `scripts/` (used when the `fa` CLI isn't installed), the GraphQL documents in `queries/` that they run, and `evals/`. The catalog scripts are thin wrappers around `scripts/query_runner.py`, which runs one `queries/*.graphql` document against the public API and prints its JSON; the same documents run with `fa query -f`. Write a new catalog lookup as a query document plus a wrapper, not as Python logic. The scripts are Python, not shell, so they work on Windows.
 
 The manifest schema follows `https://anthropic.com/claude-code/marketplace.schema.json`.
 
@@ -30,7 +30,7 @@ If you do add a skill, create `plugins/<plugin>/skills/<name>/SKILL.md` and run 
 
 ## Tests
 
-`tests/skills.test.mjs` (Node's built-in test runner) checks every `plugins/*/skills/*/SKILL.md`: frontmatter keys are limited to the set every agent platform accepts, `description` is at most 1,024 characters, every `references/…`, `scripts/…`, and relative Markdown link in the skill's files points to a file that exists, and the skill passes the Agent Skills reference validator. The validator is the Python `skills-ref` command, pinned in `tests/requirements.txt`; the test runs it once per skill. CI runs the tests on every push (`.github/workflows/test.yml`). Run them locally with:
+`tests/skills.test.mjs` (Node's built-in test runner) checks every `plugins/*/skills/*/SKILL.md`: frontmatter keys are limited to the set every agent platform accepts, `description` is at most 1,024 characters, every `references/…`, `scripts/…`, `queries/…`, and relative Markdown link in the skill's files points to a file that exists, and the skill passes the Agent Skills reference validator. The validator is the Python `skills-ref` command, pinned in `tests/requirements.txt`; the test runs it once per skill. `tests/scripts.test.mjs` runs the skill's scripts against a stub of the Font Awesome API and kit server, serving responses recorded in `tests/fixtures/scripts/` (re-record with `node tests/fixtures/scripts/record.mjs`), and `summarize-icons.py` against recorded `fa --json` output; `FA_LIVE=1 npm test` also runs the catalog scripts against the real API. CI runs the tests on every push (`.github/workflows/test.yml`). Run them locally with:
 
 ```bash
 npm ci

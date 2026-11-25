@@ -114,7 +114,7 @@ for (const skillDir of skillDirs) {
     const missing = [];
     for (const file of markdownFiles(skillDir)) {
       const text = readFileSync(file, 'utf8');
-      for (const [ref] of text.matchAll(/\b(?:references|scripts)\/[\w.-]+\.(?:md|py|sh|json)\b/g)) {
+      for (const [ref] of text.matchAll(/\b(?:references|scripts|queries)\/[\w.-]+\.(?:md|py|sh|json|graphql)\b/g)) {
         if (!existsSync(join(skillDir, ref))) missing.push(`${relative(skillDir, file)}: ${ref}`);
       }
       for (const [, link] of text.matchAll(/\]\(([^)\s#]+)(?:#[^)]*)?\)/g)) {

@@ -1,9 +1,9 @@
 # Path B: Kit package via npm
 
 1. Ask the user for their Kit code.
-2. Fetch Kit details to determine version and available families:
-   - **`fa` CLI:** Needs auth (see `references/fa-cli.md`). Run `fa kit show --kit-token <code>` to get the Kit's technology setting, and `fa kit family-styles --kit-token <code>` to get the kit's family-styles. If the user can't log in, fall back below.
-   - **Fallback:** Run `scripts/fetch-kit.py --kit-id <code>`.
+2. Fetch Kit details to determine version and available family-styles:
+   - **`fa` CLI:** Needs auth (see `references/fa-cli.md`). Run `fa kit show --kit-token <code>` to get the Kit's technology setting, and `fa kit family-styles --kit-token <code>` to get the kit's family-styles. If `fa` is installed but the user can't log in, tell them to run `fa login` in a separate terminal; the Kit's family-styles need it.
+   - **Fallback** (only when `command -v fa` fails): Run `scripts/fetch-kit.py --kit-id <code>` for the Kit's version, license, and method. Tell the user its warning: without the `fa` CLI it can't tell which family-styles the Kit includes, and assumes all that the license allows.
 3. Configure the npm registry in `.npmrc` in the project root. It needs all three of these lines. Kit packages come from the `@awesome.me` scope, and the Pro packages a Kit package depends on come from `@fortawesome`. Both scopes use the same private registry and the same token:
    ```
    @awesome.me:registry=https://npm.fontawesome.com/

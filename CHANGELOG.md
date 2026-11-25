@@ -25,6 +25,12 @@ Upgrade steps:
 
 - **`font-awesome` skill.** A single place for anything Font Awesome: icon search and suggestions, availability by family and style, Free vs Pro entitlements, your kits and their contents, custom icons and their SVGs, releases, official SVG markup, answers from the docs, setting up Font Awesome, and adding icons to your code. You can ask in plain language without naming a skill.
 
+### Changed
+
+- **Fallback scripts (no `fa` CLI):** the catalog lookups are GraphQL documents in `queries/`, run by `scripts/query_runner.py` through the same `scripts/*.py` commands, and print the API's JSON. `search.py` and `icon-exists.py` output pipes into `summarize-icons.py`. `icon-exists.py` exits 2 when the check fails, rather than 1 ("doesn't exist"). New `resolve-version.py` resolves a symbolic kit version such as `7.x`.
+- **`fetch-kit.py` no longer guesses a kit's families.** Without `fa` it can't see them, so it says so and lists what the kit's license allows, from the API, as an assumption. It reports the release a symbolic kit version resolves to now.
+- **Kit versions such as `7.x` are resolved fresh** each time, and `.font-awesome.md` records the kit's version as set, not the release it resolved to, and no families for a kit.
+
 ## 0.0.9 and earlier
 
 - `suggest-icon`: suggest icons for a concept, with Kit subset awareness.

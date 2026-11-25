@@ -26,7 +26,7 @@ Before starting, check whether `.font-awesome.md` already exists in the project 
 
 - **`fa` CLI usage, auth, and quirks:** `references/fa-cli.md`. Read it before your first `fa` call. Its Auth section says what to do when a command needs the user to log in.
 - **Fallback scripts** (no `fa` CLI): `scripts/`.
-- **Latest version:** `fa releases` (the entry with `isLatest: true`), or `scripts/latest-version.py`.
+- **Latest version:** `fa releases`, or `scripts/latest-version.py`: the entry with `isLatest: true`.
 - **`.font-awesome.md` format:** `references/font-awesome-md-format.md`.
 
 ## Steps

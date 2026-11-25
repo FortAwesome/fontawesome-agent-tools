@@ -22,7 +22,7 @@ Your knowledge of Font Awesome is likely stale: icon names change between versio
 ## Tools
 
 - **`fa` CLI** (primary): JSON for the catalog, the user's account and their kits. Read [references/fa-cli.md](references/fa-cli.md) before your first `fa` call. The CLI documents itself and is newer than your training data: before anything heavier (downloading a kit, scraping a page, writing a script), check `fa <command> --help` for a flag that does the job. `fa query` runs any GraphQL query.
-- **No `fa`** (`command -v fa` fails): the Python `scripts/` in this skill's directory cover catalog lookups and a kit's basic metadata, not account data, searching within a kit, or custom icons. End your answer by suggesting the user install `fa` (https://docs.fontawesome.com/web/use-with/fa-cli), which adds their account, kits, and official SVGs.
+- **No `fa`** (`command -v fa` fails): the Python `scripts/` in this skill's directory cover catalog lookups and a kit's version and license, not its family-styles, account data, searching within a kit, or custom icons. End your answer by suggesting the user install `fa` (https://docs.fontawesome.com/web/use-with/fa-cli), which adds their account, kits, and official SVGs.
 - **Docs**, for conceptual questions: [references/docs.md](references/docs.md).
 
 ## Resolve "I" and "my"
@@ -38,7 +38,7 @@ Cheapest source first, and only as far as the question needs ("is there a bat ic
 | Question | Approach |
 |---|---|
 | "Is there an icon for X?" / "What icons can I use for X?" | [references/suggest-icon.md](references/suggest-icon.md). Scope to a kit when the project or user names one. For "can I use", check entitlements and say which "By Icon" kits contain it. |
-| "Is there an X icon?" / "Which styles?" | Fuzzy search, not an exact lookup: `fa search --version <v> --query <X> --page-size 10` (no `fa`: `scripts/search.py`, then `scripts/icon-exists.py` on the exact match). Read `fa` results (`--json`) through `scripts/summarize-icons.py`. Lead with an exact `id` match: Free or Pro, and its families and styles from `familyStylesByLicense` (a count is enough). Then the closest matches; if none is exact, say so. |
+| "Is there an X icon?" / "Which styles?" | Fuzzy search, not an exact lookup: `fa search --version <v> --query <X> --page-size 10` (no `fa`: `scripts/search.py`). Pipe results (`fa` with `--json`) through `scripts/summarize-icons.py`. Lead with an exact `id` match: Free or Pro, and its families and styles from `familyStylesByLicense` (a count is enough). Then the closest matches; if none is exact, say so. |
 | "List my kits" / "Which kits have X?" | `fa kits`. Membership: `fa kit icon --kit-token <t> <icon>` or `fa search --kit-token <t> --query <icon>`. |
 | "Which styles of X are in my kit?" | The kit icon `variants` query in [fa-cli.md](references/fa-cli.md), run fresh. Answer from its list. |
 | "Show my custom icons" | `fa kit show --kit-token <t> --svg-format html` (names, unicodes, SVGs). Search uploads: `fa search --kit-token <t> --query <q> --custom`. |
