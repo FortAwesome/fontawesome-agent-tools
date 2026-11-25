@@ -1,0 +1,12 @@
+# Fuzzy search of a release's icons, best match first.
+query ($version: String!, $query: String!, $first: Int = 10) {
+  search(version: $version, query: $query, first: $first) {
+    id
+    label
+    unicode
+    familyStylesByLicense {
+      free { family style }
+      pro { family style }
+    }
+  }
+}

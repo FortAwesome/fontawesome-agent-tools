@@ -1,0 +1,106 @@
+{
+  "familyStyles": [
+    {
+      "family": "classic",
+      "prefix": "fas",
+      "shorthand": "solid",
+      "style": "solid"
+    },
+    {
+      "family": "classic",
+      "prefix": "far",
+      "shorthand": "regular",
+      "style": "regular"
+    },
+    {
+      "family": "classic",
+      "prefix": "fal",
+      "shorthand": "light",
+      "style": "light"
+    },
+    {
+      "family": "classic",
+      "prefix": "fat",
+      "shorthand": "thin",
+      "style": "thin"
+    },
+    {
+      "family": "classic",
+      "prefix": "fab",
+      "shorthand": "brands",
+      "style": "brands"
+    },
+    {
+      "family": "duotone",
+      "prefix": "fad",
+      "shorthand": "duotone",
+      "style": "solid"
+    },
+    {
+      "family": "duotone",
+      "prefix": "fadr",
+      "shorthand": "duotone-regular",
+      "style": "regular"
+    },
+    {
+      "family": "duotone",
+      "prefix": "fadl",
+      "shorthand": "duotone-light",
+      "style": "light"
+    },
+    {
+      "family": "duotone",
+      "prefix": "fadt",
+      "shorthand": "duotone-thin",
+      "style": "thin"
+    },
+    {
+      "family": "sharp",
+      "prefix": "fass",
+      "shorthand": "sharp-solid",
+      "style": "solid"
+    },
+    {
+      "family": "sharp",
+      "prefix": "fasr",
+      "shorthand": "sharp-regular",
+      "style": "regular"
+    },
+    {
+      "family": "sharp",
+      "prefix": "fasl",
+      "shorthand": "sharp-light",
+      "style": "light"
+    },
+    {
+      "family": "sharp",
+      "prefix": "fast",
+      "shorthand": "sharp-thin",
+      "style": "thin"
+    },
+    {
+      "family": "sharp-duotone",
+      "prefix": "fasds",
+      "shorthand": "sharp-duotone-solid",
+      "style": "solid"
+    },
+    {
+      "family": "sharp-duotone",
+      "prefix": "fasdr",
+      "shorthand": "sharp-duotone-regular",
+      "style": "regular"
+    },
+    {
+      "family": "sharp-duotone",
+      "prefix": "fasdl",
+      "shorthand": "sharp-duotone-light",
+      "style": "light"
+    },
+    {
+      "family": "sharp-duotone",
+      "prefix": "fasdt",
+      "shorthand": "sharp-duotone-thin",
+      "style": "thin"
+    }
+  ]
+}

@@ -1,0 +1,1530 @@
+[
+  {
+    "kind": "latest",
+    "variables": {
+      "version": "7.x"
+    },
+    "response": {
+      "data": {
+        "release": {
+          "isLatest": true,
+          "version": "7.3.1"
+        }
+      }
+    }
+  },
+  {
+    "kind": "latest",
+    "variables": {
+      "version": "8.x"
+    },
+    "response": {
+      "data": {
+        "release": null
+      },
+      "errors": [
+        {
+          "message": "not_found",
+          "path": [
+            "release"
+          ],
+          "locations": [
+            {
+              "line": 5,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "kind": "icon",
+    "variables": {
+      "version": "7.3.1",
+      "iconName": "house"
+    },
+    "response": {
+      "data": {
+        "release": {
+          "icon": {
+            "familyStylesByLicense": {
+              "free": [
+                {
+                  "family": "classic",
+                  "style": "regular"
+                },
+                {
+                  "family": "classic",
+                  "style": "solid"
+                }
+              ],
+              "pro": [
+                {
+                  "family": "chisel",
+                  "style": "regular"
+                },
+                {
+                  "family": "classic",
+                  "style": "light"
+                },
+                {
+                  "family": "classic",
+                  "style": "regular"
+                },
+                {
+                  "family": "classic",
+                  "style": "solid"
+                },
+                {
+                  "family": "classic",
+                  "style": "thin"
+                },
+                {
+                  "family": "duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "duotone",
+                  "style": "thin"
+                },
+                {
+                  "family": "etch",
+                  "style": "solid"
+                },
+                {
+                  "family": "graphite",
+                  "style": "thin"
+                },
+                {
+                  "family": "jelly",
+                  "style": "regular"
+                },
+                {
+                  "family": "jelly-duo",
+                  "style": "regular"
+                },
+                {
+                  "family": "jelly-fill",
+                  "style": "regular"
+                },
+                {
+                  "family": "mosaic",
+                  "style": "solid"
+                },
+                {
+                  "family": "notdog",
+                  "style": "solid"
+                },
+                {
+                  "family": "notdog-duo",
+                  "style": "solid"
+                },
+                {
+                  "family": "pixel",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "thin"
+                },
+                {
+                  "family": "slab",
+                  "style": "regular"
+                },
+                {
+                  "family": "slab-duo",
+                  "style": "regular"
+                },
+                {
+                  "family": "slab-press",
+                  "style": "regular"
+                },
+                {
+                  "family": "slab-press-duo",
+                  "style": "regular"
+                },
+                {
+                  "family": "thumbprint",
+                  "style": "light"
+                },
+                {
+                  "family": "utility",
+                  "style": "semibold"
+                },
+                {
+                  "family": "utility-duo",
+                  "style": "semibold"
+                },
+                {
+                  "family": "utility-fill",
+                  "style": "semibold"
+                },
+                {
+                  "family": "vellum",
+                  "style": "solid"
+                },
+                {
+                  "family": "whiteboard",
+                  "style": "semibold"
+                }
+              ]
+            },
+            "id": "house",
+            "label": "House"
+          }
+        }
+      }
+    }
+  },
+  {
+    "kind": "icon",
+    "variables": {
+      "version": "7.3.1",
+      "iconName": "not-an-icon"
+    },
+    "response": {
+      "data": {
+        "release": {
+          "icon": null
+        }
+      }
+    }
+  },
+  {
+    "kind": "icon",
+    "variables": {
+      "version": "9.9.9",
+      "iconName": "house"
+    },
+    "response": {
+      "data": {
+        "release": null
+      },
+      "errors": [
+        {
+          "message": "not_found",
+          "path": [
+            "release"
+          ],
+          "locations": [
+            {
+              "line": 4,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "kind": "search",
+    "variables": {
+      "version": "7.3.1",
+      "query": "cup",
+      "first": 3
+    },
+    "response": {
+      "data": {
+        "search": [
+          {
+            "familyStylesByLicense": {
+              "free": [],
+              "pro": [
+                {
+                  "family": "classic",
+                  "style": "light"
+                },
+                {
+                  "family": "classic",
+                  "style": "regular"
+                },
+                {
+                  "family": "classic",
+                  "style": "solid"
+                },
+                {
+                  "family": "classic",
+                  "style": "thin"
+                },
+                {
+                  "family": "duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "duotone",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "thin"
+                }
+              ]
+            },
+            "id": "cup-togo",
+            "label": "Cup Togo",
+            "unicode": "f6c5"
+          },
+          {
+            "familyStylesByLicense": {
+              "free": [],
+              "pro": [
+                {
+                  "family": "classic",
+                  "style": "light"
+                },
+                {
+                  "family": "classic",
+                  "style": "regular"
+                },
+                {
+                  "family": "classic",
+                  "style": "solid"
+                },
+                {
+                  "family": "classic",
+                  "style": "thin"
+                },
+                {
+                  "family": "duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "duotone",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "thin"
+                }
+              ]
+            },
+            "id": "cup-straw-swoosh",
+            "label": "Cup Straw Swoosh",
+            "unicode": "e364"
+          },
+          {
+            "familyStylesByLicense": {
+              "free": [],
+              "pro": [
+                {
+                  "family": "classic",
+                  "style": "light"
+                },
+                {
+                  "family": "classic",
+                  "style": "regular"
+                },
+                {
+                  "family": "classic",
+                  "style": "solid"
+                },
+                {
+                  "family": "classic",
+                  "style": "thin"
+                },
+                {
+                  "family": "duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "duotone",
+                  "style": "thin"
+                },
+                {
+                  "family": "notdog",
+                  "style": "solid"
+                },
+                {
+                  "family": "notdog-duo",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "thin"
+                }
+              ]
+            },
+            "id": "cup-straw",
+            "label": "Cup Straw",
+            "unicode": "e363"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "kind": "search",
+    "variables": {
+      "version": "7.3.1",
+      "query": "cup"
+    },
+    "response": {
+      "data": {
+        "search": [
+          {
+            "familyStylesByLicense": {
+              "free": [],
+              "pro": [
+                {
+                  "family": "classic",
+                  "style": "light"
+                },
+                {
+                  "family": "classic",
+                  "style": "regular"
+                },
+                {
+                  "family": "classic",
+                  "style": "solid"
+                },
+                {
+                  "family": "classic",
+                  "style": "thin"
+                },
+                {
+                  "family": "duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "duotone",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "thin"
+                }
+              ]
+            },
+            "id": "cup-togo",
+            "label": "Cup Togo",
+            "unicode": "f6c5"
+          },
+          {
+            "familyStylesByLicense": {
+              "free": [],
+              "pro": [
+                {
+                  "family": "classic",
+                  "style": "light"
+                },
+                {
+                  "family": "classic",
+                  "style": "regular"
+                },
+                {
+                  "family": "classic",
+                  "style": "solid"
+                },
+                {
+                  "family": "classic",
+                  "style": "thin"
+                },
+                {
+                  "family": "duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "duotone",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "thin"
+                }
+              ]
+            },
+            "id": "cup-straw-swoosh",
+            "label": "Cup Straw Swoosh",
+            "unicode": "e364"
+          },
+          {
+            "familyStylesByLicense": {
+              "free": [],
+              "pro": [
+                {
+                  "family": "classic",
+                  "style": "light"
+                },
+                {
+                  "family": "classic",
+                  "style": "regular"
+                },
+                {
+                  "family": "classic",
+                  "style": "solid"
+                },
+                {
+                  "family": "classic",
+                  "style": "thin"
+                },
+                {
+                  "family": "duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "duotone",
+                  "style": "thin"
+                },
+                {
+                  "family": "notdog",
+                  "style": "solid"
+                },
+                {
+                  "family": "notdog-duo",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "thin"
+                }
+              ]
+            },
+            "id": "cup-straw",
+            "label": "Cup Straw",
+            "unicode": "e363"
+          },
+          {
+            "familyStylesByLicense": {
+              "free": [
+                {
+                  "family": "classic",
+                  "style": "solid"
+                }
+              ],
+              "pro": [
+                {
+                  "family": "chisel",
+                  "style": "regular"
+                },
+                {
+                  "family": "classic",
+                  "style": "light"
+                },
+                {
+                  "family": "classic",
+                  "style": "regular"
+                },
+                {
+                  "family": "classic",
+                  "style": "solid"
+                },
+                {
+                  "family": "classic",
+                  "style": "thin"
+                },
+                {
+                  "family": "duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "duotone",
+                  "style": "thin"
+                },
+                {
+                  "family": "etch",
+                  "style": "solid"
+                },
+                {
+                  "family": "graphite",
+                  "style": "thin"
+                },
+                {
+                  "family": "jelly",
+                  "style": "regular"
+                },
+                {
+                  "family": "jelly-duo",
+                  "style": "regular"
+                },
+                {
+                  "family": "jelly-fill",
+                  "style": "regular"
+                },
+                {
+                  "family": "mosaic",
+                  "style": "solid"
+                },
+                {
+                  "family": "notdog",
+                  "style": "solid"
+                },
+                {
+                  "family": "notdog-duo",
+                  "style": "solid"
+                },
+                {
+                  "family": "pixel",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "thin"
+                },
+                {
+                  "family": "slab",
+                  "style": "regular"
+                },
+                {
+                  "family": "slab-duo",
+                  "style": "regular"
+                },
+                {
+                  "family": "slab-press",
+                  "style": "regular"
+                },
+                {
+                  "family": "slab-press-duo",
+                  "style": "regular"
+                },
+                {
+                  "family": "thumbprint",
+                  "style": "light"
+                },
+                {
+                  "family": "utility",
+                  "style": "semibold"
+                },
+                {
+                  "family": "utility-duo",
+                  "style": "semibold"
+                },
+                {
+                  "family": "utility-fill",
+                  "style": "semibold"
+                },
+                {
+                  "family": "vellum",
+                  "style": "solid"
+                },
+                {
+                  "family": "whiteboard",
+                  "style": "semibold"
+                }
+              ]
+            },
+            "id": "trophy",
+            "label": "Trophy",
+            "unicode": "f091"
+          },
+          {
+            "familyStylesByLicense": {
+              "free": [
+                {
+                  "family": "classic",
+                  "style": "solid"
+                }
+              ],
+              "pro": [
+                {
+                  "family": "chisel",
+                  "style": "regular"
+                },
+                {
+                  "family": "classic",
+                  "style": "light"
+                },
+                {
+                  "family": "classic",
+                  "style": "regular"
+                },
+                {
+                  "family": "classic",
+                  "style": "solid"
+                },
+                {
+                  "family": "classic",
+                  "style": "thin"
+                },
+                {
+                  "family": "duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "duotone",
+                  "style": "thin"
+                },
+                {
+                  "family": "etch",
+                  "style": "solid"
+                },
+                {
+                  "family": "graphite",
+                  "style": "thin"
+                },
+                {
+                  "family": "jelly",
+                  "style": "regular"
+                },
+                {
+                  "family": "jelly-duo",
+                  "style": "regular"
+                },
+                {
+                  "family": "jelly-fill",
+                  "style": "regular"
+                },
+                {
+                  "family": "mosaic",
+                  "style": "solid"
+                },
+                {
+                  "family": "notdog",
+                  "style": "solid"
+                },
+                {
+                  "family": "notdog-duo",
+                  "style": "solid"
+                },
+                {
+                  "family": "pixel",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "thin"
+                },
+                {
+                  "family": "slab",
+                  "style": "regular"
+                },
+                {
+                  "family": "slab-duo",
+                  "style": "regular"
+                },
+                {
+                  "family": "slab-press",
+                  "style": "regular"
+                },
+                {
+                  "family": "slab-press-duo",
+                  "style": "regular"
+                },
+                {
+                  "family": "thumbprint",
+                  "style": "light"
+                },
+                {
+                  "family": "utility",
+                  "style": "semibold"
+                },
+                {
+                  "family": "utility-duo",
+                  "style": "semibold"
+                },
+                {
+                  "family": "utility-fill",
+                  "style": "semibold"
+                },
+                {
+                  "family": "vellum",
+                  "style": "solid"
+                },
+                {
+                  "family": "whiteboard",
+                  "style": "semibold"
+                }
+              ]
+            },
+            "id": "mug-hot",
+            "label": "Mug Hot",
+            "unicode": "f7b6"
+          },
+          {
+            "familyStylesByLicense": {
+              "free": [
+                {
+                  "family": "classic",
+                  "style": "solid"
+                }
+              ],
+              "pro": [
+                {
+                  "family": "classic",
+                  "style": "light"
+                },
+                {
+                  "family": "classic",
+                  "style": "regular"
+                },
+                {
+                  "family": "classic",
+                  "style": "solid"
+                },
+                {
+                  "family": "classic",
+                  "style": "thin"
+                },
+                {
+                  "family": "duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "duotone",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "thin"
+                },
+                {
+                  "family": "utility",
+                  "style": "semibold"
+                },
+                {
+                  "family": "utility-duo",
+                  "style": "semibold"
+                },
+                {
+                  "family": "utility-fill",
+                  "style": "semibold"
+                },
+                {
+                  "family": "whiteboard",
+                  "style": "semibold"
+                }
+              ]
+            },
+            "id": "mug-saucer",
+            "label": "Mug Saucer",
+            "unicode": "f0f4"
+          },
+          {
+            "familyStylesByLicense": {
+              "free": [],
+              "pro": [
+                {
+                  "family": "classic",
+                  "style": "light"
+                },
+                {
+                  "family": "classic",
+                  "style": "regular"
+                },
+                {
+                  "family": "classic",
+                  "style": "solid"
+                },
+                {
+                  "family": "classic",
+                  "style": "thin"
+                },
+                {
+                  "family": "duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "duotone",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "thin"
+                }
+              ]
+            },
+            "id": "glass",
+            "label": "Glass",
+            "unicode": "f804"
+          },
+          {
+            "familyStylesByLicense": {
+              "free": [],
+              "pro": [
+                {
+                  "family": "classic",
+                  "style": "light"
+                },
+                {
+                  "family": "classic",
+                  "style": "regular"
+                },
+                {
+                  "family": "classic",
+                  "style": "solid"
+                },
+                {
+                  "family": "classic",
+                  "style": "thin"
+                },
+                {
+                  "family": "duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "duotone",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "thin"
+                }
+              ]
+            },
+            "id": "mug-tea",
+            "label": "Mug Tea",
+            "unicode": "f875"
+          },
+          {
+            "familyStylesByLicense": {
+              "free": [],
+              "pro": [
+                {
+                  "family": "classic",
+                  "style": "light"
+                },
+                {
+                  "family": "classic",
+                  "style": "regular"
+                },
+                {
+                  "family": "classic",
+                  "style": "solid"
+                },
+                {
+                  "family": "classic",
+                  "style": "thin"
+                },
+                {
+                  "family": "duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "duotone",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "thin"
+                }
+              ]
+            },
+            "id": "trophy-star",
+            "label": "Trophy Star",
+            "unicode": "f2eb"
+          },
+          {
+            "familyStylesByLicense": {
+              "free": [],
+              "pro": [
+                {
+                  "family": "classic",
+                  "style": "light"
+                },
+                {
+                  "family": "classic",
+                  "style": "regular"
+                },
+                {
+                  "family": "classic",
+                  "style": "solid"
+                },
+                {
+                  "family": "classic",
+                  "style": "thin"
+                },
+                {
+                  "family": "duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "duotone",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp",
+                  "style": "thin"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "light"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "regular"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "solid"
+                },
+                {
+                  "family": "sharp-duotone",
+                  "style": "thin"
+                }
+              ]
+            },
+            "id": "mug-tea-saucer",
+            "label": "Mug Tea Saucer",
+            "unicode": "e1f5"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "kind": "search",
+    "variables": {
+      "version": "7.3.1",
+      "query": "zzqqxxnothing",
+      "first": 3
+    },
+    "response": {
+      "data": {
+        "search": []
+      }
+    }
+  },
+  {
+    "kind": "resolve",
+    "variables": {
+      "version": "7.x"
+    },
+    "response": {
+      "data": {
+        "release": {
+          "version": "7.3.1"
+        }
+      }
+    }
+  },
+  {
+    "kind": "resolve",
+    "variables": {
+      "version": "6.x"
+    },
+    "response": {
+      "data": {
+        "release": {
+          "version": "6.7.2"
+        }
+      }
+    }
+  },
+  {
+    "kind": "resolve",
+    "variables": {
+      "version": "5.x"
+    },
+    "response": {
+      "data": {
+        "release": {
+          "version": "5.15.4"
+        }
+      }
+    }
+  },
+  {
+    "kind": "resolve",
+    "variables": {
+      "version": "7.3.1"
+    },
+    "response": {
+      "data": {
+        "release": {
+          "version": "7.3.1"
+        }
+      }
+    }
+  },
+  {
+    "kind": "resolve",
+    "variables": {
+      "version": "6.7.2"
+    },
+    "response": {
+      "data": {
+        "release": {
+          "version": "6.7.2"
+        }
+      }
+    }
+  }
+]

@@ -1,0 +1,8 @@
+# The release a version resolves to now: a symbolic version such as "7.x"
+# resolves to the latest 7.x release, and moves when a new one ships.
+# Don't pass "latest": it resolves to the last 5.x release.
+query ($version: String!) {
+  release(version: $version) {
+    version
+  }
+}

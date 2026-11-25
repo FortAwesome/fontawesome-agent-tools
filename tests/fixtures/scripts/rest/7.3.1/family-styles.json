@@ -1,0 +1,226 @@
+{
+  "familyStyles": [
+    {
+      "family": "classic",
+      "prefix": "fas",
+      "shorthand": "solid",
+      "style": "solid"
+    },
+    {
+      "family": "classic",
+      "prefix": "far",
+      "shorthand": "regular",
+      "style": "regular"
+    },
+    {
+      "family": "classic",
+      "prefix": "fal",
+      "shorthand": "light",
+      "style": "light"
+    },
+    {
+      "family": "classic",
+      "prefix": "fat",
+      "shorthand": "thin",
+      "style": "thin"
+    },
+    {
+      "family": "classic",
+      "prefix": "fab",
+      "shorthand": "brands",
+      "style": "brands"
+    },
+    {
+      "family": "duotone",
+      "prefix": "fad",
+      "shorthand": "duotone",
+      "style": "solid"
+    },
+    {
+      "family": "duotone",
+      "prefix": "fadr",
+      "shorthand": "duotone-regular",
+      "style": "regular"
+    },
+    {
+      "family": "duotone",
+      "prefix": "fadl",
+      "shorthand": "duotone-light",
+      "style": "light"
+    },
+    {
+      "family": "duotone",
+      "prefix": "fadt",
+      "shorthand": "duotone-thin",
+      "style": "thin"
+    },
+    {
+      "family": "sharp",
+      "prefix": "fass",
+      "shorthand": "sharp-solid",
+      "style": "solid"
+    },
+    {
+      "family": "sharp",
+      "prefix": "fasr",
+      "shorthand": "sharp-regular",
+      "style": "regular"
+    },
+    {
+      "family": "sharp",
+      "prefix": "fasl",
+      "shorthand": "sharp-light",
+      "style": "light"
+    },
+    {
+      "family": "sharp",
+      "prefix": "fast",
+      "shorthand": "sharp-thin",
+      "style": "thin"
+    },
+    {
+      "family": "sharp-duotone",
+      "prefix": "fasds",
+      "shorthand": "sharp-duotone-solid",
+      "style": "solid"
+    },
+    {
+      "family": "sharp-duotone",
+      "prefix": "fasdr",
+      "shorthand": "sharp-duotone-regular",
+      "style": "regular"
+    },
+    {
+      "family": "sharp-duotone",
+      "prefix": "fasdl",
+      "shorthand": "sharp-duotone-light",
+      "style": "light"
+    },
+    {
+      "family": "sharp-duotone",
+      "prefix": "fasdt",
+      "shorthand": "sharp-duotone-thin",
+      "style": "thin"
+    },
+    {
+      "family": "chisel",
+      "prefix": "facr",
+      "shorthand": "chisel-regular",
+      "style": "regular"
+    },
+    {
+      "family": "etch",
+      "prefix": "faes",
+      "shorthand": "etch-solid",
+      "style": "solid"
+    },
+    {
+      "family": "graphite",
+      "prefix": "fagt",
+      "shorthand": "graphite-thin",
+      "style": "thin"
+    },
+    {
+      "family": "jelly",
+      "prefix": "fajr",
+      "shorthand": "jelly-regular",
+      "style": "regular"
+    },
+    {
+      "family": "jelly-duo",
+      "prefix": "fajdr",
+      "shorthand": "jelly-duo-regular",
+      "style": "regular"
+    },
+    {
+      "family": "jelly-fill",
+      "prefix": "fajfr",
+      "shorthand": "jelly-fill-regular",
+      "style": "regular"
+    },
+    {
+      "family": "mosaic",
+      "prefix": "fams",
+      "shorthand": "mosaic-solid",
+      "style": "solid"
+    },
+    {
+      "family": "notdog",
+      "prefix": "fans",
+      "shorthand": "notdog-solid",
+      "style": "solid"
+    },
+    {
+      "family": "notdog-duo",
+      "prefix": "fands",
+      "shorthand": "notdog-duo-solid",
+      "style": "solid"
+    },
+    {
+      "family": "pixel",
+      "prefix": "fapr",
+      "shorthand": "pixel-regular",
+      "style": "regular"
+    },
+    {
+      "family": "slab",
+      "prefix": "faslr",
+      "shorthand": "slab-regular",
+      "style": "regular"
+    },
+    {
+      "family": "slab-duo",
+      "prefix": "fasldr",
+      "shorthand": "slab-duo-regular",
+      "style": "regular"
+    },
+    {
+      "family": "slab-press",
+      "prefix": "faslpr",
+      "shorthand": "slab-press-regular",
+      "style": "regular"
+    },
+    {
+      "family": "slab-press-duo",
+      "prefix": "faslpdr",
+      "shorthand": "slab-press-duo-regular",
+      "style": "regular"
+    },
+    {
+      "family": "thumbprint",
+      "prefix": "fatl",
+      "shorthand": "thumbprint-light",
+      "style": "light"
+    },
+    {
+      "family": "utility",
+      "prefix": "fausb",
+      "shorthand": "utility-semibold",
+      "style": "semibold"
+    },
+    {
+      "family": "utility-duo",
+      "prefix": "faudsb",
+      "shorthand": "utility-duo-semibold",
+      "style": "semibold"
+    },
+    {
+      "family": "utility-fill",
+      "prefix": "faufsb",
+      "shorthand": "utility-fill-semibold",
+      "style": "semibold"
+    },
+    {
+      "family": "vellum",
+      "prefix": "favs",
+      "shorthand": "vellum-solid",
+      "style": "solid"
+    },
+    {
+      "family": "whiteboard",
+      "prefix": "fawsb",
+      "shorthand": "whiteboard-semibold",
+      "style": "semibold"
+    }
+  ]
+}

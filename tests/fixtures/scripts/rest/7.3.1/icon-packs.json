@@ -1,0 +1,664 @@
+{
+  "iconCollections": [
+    {
+      "iconPacks": [
+        "brands",
+        "classic"
+      ],
+      "label": "Font Awesome Free",
+      "labelIconName": "bolt",
+      "labelIconPrefix": "fas",
+      "name": "free-collection",
+      "subset": [
+        {
+          "family": "classic",
+          "only": [
+            "0",
+            "1",
+            "2"
+          ],
+          "style": "solid"
+        },
+        {
+          "family": "classic",
+          "only": [
+            "address-book",
+            "address-card",
+            "alarm-clock"
+          ],
+          "style": "regular"
+        },
+        {
+          "family": "classic",
+          "style": "brands"
+        }
+      ]
+    },
+    {
+      "iconPacks": [
+        "brands",
+        "classic",
+        "duotone",
+        "sharp",
+        "sharp-duotone"
+      ],
+      "label": "Font Awesome Pro",
+      "labelIconName": "icons",
+      "labelIconPrefix": "fas",
+      "name": "pro-collection"
+    },
+    {
+      "iconPacks": [
+        "brands",
+        "classic",
+        "duotone",
+        "sharp",
+        "sharp-duotone",
+        "chisel",
+        "etch",
+        "graphite",
+        "jelly",
+        "mosaic",
+        "notdog",
+        "pixel",
+        "slab",
+        "thumbprint",
+        "utility",
+        "vellum",
+        "whiteboard"
+      ],
+      "label": "Font Awesome Pro Plus",
+      "labelIconName": "shapes",
+      "labelIconPrefix": "fas",
+      "name": "pro-plus-collection"
+    }
+  ],
+  "iconPacks": [
+    {
+      "description": "FA Brands is your go-to icon pack for when you need to showcase a company's logo. Whether it's for social media, software, or big-name products, this pack has all the icons you need to represent recognizable brands with style.",
+      "designerName": "Font Awesome",
+      "designerUrl": "https://fontawesome.com",
+      "familyStyles": [
+        {
+          "family": "classic",
+          "style": "brands",
+          "visualTags": []
+        }
+      ],
+      "label": "Brands",
+      "labelIconName": "font-awesome",
+      "labelIconPrefix": "fab",
+      "name": "brands",
+      "sourceCanvasHeight": 20,
+      "sourceGridHeight": 16
+    },
+    {
+      "description": "With more icons than you can shake a stick at, FA Classic is the seasoned pro of Font Awesome. Thousands of icons in a timeless, versatile style that work just about anywhere. Classic is like the little black dress of icons.",
+      "designerName": "Font Awesome",
+      "designerUrl": "https://fontawesome.com",
+      "familyStyles": [
+        {
+          "family": "classic",
+          "style": "solid",
+          "visualTags": [
+            "filled",
+            "round"
+          ]
+        },
+        {
+          "family": "classic",
+          "style": "regular",
+          "visualTags": [
+            "line",
+            "round"
+          ]
+        },
+        {
+          "family": "classic",
+          "style": "light",
+          "visualTags": [
+            "line",
+            "round"
+          ]
+        },
+        {
+          "family": "classic",
+          "style": "thin",
+          "visualTags": [
+            "line",
+            "round"
+          ]
+        }
+      ],
+      "label": "Classic",
+      "labelIconName": "house",
+      "labelIconPrefix": "fas",
+      "name": "classic",
+      "sourceCanvasHeight": 20,
+      "sourceGridHeight": 16
+    },
+    {
+      "description": "FA Duotone is double-layered companion to FA Classic, which icon-for-icon matches. These beauties bring contrast, clarity, and a little pizzazz - because when it comes to making an impact, sometimes two tones are better than one!",
+      "designerName": "Font Awesome",
+      "designerUrl": "https://fontawesome.com",
+      "familyStyles": [
+        {
+          "family": "duotone",
+          "style": "solid",
+          "visualTags": [
+            "duotone",
+            "filled",
+            "round"
+          ]
+        },
+        {
+          "family": "duotone",
+          "style": "regular",
+          "visualTags": [
+            "duotone",
+            "line",
+            "round"
+          ]
+        },
+        {
+          "family": "duotone",
+          "style": "light",
+          "visualTags": [
+            "duotone",
+            "line",
+            "round"
+          ]
+        },
+        {
+          "family": "duotone",
+          "style": "thin",
+          "visualTags": [
+            "duotone",
+            "line",
+            "round"
+          ]
+        }
+      ],
+      "label": "Duotone",
+      "labelIconName": "house",
+      "labelIconPrefix": "fad",
+      "name": "duotone",
+      "sourceCanvasHeight": 20,
+      "sourceGridHeight": 16
+    },
+    {
+      "description": "FA Sharp icons take clean lines and tight angles to the next level. Designed as a modern counterpart to our Classic icon pack, these icons slice through the clutter with razor precision for projects that need a high-definition edge.",
+      "designerName": "Font Awesome",
+      "designerUrl": "https://fontawesome.com",
+      "familyStyles": [
+        {
+          "family": "sharp",
+          "style": "solid",
+          "visualTags": [
+            "filled",
+            "sharp"
+          ]
+        },
+        {
+          "family": "sharp",
+          "style": "regular",
+          "visualTags": [
+            "line",
+            "sharp"
+          ]
+        },
+        {
+          "family": "sharp",
+          "style": "light",
+          "visualTags": [
+            "line",
+            "sharp"
+          ]
+        },
+        {
+          "family": "sharp",
+          "style": "thin",
+          "visualTags": [
+            "line",
+            "sharp"
+          ]
+        }
+      ],
+      "label": "Sharp",
+      "labelIconName": "house",
+      "labelIconPrefix": "fass",
+      "name": "sharp",
+      "sourceCanvasHeight": 20,
+      "sourceGridHeight": 16
+    },
+    {
+      "description": "FA Sharp-Duotone rocks twice the tone and twice the attitude, with razor-sharp lines and layered depth for extra impact. Whether you're after clean, modern, or downright daring, these icons deliver. One layer is fine, but two? Now that's cutting-edge.",
+      "designerName": "Font Awesome",
+      "designerUrl": "https://fontawesome.com",
+      "familyStyles": [
+        {
+          "family": "sharp-duotone",
+          "style": "solid",
+          "visualTags": [
+            "duotone",
+            "filled",
+            "sharp"
+          ]
+        },
+        {
+          "family": "sharp-duotone",
+          "style": "regular",
+          "visualTags": [
+            "duotone",
+            "line",
+            "sharp"
+          ]
+        },
+        {
+          "family": "sharp-duotone",
+          "style": "light",
+          "visualTags": [
+            "duotone",
+            "line",
+            "sharp"
+          ]
+        },
+        {
+          "family": "sharp-duotone",
+          "style": "thin",
+          "visualTags": [
+            "duotone",
+            "line",
+            "sharp"
+          ]
+        }
+      ],
+      "label": "Sharp Duotone",
+      "labelIconName": "house",
+      "labelIconPrefix": "fasds",
+      "name": "sharp-duotone",
+      "sourceCanvasHeight": 20,
+      "sourceGridHeight": 16
+    },
+    {
+      "description": "FA Chisel is sharp, bold, and full of character - like a sculptor's finest work. In this case, the sculptor is the amazing designer Laura Bohill. With its thick and thin strokes, this pack cuts through the noise and inscribes its way into the spotlight. You bring the ideas, Chisel brings the stone-cold execution.",
+      "designerName": "Laura Bohill",
+      "designerUrl": "https://laurarbee.com",
+      "familyStyles": [
+        {
+          "family": "chisel",
+          "style": "regular",
+          "visualTags": [
+            "line",
+            "sharp"
+          ]
+        }
+      ],
+      "label": "Chisel",
+      "labelIconName": "house",
+      "labelIconPrefix": "facr",
+      "name": "chisel",
+      "sourceCanvasHeight": 24,
+      "sourceGridHeight": 24
+    },
+    {
+      "description": "Don’t get caught with a bunch of loose icon bits ever again! Each glyph is carved from a single, glorious piece. Etch was born from a simple idea: what if you could actually create an entire set of icons from a single, connected sheet of metal? Etch’s sharp corners and rounded cutouts work together to create a big visual impact.",
+      "designerName": "Font Awesome",
+      "designerUrl": "https://fontawesome.com",
+      "familyStyles": [
+        {
+          "family": "etch",
+          "style": "solid",
+          "visualTags": [
+            "filled",
+            "sharp"
+          ]
+        }
+      ],
+      "label": "Etch",
+      "labelIconName": "house",
+      "labelIconPrefix": "faes",
+      "name": "etch",
+      "sourceCanvasHeight": 24,
+      "sourceGridHeight": 20
+    },
+    {
+      "description": "Did you know that the word \"pencil\" comes from the Latin for \"little tail\"? Well now you do, because Icon University is in session with FA Graphite. If you require a hand-drawn, academic, or erasable vibe, Professor Vic Bell is here with a Pack that's sketchy in all the right ways. Enroll your project today!",
+      "designerName": "Vic Bell",
+      "designerUrl": "https://www.vicbell.co.uk",
+      "familyStyles": [
+        {
+          "family": "graphite",
+          "style": "thin",
+          "visualTags": [
+            "line",
+            "round",
+            "sketch"
+          ]
+        }
+      ],
+      "label": "Graphite",
+      "labelIconName": "house",
+      "labelIconPrefix": "fagt",
+      "name": "graphite",
+      "sourceCanvasHeight": 24,
+      "sourceGridHeight": 20
+    },
+    {
+      "description": "FA Jelly is a soft and squishy icon pack that borrows from everyone's favorite French mathematician, Gabriel Lamé, and his superellipse. Commonly known as \"squircles\", these forms help Jelly strike a sweet balance between playful curves and versatile design.",
+      "designerName": "Font Awesome",
+      "designerUrl": "https://fontawesome.com",
+      "familyStyles": [
+        {
+          "family": "jelly",
+          "style": "regular",
+          "visualTags": [
+            "line",
+            "round"
+          ]
+        },
+        {
+          "family": "jelly-duo",
+          "style": "regular",
+          "visualTags": [
+            "duotone",
+            "line",
+            "round"
+          ]
+        },
+        {
+          "family": "jelly-fill",
+          "style": "regular",
+          "visualTags": [
+            "filled",
+            "round"
+          ]
+        }
+      ],
+      "label": "Jelly",
+      "labelIconName": "house",
+      "labelIconPrefix": "fajr",
+      "name": "jelly",
+      "sourceCanvasHeight": 24,
+      "sourceGridHeight": 20
+    },
+    {
+      "description": "Icons are little art pieces constructed from many elements, and FA Mosaic is no different. Master craftsman Josh Williams breaks the mold with this Pack — blending solid forms, swoopy curves, and fun little sprinkles he lovingly calls \"quirks.\"",
+      "designerName": "Josh Williams",
+      "designerUrl": "https://www.jw.design",
+      "familyStyles": [
+        {
+          "family": "mosaic",
+          "style": "solid",
+          "visualTags": [
+            "filled",
+            "sharp"
+          ]
+        }
+      ],
+      "label": "Mosaic",
+      "labelIconName": "house",
+      "labelIconPrefix": "fams",
+      "name": "mosaic",
+      "sourceCanvasHeight": 40,
+      "sourceGridHeight": 32
+    },
+    {
+      "description": "FA Notdog is a playful twist on classic icons, and we relish its quirky charm - not quite hotdog, not quite bun, but 100% fun. Perfect for adding a dollop of humor and personality to your designs.",
+      "designerName": "Font Awesome",
+      "designerUrl": "https://fontawesome.com",
+      "familyStyles": [
+        {
+          "family": "notdog",
+          "style": "solid",
+          "visualTags": [
+            "filled",
+            "round"
+          ]
+        },
+        {
+          "family": "notdog-duo",
+          "style": "solid",
+          "visualTags": [
+            "duotone",
+            "filled",
+            "round"
+          ]
+        }
+      ],
+      "label": "Notdog",
+      "labelIconName": "house",
+      "labelIconPrefix": "fans",
+      "name": "notdog",
+      "sourceCanvasHeight": 32,
+      "sourceGridHeight": 30
+    },
+    {
+      "description": "Before high density displays, the mighty pixel was king. FA Pixel takes you back to the halcyon days of yore — when quarters held your place at the arcade and computers only had 128kb of memory. If you're prepping your next plumbing adventure or space invasion, Pixel is ready to byte.",
+      "designerName": "Font Awesome",
+      "designerUrl": "https://fontawesome.com",
+      "familyStyles": [
+        {
+          "family": "pixel",
+          "style": "regular",
+          "visualTags": [
+            "line",
+            "pixelated"
+          ]
+        }
+      ],
+      "label": "Pixel",
+      "labelIconName": "house",
+      "labelIconPrefix": "fapr",
+      "name": "pixel",
+      "sourceCanvasHeight": 24,
+      "sourceGridHeight": 20
+    },
+    {
+      "description": "What if icons could be their own buttons? FA Slab answers that question with sturdy, blocky designs that feel bold and ready for action. Equal parts dependable and playful, Slab makes a statement - because sometimes, subtlety is overrated.",
+      "designerName": "Font Awesome",
+      "designerUrl": "https://fontawesome.com",
+      "familyStyles": [
+        {
+          "family": "slab",
+          "style": "regular",
+          "visualTags": [
+            "line",
+            "round",
+            "dimensional"
+          ]
+        },
+        {
+          "family": "slab-duo",
+          "style": "regular",
+          "visualTags": [
+            "duotone",
+            "line",
+            "round",
+            "dimensional"
+          ]
+        },
+        {
+          "family": "slab-press",
+          "style": "regular",
+          "visualTags": [
+            "line",
+            "round"
+          ]
+        },
+        {
+          "family": "slab-press-duo",
+          "style": "regular",
+          "visualTags": [
+            "duotone",
+            "line",
+            "round"
+          ]
+        }
+      ],
+      "label": "Slab",
+      "labelIconName": "house",
+      "labelIconPrefix": "faslr",
+      "name": "slab",
+      "sourceCanvasHeight": 32,
+      "sourceGridHeight": 30
+    },
+    {
+      "description": "FA Thumbprint is a fun, friendly icon set inspired by Ed Emberley's thumbprint drawings that uses minimal elements to create playful, recognizable images. Add a touch of color to make them thumbthing special.",
+      "designerName": "Font Awesome",
+      "designerUrl": "https://fontawesome.com",
+      "familyStyles": [
+        {
+          "family": "thumbprint",
+          "style": "light",
+          "visualTags": [
+            "duotone",
+            "line",
+            "round"
+          ]
+        }
+      ],
+      "label": "Thumbprint",
+      "labelIconName": "house",
+      "labelIconPrefix": "fatl",
+      "name": "thumbprint",
+      "sourceCanvasHeight": 24,
+      "sourceGridHeight": 20
+    },
+    {
+      "description": "Sometimes you need an icon set that *just works* without stealing the spotlight — and FA Utility is here to help. With a Bauhaus-inspired blend of sharp corners and smooth curves, this pack fits seamlessly into any project and gets the job done.",
+      "designerName": "Font Awesome",
+      "designerUrl": "https://fontawesome.com",
+      "familyStyles": [
+        {
+          "family": "utility",
+          "style": "semibold",
+          "visualTags": [
+            "line",
+            "round",
+            "sharp"
+          ]
+        },
+        {
+          "family": "utility-duo",
+          "style": "semibold",
+          "visualTags": [
+            "duotone",
+            "line",
+            "round",
+            "sharp"
+          ]
+        },
+        {
+          "family": "utility-fill",
+          "style": "semibold",
+          "visualTags": [
+            "filled",
+            "round",
+            "sharp"
+          ]
+        }
+      ],
+      "label": "Utility",
+      "labelIconName": "house",
+      "labelIconPrefix": "fausb",
+      "name": "utility",
+      "sourceCanvasHeight": 20,
+      "sourceGridHeight": 16
+    },
+    {
+      "description": "FA Vellum? I hardly know 'em! Here at Font Awesome, we like our icons like we like our jokes: layered. And who better to guide you amongst these overlapped slabs of significance than guest designer Brian Brasher? No one, that's who.",
+      "designerName": "Brian Brasher",
+      "designerUrl": "https://etherbrian.github.io",
+      "familyStyles": [
+        {
+          "family": "vellum",
+          "style": "solid",
+          "visualTags": [
+            "duotone",
+            "filled",
+            "sharp"
+          ]
+        }
+      ],
+      "label": "Vellum",
+      "labelIconName": "house",
+      "labelIconPrefix": "favs",
+      "name": "vellum",
+      "sourceCanvasHeight": 24,
+      "sourceGridHeight": 24
+    },
+    {
+      "description": "FA Whiteboard is your brainstorming buddy, inspired by the creativity of a productive session on a blank canvas. These hand-drawn icons are casual and brimming with personality, delivering sketchy, inventive vibes that feel authentically human. (Because they were made by one. A human, we mean. Seriously. We promise. We have receipts.)",
+      "designerName": "Font Awesome",
+      "designerUrl": "https://fontawesome.com",
+      "familyStyles": [
+        {
+          "family": "whiteboard",
+          "style": "semibold",
+          "visualTags": [
+            "line",
+            "round",
+            "sketch"
+          ]
+        }
+      ],
+      "label": "Whiteboard",
+      "labelIconName": "house",
+      "labelIconPrefix": "fawsb",
+      "name": "whiteboard",
+      "sourceCanvasHeight": 20,
+      "sourceGridHeight": 16
+    }
+  ],
+  "visualTags": [
+    {
+      "label": "Duotone",
+      "labelIconName": "circle-half",
+      "labelIconPrefix": "fad",
+      "name": "duotone"
+    },
+    {
+      "label": "Filled",
+      "labelIconName": "square",
+      "labelIconPrefix": "fas",
+      "name": "filled"
+    },
+    {
+      "label": "Line",
+      "labelIconName": "bars",
+      "labelIconPrefix": "fas",
+      "name": "line"
+    },
+    {
+      "label": "Round",
+      "labelIconName": "circle",
+      "labelIconPrefix": "fas",
+      "name": "round"
+    },
+    {
+      "label": "Sharp",
+      "labelIconName": "diamond",
+      "labelIconPrefix": "fass",
+      "name": "sharp"
+    },
+    {
+      "label": "Dimensional",
+      "labelIconName": "cube",
+      "labelIconPrefix": "fas",
+      "name": "dimensional"
+    },
+    {
+      "label": "Sketch",
+      "labelIconName": "scribble",
+      "labelIconPrefix": "fas",
+      "name": "sketch"
+    },
+    {
+      "label": "Pixelated",
+      "labelIconName": "alien-8bit",
+      "labelIconPrefix": "fas",
+      "name": "pixelated"
+    }
+  ]
+}
